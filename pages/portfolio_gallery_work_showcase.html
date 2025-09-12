@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Gallery - Ink Creek Studio | Custom Screen Printing Showcase</title>
+    <meta name="description" content="Explore Ink Creek Studio's diverse portfolio of custom screen printing projects. From local business branding to event apparel and artist collaborations in Burnaby, BC." />
+    <link rel="stylesheet" href="../css/main.css" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Finkcreek7691back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-background text-text-primary">
+    <!-- Navigation Header -->
+    <header class="bg-white shadow-card sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-10 w-auto" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 45 Q30 15 50 45 Q70 15 90 45" stroke="#2E86AB" stroke-width="3" fill="none"/>
+                            <circle cx="20" cy="35" r="2" fill="#F18F01"/>
+                            <circle cx="40" cy="25" r="1.5" fill="#F18F01"/>
+                            <circle cx="60" cy="35" r="2" fill="#F18F01"/>
+                            <circle cx="80" cy="25" r="1.5" fill="#F18F01"/>
+                            <text x="110" y="25" font-family="Dancing Script" font-size="18" font-weight="700" fill="#000000">Ink Creek</text>
+                            <text x="110" y="45" font-family="Montserrat" font-size="12" font-weight="600" fill="#2E86AB">STUDIO</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="homepage_artisan_screen_printing_studio.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Home</a>
+                        <a href="portfolio_gallery_work_showcase.html" class="text-primary font-semibold px-3 py-2 rounded-md text-sm">Portfolio</a>
+                        <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Services</a>
+                        <a href="interactive_pricing_calculator.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Calculator</a>
+                        <a href="contact_studio_location.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Contact</a>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:block">
+                    <a href="interactive_pricing_calculator.html" class="btn-accent">Get Instant Quote</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-text-secondary hover:text-primary p-2" onclick="toggleMobileMenu()">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="md:hidden hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+                    <a href="homepage_artisan_screen_printing_studio.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Home</a>
+                    <a href="portfolio_gallery_work_showcase.html" class="text-primary font-semibold block px-3 py-2 rounded-md text-base">Portfolio</a>
+                    <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Services</a>
+                    <a href="interactive_pricing_calculator.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Calculator</a>
+                    <a href="contact_studio_location.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Contact</a>
+                    <a href="interactive_pricing_calculator.html" class="btn-accent block text-center mt-4">Get Instant Quote</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative py-16 bg-surface overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 200 Q300 50 600 200 Q900 350 1200 200" stroke="#2E86AB" stroke-width="4" fill="none"/>
+                <path d="M0 220 Q300 70 600 220 Q900 370 1200 220" stroke="#F18F01" stroke-width="2" fill="none"/>
+            </svg>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-montserrat font-bold mb-6">
+                Our <span class="font-accent text-accent">Creative</span> Portfolio
+            </h1>
+            <p class="text-xl md:text-2xl text-text-secondary mb-8 max-w-3xl mx-auto">
+                Discover the diverse range of custom screen printing projects we've brought to life for Burnaby businesses, events, and artists.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="interactive_pricing_calculator.html" class="btn-accent text-lg px-8 py-4">Start Your Project</a>
+                <a href="contact_studio_location.html" class="btn-secondary text-lg px-8 py-4">Discuss Your Vision</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Navigation -->
+    <section class="py-8 bg-white sticky top-16 z-40 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="filterPortfolio('all')" class="filter-btn active px-6 py-3 rounded-full font-montserrat font-semibold transition-all duration-300 bg-primary text-white">
+                    All Work
+                </button>
+                <button onclick="filterPortfolio('business')" class="filter-btn px-6 py-3 rounded-full font-montserrat font-semibold transition-all duration-300 bg-gray-100 text-text-secondary hover:bg-secondary hover:text-white">
+                    Local Business
+                </button>
+                <button onclick="filterPortfolio('events')" class="filter-btn px-6 py-3 rounded-full font-montserrat font-semibold transition-all duration-300 bg-gray-100 text-text-secondary hover:bg-secondary hover:text-white">
+                    Events & Fundraisers
+                </button>
+                <button onclick="filterPortfolio('artists')" class="filter-btn px-6 py-3 rounded-full font-montserrat font-semibold transition-all duration-300 bg-gray-100 text-text-secondary hover:bg-secondary hover:text-white">
+                    Artist Collaborations
+                </button>
+                <button onclick="filterPortfolio('corporate')" class="filter-btn px-6 py-3 rounded-full font-montserrat font-semibold transition-all duration-300 bg-gray-100 text-text-secondary hover:bg-secondary hover:text-white">
+                    Corporate
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Gallery -->
+    <section class="py-16 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Masonry Grid -->
+            <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Local Business - Restaurant -->
+                <div class="portfolio-item business" data-category="business">
+                    <div class="portfolio-card group">
+                        <div class="aspect-w-4 aspect-h-3 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" alt="Custom branded t-shirts for Burnaby restaurant staff" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" onerror="this.src='https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-3 py-1 bg-secondary text-white text-sm rounded-full">Local Business</span>
+                                <span class="text-sm text-text-secondary">3-Color Print</span>
+                            </div>
+                            <h3 class="text-xl font-montserrat font-semibold mb-2">Maple Leaf Bistro</h3>
+                            <p class="text-text-secondary mb-4">Custom staff uniforms featuring the restaurant's signature maple leaf logo with eco-friendly water-based inks.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=100" alt="Sarah Chen, Restaurant Manager" class="w-8 h-8 rounded-full object-cover mr-2" onerror="this.src='https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=100&auto=format&fit=crop'; this.onerror=null;" />
+                                    <span class="text-sm text-text-secondary">Sarah Chen</span>
+                                </div>
+                                <button onclick="openModal('bistro')" class="text-secondary hover:text-blue-700 font-semibold text-sm">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event - Charity Run -->
+                <div class="portfolio-item events" data-category="events">
+                    <div class="portfolio-card group">
+                        <div class="aspect-w-4 aspect-h-3 overflow-hidden">
+                            <img src="https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Charity run event t-shirts with custom design" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" onerror="this.src='https://images.pixabay.com/photo/2017/08/06/12/06/people-2591874_800.jpg'; this.onerror=null;" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-3 py-1 bg-accent text-white text-sm rounded-full">Event</span>
+                                <span class="text-sm text-text-secondary">2-Color Print</span>
+                            </div>
+                            <h3 class="text-xl font-montserrat font-semibold mb-2">Hearts for Hope 5K</h3>
+                            <p class="text-text-secondary mb-4">Inspiring design for annual charity run featuring gradient heart motif and motivational messaging.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" alt="Mike Johnson, Event Coordinator" class="w-8 h-8 rounded-full object-cover mr-2" onerror="this.src='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100'; this.onerror=null;" />
+                                    <span class="text-sm text-text-secondary">Mike Johnson</span>
+                                </div>
+                                <button onclick="openModal('charity')" class="text-secondary hover:text-blue-700 font-semibold text-sm">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Artist Collaboration -->
+                <div class="portfolio-item artists" data-category="artists">
+                    <div class="portfolio-card group">
+                        <div class="aspect-w-4 aspect-h-3 overflow-hidden">
+                            <img src="https://images.pixabay.com/photo/2016/03/27/19/43/fashion-1283863_1280.jpg" alt="Artist collaboration featuring unique graphic design" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800&auto=format&fit=crop'; this.onerror=null;" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-3 py-1 bg-success text-white text-sm rounded-full">Artist Collab</span>
+                                <span class="text-sm text-text-secondary">4-Color Print</span>
+                            </div>
+                            <h3 class="text-xl font-montserrat font-semibold mb-2">Luna's Abstract Series</h3>
+                            <p class="text-text-secondary mb-4">Limited edition merchandise featuring local artist Luna Martinez's vibrant abstract paintings.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img src="https://images.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg" alt="Luna Martinez, Local Artist" class="w-8 h-8 rounded-full object-cover mr-2" onerror="this.src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=100&auto=format&fit=crop'; this.onerror=null;" />
+                                    <span class="text-sm text-text-secondary">Luna Martinez</span>
+                                </div>
+                                <button onclick="openModal('artist')" class="text-secondary hover:text-blue-700 font-semibold text-sm">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Corporate - Tech Company -->
+                <div class="portfolio-item corporate" data-category="corporate">
+                    <div class="portfolio-card group">
+                        <div class="aspect-w-4 aspect-h-3 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=800&auto=format&fit=crop" alt="Corporate branded polo shirts for tech company" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" onerror="this.src='https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-3 py-1 bg-primary text-white text-sm rounded-full">Corporate</span>
+                                <span class="text-sm text-text-secondary">1-Color Print</span>
+                            </div>
+                            <h3 class="text-xl font-montserrat font-semibold mb-2">TechFlow Solutions</h3>
+                            <p class="text-text-secondary mb-4">Professional polo shirts with embroidered logo for Burnaby-based software development company.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=100&auto=format&fit=crop" alt="David Park, HR Manager" class="w-8 h-8 rounded-full object-cover mr-2" onerror="this.src='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100'; this.onerror=null;" />
+                                    <span class="text-sm text-text-secondary">David Park</span>
+                                </div>
+                                <button onclick="openModal('corporate')" class="text-secondary hover:text-blue-700 font-semibold text-sm">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Local Business - Fitness Center -->
+                <div class="portfolio-item business" data-category="business">
+                    <div class="portfolio-card group">
+                        <div class="aspect-w-4 aspect-h-3 overflow-hidden">
+                            <img src="https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Fitness center branded tank tops and t-shirts" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop'; this.onerror=null;" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-3 py-1 bg-secondary text-white text-sm rounded-full">Local Business</span>
+                                <span class="text-sm text-text-secondary">2-Color Print</span>
+                            </div>
+                            <h3 class="text-xl font-montserrat font-semibold mb-2">Peak Performance Gym</h3>
+                            <p class="text-text-secondary mb-4">Motivational workout apparel featuring bold typography and the gym's mountain peak logo.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100" alt="Alex Thompson, Gym Owner" class="w-8 h-8 rounded-full object-cover mr-2" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop'; this.onerror=null;" />
+                                    <span class="text-sm text-text-secondary">Alex Thompson</span>
+                                </div>
+                                <button onclick="openModal('gym')" class="text-secondary hover:text-blue-700 font-semibold text-sm">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event - Wedding Party -->
+                <div class="portfolio-item events" data-category="events">
+                    <div class="portfolio-card group">
+                        <div class="aspect-w-4 aspect-h-3 overflow-hidden">
+                            <img src="https://images.pixabay.com/photo/2017/08/06/12/06/people-2591874_800.jpg" alt="Custom wedding party t-shirts with elegant design" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800&auto=format&fit=crop'; this.onerror=null;" />
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-3 py-1 bg-accent text-white text-sm rounded-full">Event</span>
+                                <span class="text-sm text-text-secondary">3-Color Print</span>
+                            </div>
+                            <h3 class="text-xl font-montserrat font-semibold mb-2">Emma & James Wedding</h3>
+                            <p class="text-text-secondary mb-4">Elegant bachelor/bachelorette party shirts with custom calligraphy and metallic gold accents.</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=100&auto=format&fit=crop" alt="Emma Rodriguez, Bride" class="w-8 h-8 rounded-full object-cover mr-2" onerror="this.src='https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=100'; this.onerror=null;" />
+                                    <span class="text-sm text-text-secondary">Emma Rodriguez</span>
+                                </div>
+                                <button onclick="openModal('wedding')" class="text-secondary hover:text-blue-700 font-semibold text-sm">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button onclick="loadMoreItems()" class="btn-secondary text-lg px-8 py-4">Load More Projects</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Study Highlight -->
+    <section class="py-16 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-montserrat font-bold mb-4">Featured Case Study</h2>
+                <p class="text-xl text-text-secondary">From concept to completion: A detailed look at our collaborative process</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Before/After Images -->
+                <div class="space-y-6">
+                    <div class="relative">
+                        <h3 class="text-lg font-montserrat font-semibold mb-4">Original Design Concept</h3>
+                        <div class="bg-white p-6 rounded-lg shadow-card">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=600&auto=format&fit=crop" alt="Original design sketch for Burnaby Music Festival" class="w-full h-48 object-cover rounded-lg" onerror="this.src='https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=600'; this.onerror=null;" />
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <h3 class="text-lg font-montserrat font-semibold mb-4">Final Printed Result</h3>
+                        <div class="bg-white p-6 rounded-lg shadow-card">
+                            <img src="https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Final printed t-shirts for Burnaby Music Festival" class="w-full h-48 object-cover rounded-lg" onerror="this.src='https://images.pixabay.com/photo/2017/08/06/12/06/people-2591874_600.jpg'; this.onerror=null;" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study Details -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-2xl font-montserrat font-bold mb-4">Burnaby Music Festival 2024</h3>
+                        <p class="text-text-secondary mb-6">
+                            When the Burnaby Music Festival approached us with their vision for commemorative merchandise, 
+                            we knew this project would require special attention to detail and creative problem-solving.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-secondary rounded-full flex items-center justify-center mr-4">
+                                <span class="text-white font-semibold text-sm">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-montserrat font-semibold mb-2">Challenge</h4>
+                                <p class="text-text-secondary">Create vibrant, music-themed designs that would appeal to diverse age groups while maintaining festival branding.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-accent rounded-full flex items-center justify-center mr-4">
+                                <span class="text-white font-semibold text-sm">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-montserrat font-semibold mb-2">Solution</h4>
+                                <p class="text-text-secondary">Developed a gradient ink technique to achieve the sunset effect, using 4-color process printing with special metallic accents.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 w-8 h-8 bg-success rounded-full flex items-center justify-center mr-4">
+                                <span class="text-white font-semibold text-sm">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-montserrat font-semibold mb-2">Result</h4>
+                                <p class="text-text-secondary">Delivered 500 shirts in 5 days, with 98% customer satisfaction and requests for reorders for next year's festival.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-card">
+                        <div class="flex items-center mb-4">
+                            <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=100" alt="Maria Santos, Festival Director" class="w-12 h-12 rounded-full object-cover mr-4" onerror="this.src='https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=100&auto=format&fit=crop'; this.onerror=null;" />
+                            <div>
+                                <h5 class="font-montserrat font-semibold">Maria Santos</h5>
+                                <p class="text-sm text-text-secondary">Festival Director</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary italic">
+                            "Ink Creek transformed our vision into something even better than we imagined. The quality exceeded our expectations, 
+                            and the team's creativity helped us create merchandise that festival-goers are still wearing months later."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Integration -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-montserrat font-bold mb-4">Latest from the Studio</h2>
+                <p class="text-xl text-text-secondary mb-6">Follow our creative process @inkcreekstudio</p>
+                <a href="https://instagram.com/inkcreekstudio" target="_blank" class="inline-flex items-center text-secondary hover:text-blue-700 font-semibold">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.004 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323C5.902 8.198 7.053 7.708 8.35 7.708s2.448.49 3.323 1.297c.876.876 1.366 2.027 1.366 3.324s-.49 2.448-1.366 3.323c-.875.876-2.026 1.366-3.323 1.366zm7.718 0c-1.297 0-2.448-.49-3.323-1.297-.876-.875-1.366-2.026-1.366-3.323s.49-2.448 1.366-3.323c.875-.876 2.026-1.366 3.323-1.366s2.448.49 3.323 1.366c.876.875 1.366 2.026 1.366 3.323s-.49 2.448-1.366 3.323c-.875.876-2.026 1.366-3.323 1.366z"/>
+                    </svg>
+                    Follow @inkcreekstudio
+                </a>
+            </div>
+
+            <!-- Instagram Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="aspect-square overflow-hidden rounded-lg">
+                    <img src="https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=2" alt="Behind the scenes screen printing process" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=400&h=400&auto=format&fit=crop'; this.onerror=null;" />
+                </div>
+                <div class="aspect-square overflow-hidden rounded-lg">
+                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=400&h=400&auto=format&fit=crop" alt="Fresh printed t-shirts drying" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.pixabay.com/photo/2017/08/06/12/06/people-2591874_400.jpg'; this.onerror=null;" />
+                </div>
+                <div class="aspect-square overflow-hidden rounded-lg">
+                    <img src="https://images.pixabay.com/photo/2016/03/27/19/43/fashion-1283863_400.jpg" alt="Color mixing for custom ink" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=400&h=400&auto=format&fit=crop'; this.onerror=null;" />
+                </div>
+                <div class="aspect-square overflow-hidden rounded-lg">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=400&h=400&auto=format&fit=crop" alt="Team working on large order" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=2'; this.onerror=null;" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-primary text-white">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-montserrat font-bold mb-6">Ready to Create Your Own Success Story?</h2>
+            <p class="text-xl mb-8 opacity-90">Let's bring your vision to life with the same quality and creativity you see in our portfolio.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="interactive_pricing_calculator.html" class="btn-accent text-lg px-8 py-4">Get Your Quote</a>
+                <a href="contact_studio_location.html" class="bg-white text-primary px-8 py-4 rounded-lg font-montserrat font-semibold hover:bg-gray-100 transition-colors">Schedule Consultation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-auto mr-3" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 45 Q30 15 50 45 Q70 15 90 45" stroke="#2E86AB" stroke-width="3" fill="none"/>
+                            <circle cx="20" cy="35" r="2" fill="#F18F01"/>
+                            <circle cx="40" cy="25" r="1.5" fill="#F18F01"/>
+                            <circle cx="60" cy="35" r="2" fill="#F18F01"/>
+                            <circle cx="80" cy="25" r="1.5" fill="#F18F01"/>
+                            <text x="110" y="25" font-family="Dancing Script" font-size="18" font-weight="700" fill="#FFFFFF">Ink Creek</text>
+                            <text x="110" y="45" font-family="Montserrat" font-size="12" font-weight="600" fill="#2E86AB">STUDIO</text>
+                        </svg>
+                    </div>
+                    <p class="text-gray-300 mb-4">Burnaby's premier custom screen printing studio. Bringing your vision to life with quality, creativity, and local expertise.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://instagram.com/inkcreekstudio" class="text-gray-400 hover:text-accent transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.004 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323C5.902 8.198 7.053 7.708 8.35 7.708s2.448.49 3.323 1.297c.876.876 1.366 2.027 1.366 3.324s-.49 2.448-1.366 3.323c-.875.876-2.026 1.366-3.323 1.366zm7.718 0c-1.297 0-2.448-.49-3.323-1.297-.876-.875-1.366-2.026-1.366-3.323s.49-2.448 1.366-3.323c.875-.876 2.026-1.366 3.323-1.366s2.448.49 3.323 1.366c.876.875 1.366 2.026 1.366 3.323s-.49 2.448-1.366 3.323c-.875.876-2.026 1.366-3.323 1.366z"/>
+                            </svg>
+                        </a>
+                        <a href="https://facebook.com/inkcreekstudio" class="text-gray-400 hover:text-accent transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-montserrat font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="homepage_artisan_screen_printing_studio.html" class="text-gray-300 hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="services_capabilities_hub.html" class="text-gray-300 hover:text-accent transition-colors">Services</a></li>
+                        <li><a href="interactive_pricing_calculator.html" class="text-gray-300 hover:text-accent transition-colors">Pricing Calculator</a></li>
+                        <li><a href="contact_studio_location.html" class="text-gray-300 hover:text-accent transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-lg font-montserrat font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>123 Creative Way</li>
+                        <li>Burnaby, BC V5A 1A1</li>
+                        <li>(604) 555-0123</li>
+                        <li>hello@inkcreekstudio.ca</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Ink Creek Studio. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for Portfolio Details -->
+    <div id="portfolio-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-4xl w-full max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 id="modal-title" class="text-2xl font-montserrat font-bold"></h3>
+                    <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div id="modal-content">
+                    <!-- Modal content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Portfolio filtering
+        function filterPortfolio(category) {
+            const items = document.querySelectorAll('.portfolio-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update button states
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'bg-primary', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-text-secondary');
+            });
+            
+            event.target.classList.add('active', 'bg-primary', 'text-white');
+            event.target.classList.remove('bg-gray-100', 'text-text-secondary');
+            
+            // Filter items
+            items.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                    item.style.animation = 'fadeIn 0.5s ease-in-out';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Load more items (simulated)
+        function loadMoreItems() {
+            // In a real application, this would load more items from the server
+            alert('More portfolio items would be loaded here. This is a demo implementation.');
+        }
+
+        // Modal functionality
+        function openModal(projectId) {
+            const modal = document.getElementById('portfolio-modal');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-content');
+            
+            // Sample modal content based on project ID
+            const projectData = {
+                'bistro': {
+                    title: 'Maple Leaf Bistro - Staff Uniforms',
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=600&auto=format&fit=crop" 
+                                     alt="Bistro staff uniforms" class="w-full h-64 object-cover rounded-lg mb-4">
+                                <h4 class="font-montserrat font-semibold mb-2">Project Details</h4>
+                                <ul class="space-y-2 text-text-secondary">
+                                    <li><strong>Client:</strong> Maple Leaf Bistro</li>
+                                    <li><strong>Quantity:</strong> 25 shirts</li>
+                                    <li><strong>Colors:</strong> 3-color process</li>
+                                    <li><strong>Turnaround:</strong> 5 business days</li>
+                                    <li><strong>Technique:</strong> Water-based inks</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-montserrat font-semibold mb-4">Challenge & Solution</h4>
+                                <p class="text-text-secondary mb-4">The bistro needed uniforms that would maintain their elegant brand image while being practical for kitchen and service staff.</p>
+                                <p class="text-text-secondary mb-4">We used eco-friendly water-based inks that provide excellent durability and comfort, perfect for food service environments.</p>
+                                <div class="bg-surface p-4 rounded-lg">
+                                    <p class="italic text-text-secondary">"The shirts look professional and have held up beautifully through countless washes. Our staff loves wearing them!" - Sarah Chen, Manager</p>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                'charity': {
+                    title: 'Hearts for Hope 5K - Event Apparel',
+                    content: `
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <img src="https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=600" 
+                                     alt="Charity run t-shirts" class="w-full h-64 object-cover rounded-lg mb-4">
+                                <h4 class="font-montserrat font-semibold mb-2">Project Details</h4>
+                                <ul class="space-y-2 text-text-secondary">
+                                    <li><strong>Client:</strong> Hearts for Hope Foundation</li>
+                                    <li><strong>Quantity:</strong> 300 shirts</li>
+                                    <li><strong>Colors:</strong> 2-color gradient</li>
+                                    <li><strong>Turnaround:</strong> 7 business days</li>
+                                    <li><strong>Technique:</strong> Specialty gradient printing</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-montserrat font-semibold mb-4">Challenge & Solution</h4>
+                                <p class="text-text-secondary mb-4">Creating an inspiring design that would motivate runners while staying within the charity's budget constraints.</p>
+                                <p class="text-text-secondary mb-4">We developed a custom gradient technique that created a beautiful sunrise effect, symbolizing hope and new beginnings.</p>
+                                <div class="bg-surface p-4 rounded-lg">
+                                    <p class="italic text-text-secondary">"The shirts were a huge hit! Participants are still wearing them months later, which keeps our cause visible in the community." - Mike Johnson, Event Coordinator</p>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+                // Add more project data as needed
+            };
+            
+            const data = projectData[projectId] || {
+                title: 'Project Details',
+                content: '<p>Project details would be displayed here.</p>'
+            };
+            
+            title.textContent = data.title;
+            content.innerHTML = data.content;
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('portfolio-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('portfolio-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Lazy loading for images
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.src;
+                    img.classList.remove('lazy');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => imageObserver.observe(img));
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

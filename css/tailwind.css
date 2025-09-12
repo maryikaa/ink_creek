@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-primary: #000000; /* black - ink depth, professional authority, craft precision */
+  --color-secondary: #666666; /* gray - supportive, professional secondary color */
+  --color-accent: #84cc16; /* fresh green - vibrant accent, button highlights, brand energy */
+  
+  /* Background Colors */
+  --color-background: #FFFFFF; /* white - clean canvas, content clarity, gallery space */
+  --color-surface: #F8F9FA; /* gray-50 - subtle separation, card backgrounds, gentle depth */
+  
+  /* Text Colors */
+  --color-text-primary: #000000; /* black - strong contrast, professional communication */
+  --color-text-secondary: #666666; /* gray-600 - clear hierarchy, supporting information, accessible contrast */
+  
+  /* Status Colors */
+  --color-success: #84cc16; /* fresh green - matches brand accent */
+  --color-warning: #FFC107; /* yellow-500 - file requirements, deadline notices, helpful alerts */
+  --color-error: #DC3545; /* red-600 - form validation, gentle correction, helpful guidance */
+  
+  /* Border Colors */
+  --color-border: #E5E5E5; /* gray-300 - clean borders for form inputs and content separation */
+  --color-border-active: #84cc16; /* fresh green - active state borders */
+  
+  /* Shadow Values */
+  --shadow-subtle: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-prominent: 0 8px 25px rgba(0, 0, 0, 0.15);
+  
+  /* Animation Timing */
+  --transition-fast: 200ms ease-in-out;
+  --transition-normal: 300ms ease-in-out;
+}
+
+@layer base {
+  body {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-text-primary);
+  }
+  
+  .font-accent {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 rounded-lg font-montserrat font-semibold transition-all duration-300 hover:bg-gray-800 focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-white px-6 py-3 rounded-lg font-montserrat font-semibold transition-all duration-300 hover:bg-gray-700 focus:ring-2 focus:ring-secondary focus:ring-offset-2;
+  }
+  
+  .btn-accent {
+    @apply bg-accent text-black px-6 py-3 rounded-lg font-montserrat font-semibold transition-all duration-300 hover:opacity-90 focus:ring-2 focus:ring-accent focus:ring-offset-2;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-card p-6 transition-all duration-300 hover:shadow-prominent;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all duration-200;
+  }
+  
+  .portfolio-card {
+    @apply relative overflow-hidden rounded-lg shadow-card transition-all duration-300 hover:shadow-prominent hover:scale-105;
+  }
+  
+  .ink-flow-gradient {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .transition-smooth {
+    transition: all var(--transition-normal);
+  }
+  
+  .transition-quick {
+    transition: all var(--transition-fast);
+  }
+  
+  .shadow-subtle {
+    box-shadow: var(--shadow-subtle);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .shadow-prominent {
+    box-shadow: var(--shadow-prominent);
+  }
+}
