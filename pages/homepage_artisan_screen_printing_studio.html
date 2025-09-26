@@ -8,381 +8,289 @@
     <link rel="stylesheet" href="../css/main.css" />
 <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Finkcreek7691back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
 </head>
-<body class="bg-background text-text-primary">
-    <!-- Navigation Header -->
-    <header class="bg-white shadow-card sticky top-0 z-50">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+<body class="bg-white text-black">
+    <!-- Modern Navigation Header -->
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50 backdrop-blur-sm">
+        <nav class="container">
+            <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <img alt="Ink Creek Screen Printing" class="h-10 w-auto" />
-                    </div>
+                    <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-8 w-auto" />
                 </div>
 
                 <!-- Desktop Navigation -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="homepage_artisan_screen_printing_studio.html" class="text-primary font-semibold px-3 py-2 rounded-md text-sm">Home</a>
-                        <a href="portfolio_gallery_work_showcase.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Portfolio</a>
-                        <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Services</a>
-                        <a href="interactive_pricing_calculator.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Calculator</a>
-                        <a href="contact_studio_location.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Contact</a>
-                    </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="homepage_artisan_screen_printing_studio.html" class="nav-link active">Home</a>
+                    <a href="portfolio_gallery_work_showcase.html" class="nav-link">Portfolio</a>
+                    <a href="services_capabilities_hub.html" class="nav-link">Services</a>
+                    <a href="interactive_pricing_calculator.html" class="nav-link">Calculator</a>
+                    <a href="contact_studio_location.html" class="nav-link">Contact</a>
                 </div>
 
                 <!-- CTA Button -->
                 <div class="hidden md:block">
-                    <a href="interactive_pricing_calculator.html" class="btn-accent">Get Instant Quote</a>
+                    <a href="interactive_pricing_calculator.html" class="btn-accent">Get Quote</a>
                 </div>
 
                 <!-- Mobile menu button -->
                 <div class="md:hidden">
-                    <button type="button" class="text-text-secondary hover:text-primary p-2" onclick="toggleMobileMenu()">
+                    <button type="button" class="p-2 text-black hover:text-accent transition-colors" onclick="toggleMobileMenu()">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
                     </button>
                 </div>
             </div>
 
             <!-- Mobile Navigation Menu -->
-            <div id="mobile-menu" class="md:hidden hidden">
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
-                    <a href="homepage_artisan_screen_printing_studio.html" class="text-primary font-semibold block px-3 py-2 rounded-md text-base">Home</a>
-                    <a href="portfolio_gallery_work_showcase.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Portfolio</a>
-                    <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Services</a>
-                    <a href="interactive_pricing_calculator.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Calculator</a>
-                    <a href="contact_studio_location.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Contact</a>
-                    <a href="interactive_pricing_calculator.html" class="btn-accent block text-center mt-4">Get Instant Quote</a>
+            <div id="mobile-menu" class="md:hidden hidden border-t border-gray-100">
+                <div class="py-6 space-y-4">
+                    <a href="homepage_artisan_screen_printing_studio.html" class="block nav-link active">Home</a>
+                    <a href="portfolio_gallery_work_showcase.html" class="block nav-link">Portfolio</a>
+                    <a href="services_capabilities_hub.html" class="block nav-link">Services</a>
+                    <a href="interactive_pricing_calculator.html" class="block nav-link">Calculator</a>
+                    <a href="contact_studio_location.html" class="block nav-link">Contact</a>
+                    <a href="interactive_pricing_calculator.html" class="btn-accent w-full text-center mt-6">Get Quote</a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section with Carousel -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <!-- Background Carousel -->
-        <div class="absolute inset-0 z-0">
-            <div id="hero-carousel" class="relative w-full h-full">
-                <!-- Slide 1 -->
-                <div class="carousel-slide absolute inset-0 opacity-100 transition-opacity duration-1000">
-                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Custom screen printed t-shirts for local Burnaby business" class="w-full h-full object-cover" onerror="this.src='https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;" />
-                    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-                </div>
-                <!-- Slide 2 -->
-                <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000">
-                    <img src="https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Screen printing process in action at Ink Creek Studio" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;" />
-                    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-                </div>
-                <!-- Slide 3 -->
-                <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000">
-                    <img src="https://images.pixabay.com/photo/2017/08/06/12/06/people-2591874_1280.jpg" alt="Event t-shirts and custom apparel showcase" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=2940&auto=format&fit=crop'; this.onerror=null;" />
-                    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-                </div>
-            </div>
+<!-- Hero Section - Full Screen with Background Image -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gray-900">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0">
+        <img src="../assets/images/head_image.jpg" alt="Ink Creek Studio Background" class="w-full h-full object-cover" />
+    </div>
+    
+    <!-- Semi-transparent White Overlay (30%) -->
+    <div class="absolute inset-0 bg-white bg-opacity-60 z-10"></div>
+    
+    <!-- Hero Content -->
+    <div class="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <!-- Bold Sans-serif Headline -->
+        <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-black mb-6 leading-tight">
+            Your Vision, <br class="hidden sm:block" />Our Craft
+        </h1>
+        
+        <!-- Smaller Subtitle -->
+        <p class="text-lg md:text-xl lg:text-2xl text-black mb-12 max-w-3xl mx-auto leading-relaxed">
+            Burnaby's premier custom screen printing studio. We bring your ideas to life with unmatched quality, creativity, and local expertise.
+        </p>
+        
+        <!-- Call-to-Action Button with Accent Green and Hover Animation -->
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <a href="interactive_pricing_calculator.html" class="inline-block px-8 py-4 bg-accent text-black font-bold text-lg rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-opacity-90 transform">
+                Get Instant Quote
+            </a>
+            <a href="portfolio_gallery_work_showcase.html" class="inline-block px-8 py-4 bg-transparent border-2 border-black text-black font-medium text-lg rounded-xl transition-all duration-300 hover:bg-black hover:text-white">
+                View Our Work
+            </a>
         </div>
-
-        <!-- Hero Content -->
-        <div class="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-montserrat font-bold mb-6 text-shadow">
-                Your Vision, <span class="font-accent text-accent text-center">Our Craft</span>
-            </h1>
-            <p class="text-xl md:text-2xl mb-8 text-shadow font-open-sans">
-                Burnaby's Premier Custom Screen Printing Studio
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="interactive_pricing_calculator.html" class="btn-accent text-lg px-8 py-4 shadow-prominent">Get Instant Quote</a>
-                <a href="portfolio_gallery_work_showcase.html" class="btn-secondary text-lg px-8 py-4">
-                    View Our Work
-                </a>
-            </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+        <div class="animate-bounce">
+            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
         </div>
+    </div>
+</section>
 
-        <!-- Floating Quote Calculator Widget -->
-        <div class="fixed bottom-6 right-6 z-50 hidden lg:block">
-            <div class="bg-white rounded-xl shadow-prominent p-4 max-w-sm">
-                <h3 class="font-montserrat font-semibold text-lg mb-3">Quick Quote</h3>
-                <div class="space-y-3">
-                    <select class="input-field text-sm">
-                        <option>Select Item Type</option>
-                        <option>T-Shirts</option>
-                        <option>Hoodies</option>
-                        <option>Polo Shirts</option>
-                        <option>Tank Tops</option>
-                    </select>
-                    <input type="number" placeholder="Quantity" class="input-field text-sm" min="1" />
-                    <input type="number" placeholder="Colors" class="input-field text-sm" min="1" max="6" />
-                    <a href="interactive_pricing_calculator.html" class="btn-primary w-full text-center block">Calculate Price</a>
-                </div>
-            </div>
-        </div>
 
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
-            <div class="animate-bounce">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-                </svg>
-            </div>
-        </div>
-    </section>
-
-    <!-- Value Proposition Section -->
-    <section class="py-16 bg-surface">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Value Propositions - Clean Grid -->
+    <section class="section bg-gray-50">
+        <div class="container">
+            <div class="grid-3">
                 <!-- Local Expertise -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-secondary rounded-full mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-4">Local Expertise</h3>
-                    <p class="text-text-secondary">Proudly serving Burnaby and the Lower Mainland with personalized service and deep community connections.</p>
+                    <h3 class="text-2xl font-bold mb-4">Local Expertise</h3>
+                    <p class="text-gray-600">Proudly serving Burnaby and the Lower Mainland with personalized service and deep community connections.</p>
                 </div>
 
                 <!-- Quality Guaranteed -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-accent rounded-full mb-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
                         <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-4">Quality Guaranteed</h3>
-                    <p class="text-text-secondary">Premium inks, professional equipment, and meticulous attention to detail ensure lasting, vibrant results.</p>
+                    <h3 class="text-2xl font-bold mb-4">Quality Guaranteed</h3>
+                    <p class="text-gray-600">Premium inks, professional equipment, and meticulous attention to detail ensure lasting, vibrant results.</p>
                 </div>
 
                 <!-- Fast Turnaround -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-4">Fast Turnaround</h3>
-                    <p class="text-text-secondary">Rush orders available with same-day and next-day options to meet your urgent deadlines.</p>
+                    <h3 class="text-2xl font-bold mb-4">Fast Turnaround</h3>
+                    <p class="text-gray-600">Rush orders available with same-day and next-day options to meet your urgent deadlines.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Instagram Feed Integration -->
-    <section class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-montserrat font-bold mb-4">Behind the Scenes</h2>
-                <p class="text-xl text-text-secondary mb-6">Follow our creative process @inkcreekstudio</p>
-                <a href="https://instagram.com/inkcreekstudio" target="_blank" class="inline-flex items-center text-secondary hover:text-accent font-semibold">
-                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.004 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323C5.902 8.198 7.053 7.708 8.35 7.708s2.448.49 3.323 1.297c.876.876 1.366 2.027 1.366 3.324s-.49 2.448-1.366 3.323c-.875.876-2.026 1.366-3.323 1.366zm7.718 0c-1.297 0-2.448-.49-3.323-1.297-.876-.875-1.366-2.026-1.366-3.323s.49-2.448 1.366-3.323c.875-.876 2.026-1.366 3.323-1.366s2.448.49 3.323 1.366c.876.875 1.366 2.026 1.366 3.323s-.49 2.448-1.366 3.323c-.875.876-2.026 1.366-3.323 1.366z"/>
-                    </svg>
-                    Follow @inkcreekstudio
-                </a>
-            </div>
-
-            <!-- Instagram Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="aspect-square overflow-hidden rounded-lg">
-                    <img src="https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=2" alt="Screen printing process" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=400&h=400&auto=format&fit=crop'; this.onerror=null;" />
-                </div>
-                <div class="aspect-square overflow-hidden rounded-lg">
-                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=400&h=400&auto=format&fit=crop" alt="Custom t-shirt designs" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.pixabay.com/photo/2017/08/06/12/06/people-2591874_400.jpg'; this.onerror=null;" />
-                </div>
-                <div class="aspect-square overflow-hidden rounded-lg">
-                    <img src="https://images.pixabay.com/photo/2016/03/27/19/43/fashion-1283863_1280.jpg" alt="Finished apparel showcase" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=400&h=400&auto=format&fit=crop'; this.onerror=null;" />
-                </div>
-                <div class="aspect-square overflow-hidden rounded-lg">
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=400&h=400&auto=format&fit=crop" alt="Studio workspace" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&dpr=2'; this.onerror=null;" />
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Client Testimonials -->
-    <section class="py-16 bg-surface">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-montserrat font-bold mb-4">What Our Clients Say</h2>
-                <p class="text-xl text-text-secondary">Trusted by Burnaby businesses and beyond</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="card">
-                    <div class="flex items-center mb-4">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&h=150&auto=format&fit=crop" alt="Mike Chen, Burnaby Fitness Center" class="w-12 h-12 rounded-full object-cover mr-4" onerror="this.src='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2'; this.onerror=null;" />
-                        <div>
-                            <h4 class="font-montserrat font-semibold">Mike Chen</h4>
-                            <p class="text-sm text-text-secondary">Burnaby Fitness Center</p>
-                        </div>
-                    </div>
-                    <p class="text-text-secondary italic">"Ink Creek delivered 200 gym shirts in just 3 days. The quality is outstanding and our members love them. Highly recommend!"</p>
-                    <div class="flex mt-4">
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Testimonial 2 -->
-                <div class="card">
-                    <div class="flex items-center mb-4">
-                        <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2" alt="Sarah Johnson, Burnaby Community Events" class="w-12 h-12 rounded-full object-cover mr-4" onerror="this.src='https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=150&h=150&auto=format&fit=crop'; this.onerror=null;" />
-                        <div>
-                            <h4 class="font-montserrat font-semibold">Sarah Johnson</h4>
-                            <p class="text-sm text-text-secondary">Community Events Coordinator</p>
-                        </div>
-                    </div>
-                    <p class="text-text-secondary italic">"Perfect for our charity run! The team helped us design something beautiful and the shirts looked amazing on race day."</p>
-                    <div class="flex mt-4">
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                    </div>
-                </div>
-
-                <!-- Testimonial 3 -->
-                <div class="card">
-                    <div class="flex items-center mb-4">
-                        <img src="https://images.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg" alt="David Park, Local Artist" class="w-12 h-12 rounded-full object-cover mr-4" onerror="this.src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&h=150&auto=format&fit=crop'; this.onerror=null;" />
-                        <div>
-                            <h4 class="font-montserrat font-semibold">David Park</h4>
-                            <p class="text-sm text-text-secondary">Local Artist</p>
-                        </div>
-                    </div>
-                    <p class="text-text-secondary italic">"They brought my artwork to life perfectly. The color matching was spot-on and the print quality exceeded my expectations."</p>
-                    <div class="flex mt-4">
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-montserrat font-bold mb-4">How It Works</h2>
-                <p class="text-xl text-text-secondary">From concept to finished apparel in 4 simple steps</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <!-- Process Section - How It Works -->
+    <section class="section bg-white">
+        <div class="container text-center">
+            <h2 class="heading-large mb-16">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
                 <!-- Step 1 -->
                 <div class="text-center">
-                    <div class="relative mb-6">
-                        <div class="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-2xl font-montserrat font-bold text-white">1</span>
-                        </div>
-                        <div class="absolute top-10 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-secondary opacity-20 rounded-full animate-ping"></div>
+                    <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">1</span>
                     </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-3">Get Quote</h3>
-                    <p class="text-text-secondary">Use our calculator or contact us directly for instant pricing on your custom apparel project.</p>
+                    <h3 class="text-xl font-bold mb-4">Get Quote</h3>
+                    <p class="text-gray-600">Use our calculator or contact us directly for instant pricing on your custom apparel project.</p>
                 </div>
 
                 <!-- Step 2 -->
                 <div class="text-center">
-                    <div class="relative mb-6">
-                        <div class="w-20 h-20 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-2xl font-montserrat font-bold text-black">2</span>
-                        </div>
+                    <div class="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-black">2</span>
                     </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-3">Design & Approve</h3>
-                    <p class="text-text-secondary">Submit your artwork or work with our team to create the perfect design for your vision.</p>
+                    <h3 class="text-xl font-bold mb-4">Design & Approve</h3>
+                    <p class="text-gray-600">Submit your artwork or work with our team to create the perfect design for your vision.</p>
                 </div>
 
                 <!-- Step 3 -->
                 <div class="text-center">
-                    <div class="relative mb-6">
-                        <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-2xl font-montserrat font-bold text-white">3</span>
-                        </div>
+                    <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">3</span>
                     </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-3">We Print</h3>
-                    <p class="text-text-secondary">Our skilled craftspeople bring your design to life using premium inks and professional equipment.</p>
+                    <h3 class="text-xl font-bold mb-4">We Print</h3>
+                    <p class="text-gray-600">Our skilled craftspeople bring your design to life using premium inks and professional equipment.</p>
                 </div>
 
                 <!-- Step 4 -->
                 <div class="text-center">
-                    <div class="relative mb-6">
-                        <div class="w-20 h-20 bg-success rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-2xl font-montserrat font-bold text-black">4</span>
-                        </div>
+                    <div class="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-black">4</span>
                     </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-3">You Receive</h3>
-                    <p class="text-text-secondary">Pick up your finished apparel or have it delivered. Quality guaranteed, satisfaction assured.</p>
+                    <h3 class="text-xl font-bold mb-4">You Receive</h3>
+                    <p class="text-gray-600">Pick up your finished apparel or have it delivered. Quality guaranteed, satisfaction assured.</p>
                 </div>
             </div>
 
+            <div class="mt-16">
+                <a href="interactive_pricing_calculator.html" class="btn-primary">Start Your Project</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Work - Large Images -->
+    <section class="section bg-gray-50">
+        <div class="container">
+            <div class="text-center mb-16">
+                <h2 class="heading-large mb-6">Featured Work</h2>
+                <p class="text-large max-w-2xl mx-auto">Recent projects that showcase our commitment to quality and creativity.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" alt="Custom business apparel" class="image-hover w-full h-80 object-cover" onerror="this.src='https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;" />
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Local Business Branding</h3>
+                        <p class="text-gray-600">Professional uniforms and branded apparel for Burnaby's growing businesses.</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="image-container">
+                        <img src="https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Event merchandise" class="image-hover w-full h-80 object-cover" onerror="this.src='https://images.pixabay.com/photo/2017/08/06/12/06/people-2591874_800.jpg'; this.onerror=null;" />
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Event Merchandise</h3>
+                        <p class="text-gray-600">Custom designs for fundraisers, festivals, and community events across the Lower Mainland.</p>
+                    </div>
+                </div>
+            </div>
+            
             <div class="text-center mt-12">
-                <a href="interactive_pricing_calculator.html" class="btn-primary text-lg px-8 py-4">Start Your Project</a>
+                <a href="portfolio_gallery_work_showcase.html" class="btn-ghost">View Full Portfolio →</a>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-16 bg-primary text-white">
-        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl md:text-4xl font-montserrat font-bold mb-6">Ready to Bring Your Vision to Life?</h2>
-            <p class="text-xl mb-8 opacity-90">Join hundreds of satisfied customers who trust Ink Creek Studio for their custom apparel needs.</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="interactive_pricing_calculator.html" class="btn-accent text-lg px-8 py-4">Get Your Quote</a>
-                <a href="contact_studio_location.html" class="bg-white text-primary px-8 py-4 rounded-lg font-montserrat font-semibold hover:bg-gray-100 transition-colors">Visit Our Studio</a>
+    <!-- Testimonials - Clean & Simple -->
+    <section class="section bg-white">
+        <div class="container text-center">
+            <h2 class="heading-large mb-16">What Our Clients Say</h2>
+            <div class="grid-3">
+                <!-- Testimonial 1 -->
+                <div class="testimonial">
+                    <p class="text-gray-700 mb-6 italic">"Ink Creek delivered 200 gym shirts in just 3 days. The quality is outstanding and our members love them. Highly recommend!"</p>
+                    <div class="flex items-center">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=60&h=60&auto=format&fit=crop" alt="Mike Chen" class="w-12 h-12 rounded-full object-cover mr-4" onerror="this.src='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=60&h=60'; this.onerror=null;" />
+                        <div class="text-left">
+                            <h4 class="font-semibold">Mike Chen</h4>
+                            <p class="text-sm text-gray-500">Burnaby Fitness Center</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial">
+                    <p class="text-gray-700 mb-6 italic">"Perfect for our charity run! The team helped us design something beautiful and the shirts looked amazing on race day."</p>
+                    <div class="flex items-center">
+                        <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=60&h=60" alt="Sarah Johnson" class="w-12 h-12 rounded-full object-cover mr-4" onerror="this.src='https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=60&h=60&auto=format&fit=crop'; this.onerror=null;" />
+                        <div class="text-left">
+                            <h4 class="font-semibold">Sarah Johnson</h4>
+                            <p class="text-sm text-gray-500">Community Events Coordinator</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial">
+                    <p class="text-gray-700 mb-6 italic">"They brought my artwork to life perfectly. The color matching was spot-on and the print quality exceeded my expectations."</p>
+                    <div class="flex items-center">
+                        <img src="https://images.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg" alt="David Park" class="w-12 h-12 rounded-full object-cover mr-4" onerror="this.src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=60&h=60&auto=format&fit=crop'; this.onerror=null;" />
+                        <div class="text-left">
+                            <h4 class="font-semibold">David Park</h4>
+                            <p class="text-sm text-gray-500">Local Artist</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- CTA Section - Bold & Simple -->
+    <section class="section bg-black text-white">
+        <div class="container-sm text-center">
+            <h2 class="heading-large text-white mb-6">Ready to Bring Your Vision to Life?</h2>
+            <p class="text-large text-gray-300 mb-12">Join hundreds of satisfied customers who trust Ink Creek Studio for their custom apparel needs.</p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="interactive_pricing_calculator.html" class="btn-accent">Get Your Quote</a>
+                <a href="contact_studio_location.html" class="bg-white text-black px-8 py-4 rounded-xl font-medium transition-all duration-300 hover:bg-gray-100">Visit Our Studio</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modern Footer -->
+    <footer class="bg-white border-t border-gray-100 py-16">
+        <div class="container">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Company Info -->
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center mb-4">
-                        <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-8 w-auto mr-3" />
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-6">
+                        <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-8 w-auto" />
                     </div>
-                    <p class="text-gray-300 mb-4">Burnaby's premier custom screen printing studio. Bringing your vision to life with quality, creativity, and local expertise.</p>
+                    <p class="text-gray-600 mb-6 max-w-md">Burnaby's premier custom screen printing studio. Bringing your vision to life with quality, creativity, and local expertise.</p>
                     <div class="flex space-x-4">
                         <a href="https://instagram.com/inkcreekstudio" class="text-gray-400 hover:text-accent transition-colors">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -398,20 +306,20 @@
                 </div>
 
                 <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-montserrat font-semibold mb-4">Quick Links</h3>
+                <div class="footer-section">
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="portfolio_gallery_work_showcase.html" class="text-gray-300 hover:text-accent transition-colors">Portfolio</a></li>
-                        <li><a href="services_capabilities_hub.html" class="text-gray-300 hover:text-accent transition-colors">Services</a></li>
-                        <li><a href="interactive_pricing_calculator.html" class="text-gray-300 hover:text-accent transition-colors">Pricing Calculator</a></li>
-                        <li><a href="contact_studio_location.html" class="text-gray-300 hover:text-accent transition-colors">Contact Us</a></li>
+                        <li><a href="portfolio_gallery_work_showcase.html" class="footer-link">Portfolio</a></li>
+                        <li><a href="services_capabilities_hub.html" class="footer-link">Services</a></li>
+                        <li><a href="interactive_pricing_calculator.html" class="footer-link">Calculator</a></li>
+                        <li><a href="contact_studio_location.html" class="footer-link">Contact</a></li>
                     </ul>
                 </div>
 
                 <!-- Contact Info -->
-                <div>
-                    <h3 class="text-lg font-montserrat font-semibold mb-4">Contact</h3>
-                    <ul class="space-y-2 text-gray-300">
+                <div class="footer-section">
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-600">
                         <li>123 Creative Way</li>
                         <li>Burnaby, BC V5A 1A1</li>
                         <li>(604) 555-0123</li>
@@ -420,7 +328,7 @@
                 </div>
             </div>
 
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <div class="border-t border-gray-100 mt-12 pt-8 text-center text-gray-500">
                 <p>&copy; 2025 Ink Creek Studio. All Rights Reserved.</p>
             </div>
         </div>
@@ -432,20 +340,6 @@
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
         }
-
-        // Hero carousel functionality
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        const totalSlides = slides.length;
-
-        function nextSlide() {
-            slides[currentSlide].style.opacity = '0';
-            currentSlide = (currentSlide + 1) % totalSlides;
-            slides[currentSlide].style.opacity = '1';
-        }
-
-        // Auto-advance carousel every 5 seconds
-        setInterval(nextSlide, 5000);
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -461,17 +355,13 @@
             });
         });
 
-        // Add scroll effect to floating quote widget
+        // Add scroll effect to header
         window.addEventListener('scroll', function() {
-            const widget = document.querySelector('.fixed.bottom-6.right-6');
-            if (widget) {
-                if (window.scrollY > 100) {
-                    widget.style.transform = 'translateY(0)';
-                    widget.style.opacity = '1';
-                } else {
-                    widget.style.transform = 'translateY(20px)';
-                    widget.style.opacity = '0.8';
-                }
+            const header = document.querySelector('header');
+            if (window.scrollY > 0) {
+                header.classList.add('shadow-subtle');
+            } else {
+                header.classList.remove('shadow-subtle');
             }
         });
     </script>

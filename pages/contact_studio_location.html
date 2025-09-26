@@ -3,419 +3,285 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact & Studio Location - Ink Creek Studio | Burnaby Screen Printing</title>
-    <meta name="description" content="Visit Ink Creek Studio in Burnaby, BC. Get directions, contact info, and book your consultation. Local screen printing experts ready to help." />
+    <title>Contact Us - Ink Creek Studio | Get in Touch for Custom Screen Printing</title>
+    <meta name="description" content="Contact Ink Creek Studio for your custom screen printing needs. Located in Burnaby, BC. Get quotes, schedule consultations, or visit our studio." />
     <link rel="stylesheet" href="../css/main.css" />
 <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Finkcreek7691back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
 </head>
-<body class="bg-background text-text-primary">
-    <!-- Navigation Header -->
-    <header class="bg-white shadow-card sticky top-0 z-50">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+<body class="bg-white text-black">
+    <!-- Modern Navigation Header -->
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50 backdrop-blur-sm">
+        <nav class="container">
+            <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <svg class="h-10 w-auto" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 45 Q30 15 50 45 Q70 15 90 45" stroke="#2E86AB" stroke-width="3" fill="none"/>
-                            <circle cx="20" cy="35" r="2" fill="#84cc16"/>
-                            <circle cx="40" cy="25" r="1.5" fill="#84cc16"/>
-                            <circle cx="60" cy="35" r="2" fill="#84cc16"/>
-                            <circle cx="80" cy="25" r="1.5" fill="#84cc16"/>
-                            <text x="110" y="25" font-family="Dancing Script" font-size="18" font-weight="700" fill="#000000">Ink Creek</text>
-                            <text x="110" y="45" font-family="Montserrat" font-size="12" font-weight="600" fill="#2E86AB">STUDIO</text>
-                        </svg>
-                    </div>
+                    <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-8 w-auto" />
                 </div>
 
                 <!-- Desktop Navigation -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="homepage_artisan_screen_printing_studio.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Home</a>
-                        <a href="portfolio_gallery_work_showcase.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Portfolio</a>
-                        <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Services</a>
-                        <a href="interactive_pricing_calculator.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Calculator</a>
-                        <a href="contact_studio_location.html" class="text-primary font-semibold px-3 py-2 rounded-md text-sm">Contact</a>
-                    </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="homepage_artisan_screen_printing_studio.html" class="nav-link">Home</a>
+                    <a href="portfolio_gallery_work_showcase.html" class="nav-link">Portfolio</a>
+                    <a href="services_capabilities_hub.html" class="nav-link">Services</a>
+                    <a href="interactive_pricing_calculator.html" class="nav-link">Calculator</a>
+                    <a href="contact_studio_location.html" class="nav-link active">Contact</a>
                 </div>
 
                 <!-- CTA Button -->
                 <div class="hidden md:block">
-                    <a href="interactive_pricing_calculator.html" class="btn-accent">Get Instant Quote</a>
+                    <a href="interactive_pricing_calculator.html" class="btn-accent">Get Quote</a>
                 </div>
 
                 <!-- Mobile menu button -->
                 <div class="md:hidden">
-                    <button type="button" class="text-text-secondary hover:text-primary p-2" onclick="toggleMobileMenu()">
+                    <button type="button" class="p-2 text-black hover:text-accent transition-colors" onclick="toggleMobileMenu()">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
                     </button>
                 </div>
             </div>
 
             <!-- Mobile Navigation Menu -->
-            <div id="mobile-menu" class="md:hidden hidden">
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
-                    <a href="homepage_artisan_screen_printing_studio.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Home</a>
-                    <a href="portfolio_gallery_work_showcase.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Portfolio</a>
-                    <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Services</a>
-                    <a href="interactive_pricing_calculator.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Calculator</a>
-                    <a href="contact_studio_location.html" class="text-primary font-semibold block px-3 py-2 rounded-md text-base">Contact</a>
-                    <a href="interactive_pricing_calculator.html" class="btn-accent block text-center mt-4">Get Instant Quote</a>
+            <div id="mobile-menu" class="md:hidden hidden border-t border-gray-100">
+                <div class="py-6 space-y-4">
+                    <a href="homepage_artisan_screen_printing_studio.html" class="block nav-link">Home</a>
+                    <a href="portfolio_gallery_work_showcase.html" class="block nav-link">Portfolio</a>
+                    <a href="services_capabilities_hub.html" class="block nav-link">Services</a>
+                    <a href="interactive_pricing_calculator.html" class="block nav-link">Calculator</a>
+                    <a href="contact_studio_location.html" class="block nav-link active">Contact</a>
+                    <a href="interactive_pricing_calculator.html" class="btn-accent w-full text-center mt-6">Get Quote</a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative py-16 bg-primary text-white overflow-hidden">
-        <div class="absolute inset-0">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Ink Creek Studio workspace in Burnaby" class="w-full h-full object-cover opacity-20" onerror="this.src='https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'; this.onerror=null;" />
-        </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl md:text-6xl font-montserrat font-bold mb-6">
-                Visit Our <span class="font-accent text-accent">Studio</span>
+    <!-- Hero Section - Clean & Direct -->
+    <section class="section bg-white">
+        <div class="container text-center">
+            <h1 class="heading-display mb-8">
+                Let's <span class="text-accent">Create</span> Together
             </h1>
-            <p class="text-xl md:text-2xl mb-8 opacity-90">
-                Located in the heart of Burnaby, ready to bring your vision to life
+            <p class="text-large max-w-2xl mx-auto mb-12">
+                Ready to bring your vision to life? Get in touch with our team of screen printing experts. We're here to help make your ideas a reality.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="tel:+16045550123" class="btn-accent text-lg px-8 py-4 inline-flex items-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                    </svg>
-                    Call Now
-                </a>
-                <button onclick="scrollToBooking()" class="bg-white text-primary px-8 py-4 rounded-lg font-montserrat font-semibold hover:bg-gray-100 transition-colors text-lg">
-                    Book Consultation
-                </button>
-            </div>
         </div>
     </section>
 
-    <!-- Quick Contact Info -->
-    <section class="py-12 bg-surface">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Phone -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-secondary rounded-full mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                        </svg>
+    <!-- Contact Section - Modern Grid Layout -->
+    <section class="section bg-white">
+        <div class="container">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                
+                <!-- Contact Form -->
+                <div class="space-y-8">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4">Send us a message</h2>
+                        <p class="text-gray-600">Fill out the form below and we'll get back to you within 24 hours.</p>
                     </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-2">Call Us</h3>
-                    <a href="tel:+16045550123" class="text-secondary hover:text-blue-700 font-semibold text-lg">(604) 555-0123</a>
-                    <p class="text-text-secondary mt-2">Mon-Fri: 9AM-6PM<br />Sat: 10AM-4PM</p>
-                </div>
-
-                <!-- Email -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 bg-accent">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-2">Email Us</h3>
-                    <a href="mailto:hello@inkcreekstudio.ca" class="text-secondary hover:text-blue-700 font-semibold">hello@inkcreekstudio.ca</a>
-                    <p class="text-text-secondary mt-2">We respond within 2 hours<br />during business hours</p>
-                </div>
-
-                <!-- Location -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-2">Visit Us</h3>
-                    <address class="text-text-primary not-italic font-semibold">
-                        123 Creative Way<br />
-                        Burnaby, BC V5A 1A1
-                    </address>
-                    <p class="text-text-secondary mt-2">Free parking available<br />Transit accessible</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Map and Studio Info -->
-    <section class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                <!-- Map -->
-                <div class="order-2 lg:order-1">
-                    <div class="bg-surface rounded-xl p-8 h-96 flex items-center justify-center">
-                        <div class="text-center">
-                            <svg class="w-16 h-16 text-secondary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                            <h3 class="text-xl font-montserrat font-semibold mb-2">Interactive Map</h3>
-                            <p class="text-text-secondary mb-4">Click to open in Google Maps</p>
-                            <a href="https://maps.google.com/?q=123+Creative+Way,+Burnaby,+BC" target="_blank" class="btn-secondary">
-                                Get Directions
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Studio Information -->
-                <div class="order-1 lg:order-2">
-                    <h2 class="text-3xl md:text-4xl font-montserrat font-bold mb-6">Visit Our Studio</h2>
-                    <p class="text-lg text-text-secondary mb-8">
-                        Experience the craft firsthand at our Burnaby studio. See our equipment in action, 
-                        browse material samples, and collaborate on your design in person.
-                    </p>
-
-                    <!-- What to Expect -->
-                    <div class="space-y-6 mb-8">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-secondary rounded-full flex items-center justify-center mr-4 mt-1">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
+                    
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                <input type="text" id="firstName" name="firstName" class="input-field" required />
                             </div>
                             <div>
-                                <h4 class="font-montserrat font-semibold mb-1">Material Samples</h4>
-                                <p class="text-text-secondary">Feel the quality of our t-shirts, hoodies, and specialty items</p>
+                                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" class="input-field" required />
                             </div>
                         </div>
-
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-secondary rounded-full flex items-center justify-center mr-4 mt-1">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-montserrat font-semibold mb-1">Design Consultation</h4>
-                                <p class="text-text-secondary">Work with our team to perfect your artwork and placement</p>
-                            </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" class="input-field" required />
                         </div>
-
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-secondary rounded-full flex items-center justify-center mr-4 mt-1">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-montserrat font-semibold mb-1">Process Tour</h4>
-                                <p class="text-text-secondary">See how we create your custom apparel from start to finish</p>
-                            </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="input-field" />
                         </div>
-
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-secondary rounded-full flex items-center justify-center mr-4 mt-1">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        
+                        <div>
+                            <label for="projectType" class="block text-sm font-medium text-gray-700 mb-2">Project Type</label>
+                            <select id="projectType" name="projectType" class="input-field">
+                                <option value>Select a project type</option>
+                                <option value="business-branding">Business Branding</option>
+                                <option value="event-merchandise">Event Merchandise</option>
+                                <option value="corporate-apparel">Corporate Apparel</option>
+                                <option value="personal-project">Personal Project</option>
+                                <option value="fundraiser">Fundraiser</option>
+                                <option value="artist-collaboration">Artist Collaboration</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="quantity" class="block text-sm font-medium text-gray-700 mb-2">Estimated Quantity</label>
+                            <select id="quantity" name="quantity" class="input-field">
+                                <option value>Select quantity range</option>
+                                <option value="1-25">1-25 pieces</option>
+                                <option value="26-50">26-50 pieces</option>
+                                <option value="51-100">51-100 pieces</option>
+                                <option value="101-250">101-250 pieces</option>
+                                <option value="251-500">251-500 pieces</option>
+                                <option value="500+">500+ pieces</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="timeline" class="block text-sm font-medium text-gray-700 mb-2">Timeline</label>
+                            <select id="timeline" name="timeline" class="input-field">
+                                <option value>When do you need this?</option>
+                                <option value="rush">Rush (1-3 days)</option>
+                                <option value="standard">Standard (1-2 weeks)</option>
+                                <option value="flexible">Flexible (2-4 weeks)</option>
+                                <option value="planning">Just planning ahead</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Project Details</label>
+                            <textarea id="message" name="message" rows="4" class="input-field" placeholder="Tell us about your project, design ideas, special requirements, or any questions you have..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-accent w-full">Send Message</button>
+                    </form>
+                </div>
+                
+                <!-- Contact Info & Studio Details -->
+                <div class="space-y-12">
+                    
+                    <!-- Studio Info -->
+                    <div class="card">
+                        <h3 class="text-xl font-bold mb-6">Visit Our Studio</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-accent mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
+                                <div>
+                                    <p class="font-semibold">Address</p>
+                                    <p class="text-gray-600">123 Creative Way<br />Burnaby, BC V5A 1A1</p>
+                                </div>
                             </div>
-                            <div>
-                                <h4 class="font-montserrat font-semibold mb-1">Instant Quotes</h4>
-                                <p class="text-text-secondary">Get accurate pricing and timeline estimates on the spot</p>
+                            
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-accent mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                                <div>
+                                    <p class="font-semibold">Phone</p>
+                                    <p class="text-gray-600">(604) 555-0123</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-accent mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <div>
+                                    <p class="font-semibold">Email</p>
+                                    <p class="text-gray-600">hello@inkcreekstudio.ca</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-
+                    
                     <!-- Studio Hours -->
-                    <div class="bg-surface rounded-lg p-6">
-                        <h4 class="font-montserrat font-semibold mb-4 flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            Studio Hours
-                        </h4>
-                        <div class="space-y-2 text-sm">
+                    <div class="card">
+                        <h3 class="text-xl font-bold mb-6">Studio Hours</h3>
+                        <div class="space-y-3">
                             <div class="flex justify-between">
-                                <span class="text-text-secondary">Monday - Friday</span>
-                                <span class="font-semibold">9:00 AM - 6:00 PM</span>
+                                <span class="font-medium">Monday - Friday</span>
+                                <span class="text-gray-600">9:00 AM - 6:00 PM</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-text-secondary">Saturday</span>
-                                <span class="font-semibold">10:00 AM - 4:00 PM</span>
+                                <span class="font-medium">Saturday</span>
+                                <span class="text-gray-600">10:00 AM - 4:00 PM</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-text-secondary">Sunday</span>
-                                <span class="font-semibold">Closed</span>
+                                <span class="font-medium">Sunday</span>
+                                <span class="text-gray-600">Closed</span>
                             </div>
                         </div>
-                        <p class="text-xs text-text-secondary mt-4">
-                            * Extended hours available for rush orders by appointment
-                        </p>
+                        <div class="mt-6 p-4 bg-gray-50 rounded-xl">
+                            <p class="text-sm text-gray-600">
+                                <strong>Note:</strong> We recommend scheduling an appointment for consultations to ensure we can give you our full attention.
+                            </p>
+                        </div>
                     </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold">Quick Actions</h3>
+                        <div class="space-y-3">
+                            <a href="interactive_pricing_calculator.html" class="btn-primary w-full text-center">Get Instant Quote</a>
+                            <a href="portfolio_gallery_work_showcase.html" class="btn-secondary w-full text-center">View Portfolio</a>
+                            <a href="services_capabilities_hub.html" class="btn-ghost w-full text-center">Our Services</a>
+                        </div>
+                    </div>
+                    
                 </div>
+                
             </div>
         </div>
     </section>
 
-    <!-- Contact Form Section -->
-    <section id="contact-form" class="py-16 bg-surface">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Map Section - Clean Integration -->
+    <section class="section bg-gray-50">
+        <div class="container">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-montserrat font-bold mb-4">Get In Touch</h2>
-                <p class="text-xl text-text-secondary">Ready to start your project? We'd love to hear from you.</p>
+                <h2 class="text-3xl font-bold mb-4">Find Our Studio</h2>
+                <p class="text-gray-600">Located in the heart of Burnaby, easily accessible from all Lower Mainland communities.</p>
             </div>
-
-            <div class="card">
-                <form class="space-y-6" onsubmit="handleFormSubmit(event)">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="firstName" class="block text-sm font-montserrat font-semibold text-text-primary mb-2">First Name *</label>
-                            <input type="text" id="firstName" name="firstName" required class="input-field" placeholder="Your first name" />
-                        </div>
-                        <div>
-                            <label for="lastName" class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Last Name *</label>
-                            <input type="text" id="lastName" name="lastName" required class="input-field" placeholder="Your last name" />
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="email" class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Email Address *</label>
-                            <input type="email" id="email" name="email" required class="input-field" placeholder="your.email@example.com" />
-                        </div>
-                        <div>
-                            <label for="phone" class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" class="input-field" placeholder="(604) 555-0123" />
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="company" class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Company/Organization</label>
-                        <input type="text" id="company" name="company" class="input-field" placeholder="Your company name (optional)" />
-                    </div>
-
-                    <div>
-                        <label for="inquiryType" class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Inquiry Type *</label>
-                        <select id="inquiryType" name="inquiryType" required class="input-field">
-                            <option value>Select inquiry type</option>
-                            <option value="quote">Quote Request</option>
-                            <option value="consultation">Design Consultation</option>
-                            <option value="rush">Rush Order</option>
-                            <option value="reorder">Reorder Previous Design</option>
-                            <option value="general">General Question</option>
-                            <option value="partnership">Partnership Inquiry</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="projectDetails" class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Project Details</label>
-                        <textarea id="projectDetails" name="projectDetails" rows="5" class="input-field" placeholder="Tell us about your project - item type, quantity, colors, timeline, etc."></textarea>
-                    </div>
-
-                    <div>
-                        <label for="timeline" class="block text-sm font-montserrat font-semibold text-text-primary mb-2">When do you need this completed?</label>
-                        <select id="timeline" name="timeline" class="input-field">
-                            <option value>Select timeline</option>
-                            <option value="asap">ASAP (Rush Order)</option>
-                            <option value="1-week">Within 1 week</option>
-                            <option value="2-weeks">Within 2 weeks</option>
-                            <option value="1-month">Within 1 month</option>
-                            <option value="flexible">Flexible timeline</option>
-                        </select>
-                    </div>
-
-                    <div class="flex items-center">
-                        <input type="checkbox" id="newsletter" name="newsletter" class="w-4 h-4 text-secondary border-gray-300 rounded focus:ring-secondary" />
-                        <label for="newsletter" class="ml-2 text-sm text-text-secondary">
-                            I'd like to receive updates about new services and special offers
-                        </label>
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <button type="submit" class="btn-primary flex-1 text-center">
-                            Send Message
-                        </button>
-                        <a href="interactive_pricing_calculator.html" class="btn-secondary flex-1 text-center">
-                            Get Instant Quote
-                        </a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Service Area & Delivery -->
-    <section class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-montserrat font-bold mb-4">Service Area & Delivery</h2>
-                <p class="text-xl text-text-secondary">Proudly serving Burnaby and the Greater Vancouver area</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Pickup -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-success rounded-full mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h1.87a2 2 0 011.847 1.318l.516 1.682H19a2 2 0 010 4H5.236a2 2 0 01-1.789-1.106L3 10a2 2 0 01-2-2V6a2 2 0 012-2h2.236z"/>
+            
+            <div class="bg-white rounded-2xl overflow-hidden shadow-subtle">
+                <!-- Map Placeholder -->
+                <div class="h-96 bg-gray-200 flex items-center justify-center">
+                    <div class="text-center">
+                        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
+                        <p class="text-gray-500 font-medium">Interactive Map</p>
+                        <p class="text-sm text-gray-400">Google Maps integration would be placed here</p>
                     </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-4">Studio Pickup</h3>
-                    <p class="text-text-secondary mb-4">Free pickup at our Burnaby studio. We'll notify you when your order is ready.</p>
-                    <ul class="text-sm text-text-secondary space-y-1">
-                        <li>• No additional cost</li>
-                        <li>• Quality inspection included</li>
-                        <li>• Flexible pickup hours</li>
-                    </ul>
                 </div>
-
-                <!-- Local Delivery -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-secondary rounded-full mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-4">Local Delivery</h3>
-                    <p class="text-text-secondary mb-4">Convenient delivery within Burnaby and surrounding areas.</p>
-                    <ul class="text-sm text-text-secondary space-y-1">
-                        <li>• Burnaby: $15</li>
-                        <li>• Vancouver: $20</li>
-                        <li>• Richmond/New West: $25</li>
-                    </ul>
-                </div>
-
-                <!-- Shipping -->
-                <div class="text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-accent rounded-full mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-montserrat font-semibold mb-4">Canada-Wide Shipping</h3>
-                    <p class="text-text-secondary mb-4">Professional packaging and reliable shipping across Canada.</p>
-                    <ul class="text-sm text-text-secondary space-y-1">
-                        <li>• BC: $12-18</li>
-                        <li>• Canada: $18-35</li>
-                        <li>• Tracking included</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Service Area Map -->
-            <div class="mt-12 bg-surface rounded-xl p-8">
-                <h3 class="text-2xl font-montserrat font-bold text-center mb-6">Primary Service Areas</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                    <div class="p-4">
-                        <h4 class="font-montserrat font-semibold text-secondary">Burnaby</h4>
-                        <p class="text-sm text-text-secondary">Home base</p>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-montserrat font-semibold text-secondary">Vancouver</h4>
-                        <p class="text-sm text-text-secondary">20 min delivery</p>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-montserrat font-semibold text-secondary">Richmond</h4>
-                        <p class="text-sm text-text-secondary">25 min delivery</p>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-montserrat font-semibold text-secondary">New Westminster</h4>
-                        <p class="text-sm text-text-secondary">15 min delivery</p>
+                
+                <!-- Directions Info -->
+                <div class="p-8 border-t border-gray-100">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold mb-2">Free Parking</h3>
+                            <p class="text-gray-600 text-sm">Ample parking available right in front of our studio</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold mb-2">Transit Accessible</h3>
+                            <p class="text-gray-600 text-sm">Just 2 blocks from Brentwood SkyTrain station</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold mb-2">Walk-ins Welcome</h3>
+                            <p class="text-gray-600 text-sm">Drop by anytime during business hours for quick questions</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -423,166 +289,66 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="py-16 bg-surface">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-montserrat font-bold mb-4">Frequently Asked Questions</h2>
-                <p class="text-xl text-text-secondary">Quick answers to common questions</p>
+    <section class="section bg-white">
+        <div class="container">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Quick answers to common questions about our services and process.</p>
             </div>
-
-            <div class="space-y-6">
-                <!-- FAQ Item 1 -->
+            
+            <div class="max-w-3xl mx-auto space-y-8">
+                
                 <div class="card">
-                    <button class="w-full text-left flex justify-between items-center" onclick="toggleFAQ(1)">
-                        <h3 class="text-lg font-montserrat font-semibold">What are your typical turnaround times?</h3>
-                        <svg id="faq-icon-1" class="w-5 h-5 text-secondary transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    <div id="faq-content-1" class="hidden mt-4 text-text-secondary">
-                        <p>Standard orders: 5-7 business days. Rush orders: 1-3 business days (additional fees apply). Large orders (500+ pieces) may require 7-10 business days. We'll provide exact timelines when you submit your quote request.</p>
-                    </div>
+                    <h3 class="font-bold text-lg mb-3">How quickly can you complete an order?</h3>
+                    <p class="text-gray-600">Standard turnaround is 7-10 business days. Rush orders (1-3 days) are available for an additional fee. Timeline depends on quantity, complexity, and current workload.</p>
                 </div>
-
-                <!-- FAQ Item 2 -->
+                
                 <div class="card">
-                    <button class="w-full text-left flex justify-between items-center" onclick="toggleFAQ(2)">
-                        <h3 class="text-lg font-montserrat font-semibold">Do you offer design services?</h3>
-                        <svg id="faq-icon-2" class="w-5 h-5 text-secondary transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    <div id="faq-content-2" class="hidden mt-4 text-text-secondary">
-                        <p>Yes! We offer design consultation, artwork cleanup, and custom design creation. Basic design adjustments are included with orders. Complex custom designs start at $50. We can work with your existing artwork or create something completely new.</p>
-                    </div>
+                    <h3 class="font-bold text-lg mb-3">What's the minimum order quantity?</h3>
+                    <p class="text-gray-600">We don't have a strict minimum, but orders under 12 pieces may have higher per-unit costs due to setup fees. We're happy to work with you on small personal projects!</p>
                 </div>
-
-                <!-- FAQ Item 3 -->
+                
                 <div class="card">
-                    <button class="w-full text-left flex justify-between items-center" onclick="toggleFAQ(3)">
-                        <h3 class="text-lg font-montserrat font-semibold">What's your minimum order quantity?</h3>
-                        <svg id="faq-icon-3" class="w-5 h-5 text-secondary transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    <div id="faq-content-3" class="hidden mt-4 text-text-secondary">
-                        <p>Our minimum order is 12 pieces for screen printing. For smaller quantities (1-11 pieces), we offer heat transfer vinyl or direct-to-garment printing. Digital printing options are available for orders under 12 pieces with different pricing.</p>
-                    </div>
+                    <h3 class="font-bold text-lg mb-3">Do you provide design services?</h3>
+                    <p class="text-gray-600">Yes! Our in-house design team can help create or refine your artwork. We also offer design consultations to optimize your existing artwork for screen printing.</p>
                 </div>
-
-                <!-- FAQ Item 4 -->
+                
                 <div class="card">
-                    <button class="w-full text-left flex justify-between items-center" onclick="toggleFAQ(4)">
-                        <h3 class="text-lg font-montserrat font-semibold">Can I see samples before placing a large order?</h3>
-                        <svg id="faq-icon-4" class="w-5 h-5 text-secondary transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    <div id="faq-content-4" class="hidden mt-4 text-text-secondary">
-                        <p>Absolutely! We offer sample printing for $25-35 per piece (credited toward your final order). Visit our studio to see material samples, or we can create a sample with your design. This is especially recommended for orders over 100 pieces.</p>
-                    </div>
+                    <h3 class="font-bold text-lg mb-3">What file formats do you accept?</h3>
+                    <p class="text-gray-600">We prefer vector files (AI, EPS, SVG) for the best quality, but we can work with high-resolution PNG, PDF, or JPG files. We'll let you know if we need any adjustments.</p>
                 </div>
-
-                <!-- FAQ Item 5 -->
+                
                 <div class="card">
-                    <button class="w-full text-left flex justify-between items-center" onclick="toggleFAQ(5)">
-                        <h3 class="text-lg font-montserrat font-semibold">What file formats do you accept?</h3>
-                        <svg id="faq-icon-5" class="w-5 h-5 text-secondary transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    <div id="faq-content-5" class="hidden mt-4 text-text-secondary">
-                        <p>We prefer vector files (AI, EPS, PDF) for best quality. We also accept high-resolution PNG, JPG, and PSD files (300 DPI minimum). If you only have a low-resolution file, we can often recreate it as a vector for a small additional fee.</p>
-                    </div>
+                    <h3 class="font-bold text-lg mb-3">Do you offer delivery in the Lower Mainland?</h3>
+                    <p class="text-gray-600">Yes, we offer delivery throughout the Lower Mainland for orders over $200. Pickup is always free, and we're conveniently located with free parking.</p>
                 </div>
+                
             </div>
         </div>
     </section>
 
-    <!-- Emergency Contact -->
-    <section class="py-12 bg-warning text-gray-900">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-2xl font-montserrat font-bold mb-4">Need Rush Service?</h2>
-            <p class="text-lg mb-6">For urgent orders and emergency printing needs, call our rush line:</p>
-            <a href="tel:+16045550124" class="inline-flex items-center bg-gray-900 text-white px-8 py-4 rounded-lg font-montserrat font-semibold hover:bg-gray-800 transition-colors text-lg">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                </svg>
-                Rush Line: (604) 555-0124
-            </a>
-            <p class="text-sm mt-4 opacity-75">Available 24/7 for true emergencies • Additional fees apply</p>
-        </div>
-    </section>
-
-    <!-- Social Media Integration -->
-    <section class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-montserrat font-bold mb-4">Stay Connected</h2>
-                <p class="text-xl text-text-secondary">Follow our journey and see our latest work</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <!-- Social Links -->
-                <div class="text-center md:text-left">
-                    <h3 class="text-2xl font-montserrat font-semibold mb-6">Follow Us</h3>
-                    <div class="space-y-4">
-                        <a href="https://instagram.com/inkcreekstudio" target="_blank" class="flex items-center justify-center md:justify-start p-4 bg-surface rounded-lg hover:bg-gray-100 transition-colors">
-                            <svg class="w-8 h-8 text-secondary mr-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.004 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323C5.902 8.198 7.053 7.708 8.35 7.708s2.448.49 3.323 1.297c.876.876 1.366 2.027 1.366 3.324s-.49 2.448-1.366 3.323c-.875.876-2.026 1.366-3.323 1.366zm7.718 0c-1.297 0-2.448-.49-3.323-1.297-.876-.875-1.366-2.026-1.366-3.323s.49-2.448 1.366-3.323c.875-.876 2.026-1.366 3.323-1.366s2.448.49 3.323 1.366c.876.875 1.366 2.026 1.366 3.323s-.49 2.448-1.366 3.323c-.875.876-2.026 1.366-3.323 1.366z"/>
-                            </svg>
-                            <div>
-                                <h4 class="font-montserrat font-semibold">@inkcreekstudio</h4>
-                                <p class="text-sm text-text-secondary">Behind-the-scenes & finished work</p>
-                            </div>
-                        </a>
-
-                        <a href="https://facebook.com/inkcreekstudio" target="_blank" class="flex items-center justify-center md:justify-start p-4 bg-surface rounded-lg hover:bg-gray-100 transition-colors">
-                            <svg class="w-8 h-8 text-secondary mr-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                            <div>
-                                <h4 class="font-montserrat font-semibold">Ink Creek Studio</h4>
-                                <p class="text-sm text-text-secondary">Community updates & events</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Recent Posts Preview -->
-                <div>
-                    <h3 class="text-2xl font-montserrat font-semibold mb-6 text-center">Latest Posts</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="aspect-square overflow-hidden rounded-lg">
-                            <img src="https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2" alt="Recent Instagram post" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=300&h=300&auto=format&fit=crop'; this.onerror=null;" />
-                        </div>
-                        <div class="aspect-square overflow-hidden rounded-lg">
-                            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=300&h=300&auto=format&fit=crop" alt="Recent Instagram post" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" onerror="this.src='https://images.pixabay.com/photo/2017/08/06/12/06/people-2591874_300.jpg'; this.onerror=null;" />
-                        </div>
-                    </div>
-                </div>
+    <!-- CTA Section -->
+    <section class="section bg-black text-white">
+        <div class="container-sm text-center">
+            <h2 class="heading-large text-white mb-6">Ready to Start Your Project?</h2>
+            <p class="text-large text-gray-300 mb-12">Don't see what you need above? Get in touch and let's discuss your unique project requirements.</p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="interactive_pricing_calculator.html" class="btn-accent">Get Quote Now</a>
+                <a href="tel:+16045550123" class="bg-white text-black px-8 py-4 rounded-xl font-medium transition-all duration-300 hover:bg-gray-100">Call (604) 555-0123</a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Modern Footer -->
+    <footer class="bg-white border-t border-gray-100 py-16">
+        <div class="container">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Company Info -->
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center mb-4">
-                        <svg class="h-8 w-auto mr-3" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 45 Q30 15 50 45 Q70 15 90 45" stroke="#2E86AB" stroke-width="3" fill="none"/>
-                            <circle cx="20" cy="35" r="2" fill="#84cc16"/>
-                            <circle cx="40" cy="25" r="1.5" fill="#84cc16"/>
-                            <circle cx="60" cy="35" r="2" fill="#84cc16"/>
-                            <circle cx="80" cy="25" r="1.5" fill="#84cc16"/>
-                            <text x="110" y="25" font-family="Dancing Script" font-size="18" font-weight="700" fill="#FFFFFF">Ink Creek</text>
-                            <text x="110" y="45" font-family="Montserrat" font-size="12" font-weight="600" fill="#2E86AB">STUDIO</text>
-                        </svg>
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-6">
+                        <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-8 w-auto" />
                     </div>
-                    <p class="text-gray-300 mb-4">Burnaby's premier custom screen printing studio. Bringing your vision to life with quality, creativity, and local expertise.</p>
+                    <p class="text-gray-600 mb-6 max-w-md">Burnaby's premier custom screen printing studio. Bringing your vision to life with quality, creativity, and local expertise.</p>
                     <div class="flex space-x-4">
                         <a href="https://instagram.com/inkcreekstudio" class="text-gray-400 hover:text-accent transition-colors">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -598,20 +364,20 @@
                 </div>
 
                 <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-montserrat font-semibold mb-4">Quick Links</h3>
+                <div class="footer-section">
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="portfolio_gallery_work_showcase.html" class="text-gray-300 hover:text-accent transition-colors">Portfolio</a></li>
-                        <li><a href="services_capabilities_hub.html" class="text-gray-300 hover:text-accent transition-colors">Services</a></li>
-                        <li><a href="interactive_pricing_calculator.html" class="text-gray-300 hover:text-accent transition-colors">Pricing Calculator</a></li>
-                        <li><a href="contact_studio_location.html" class="text-gray-300 hover:text-accent transition-colors">Contact Us</a></li>
+                        <li><a href="homepage_artisan_screen_printing_studio.html" class="footer-link">Home</a></li>
+                        <li><a href="portfolio_gallery_work_showcase.html" class="footer-link">Portfolio</a></li>
+                        <li><a href="services_capabilities_hub.html" class="footer-link">Services</a></li>
+                        <li><a href="interactive_pricing_calculator.html" class="footer-link">Calculator</a></li>
                     </ul>
                 </div>
 
                 <!-- Contact Info -->
-                <div>
-                    <h3 class="text-lg font-montserrat font-semibold mb-4">Contact</h3>
-                    <ul class="space-y-2 text-gray-300">
+                <div class="footer-section">
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-600">
                         <li>123 Creative Way</li>
                         <li>Burnaby, BC V5A 1A1</li>
                         <li>(604) 555-0123</li>
@@ -620,7 +386,7 @@
                 </div>
             </div>
 
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <div class="border-t border-gray-100 mt-12 pt-8 text-center text-gray-500">
                 <p>&copy; 2025 Ink Creek Studio. All Rights Reserved.</p>
             </div>
         </div>
@@ -633,44 +399,44 @@
             mobileMenu.classList.toggle('hidden');
         }
 
-        // Smooth scroll to booking section
-        function scrollToBooking() {
-            document.getElementById('contact-form').scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-
-        // FAQ toggle functionality
-        function toggleFAQ(index) {
-            const content = document.getElementById(`faq-content-${index}`);
-            const icon = document.getElementById(`faq-icon-${index}`);
-            
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                icon.style.transform = 'rotate(180deg)';
-            } else {
-                content.classList.add('hidden');
-                icon.style.transform = 'rotate(0deg)';
-            }
-        }
-
-        // Form submission handler
-        function handleFormSubmit(event) {
-            event.preventDefault();
+        // Form submission handling
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
             
             // Get form data
-            const formData = new FormData(event.target);
+            const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
             
-            // Show success message
-            alert('Thank you for your message! We\'ll get back to you within 2 hours during business hours.');
+            // Simple validation
+            if (!data.firstName || !data.lastName || !data.email) {
+                alert('Please fill in all required fields.');
+                return;
+            }
             
-            // Reset form
-            event.target.reset();
+            // Simulate form submission
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
             
-            // In a real application, you would send this data to your server
-            console.log('Form submission:', data);
-        }
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            
+            setTimeout(() => {
+                alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+                e.target.reset();
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }, 1500);
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 0) {
+                header.classList.add('shadow-subtle');
+            } else {
+                header.classList.remove('shadow-subtle');
+            }
+        });
 
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -684,24 +450,6 @@
                     });
                 }
             });
-        });
-
-        // Add loading animation to form submission
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-            if (form) {
-                form.addEventListener('submit', function() {
-                    const submitButton = form.querySelector('button[type="submit"]');
-                    const originalText = submitButton.textContent;
-                    submitButton.textContent = 'Sending...';
-                    submitButton.disabled = true;
-                    
-                    setTimeout(() => {
-                        submitButton.textContent = originalText;
-                        submitButton.disabled = false;
-                    }, 2000);
-                });
-            }
         });
     </script>
 <script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
