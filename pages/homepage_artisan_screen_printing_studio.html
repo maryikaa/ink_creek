@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ink Creek Studio - Burnaby's Premier Custom Screen Printing Studio</title>
+    <title><p class="text-white">Ink Creek Studio - Burnaby's Premier Custom Screen Printing Studio</p></title>
     <meta name="description" content="Your Vision, Our Craft. Professional custom screen printing services in Burnaby, BC. Quality guaranteed, fast turnaround, local expertise." />
     <link rel="stylesheet" href="../css/main.css" />
 <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Finkcreek7691back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
 </head>
 <body class="bg-white text-black">
     <!-- Modern Navigation Header -->
-    <header class="bg-white border-b border-gray-100 sticky top-0 z-50 backdrop-blur-sm">
-        <nav class="container">
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <nav class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-8 w-auto" />
+                    <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-16 w-auto" />
                 </div>
 
                 <!-- Desktop Navigation -->
@@ -44,7 +44,7 @@
 
             <!-- Mobile Navigation Menu -->
             <div id="mobile-menu" class="md:hidden hidden border-t border-gray-100">
-                <div class="py-6 space-y-4">
+                <div class="py-6 space-y-4 px-4 sm:px-6 lg:px-8">
                     <a href="homepage_artisan_screen_printing_studio.html" class="block nav-link active">Home</a>
                     <a href="portfolio_gallery_work_showcase.html" class="block nav-link">Portfolio</a>
                     <a href="services_capabilities_hub.html" class="block nav-link">Services</a>
@@ -56,29 +56,19 @@
         </nav>
     </header>
 
-<!-- Hero Section - Full Screen with Background Image -->
-<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gray-900">
-    <!-- Background Image -->
-    <div class="absolute inset-0 z-0">
-        <img src="../assets/images/head_image.jpg" alt="Ink Creek Studio Background" class="w-full h-full object-cover" />
-    </div>
-    
-    <!-- Semi-transparent White Overlay (30%) -->
-    <div class="absolute inset-0 bg-white bg-opacity-60 z-10"></div>
-    
+<section class="hero relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="hero__overlay"></div>
+
     <!-- Hero Content -->
     <div class="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <!-- Bold Sans-serif Headline -->
+        <!-- Удалено: <img ...> — картинка теперь фоном секции -->
         <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-black mb-6 leading-tight">
             Your Vision, <br class="hidden sm:block" />Our Craft
         </h1>
-        
-        <!-- Smaller Subtitle -->
         <p class="text-lg md:text-xl lg:text-2xl text-black mb-12 max-w-3xl mx-auto leading-relaxed">
             Burnaby's premier custom screen printing studio. We bring your ideas to life with unmatched quality, creativity, and local expertise.
         </p>
-        
-        <!-- Call-to-Action Button with Accent Green and Hover Animation -->
+
         <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <a href="interactive_pricing_calculator.html" class="inline-block px-8 py-4 bg-accent text-black font-bold text-lg rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-opacity-90 transform">
                 Get Instant Quote
@@ -88,7 +78,7 @@
             </a>
         </div>
     </div>
-    
+
     <!-- Scroll Indicator -->
     <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
         <div class="animate-bounce">
@@ -98,6 +88,7 @@
         </div>
     </div>
 </section>
+
 
 
     <!-- Value Propositions - Clean Grid -->
@@ -200,7 +191,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div class="space-y-6">
                     <div class="image-container">
-                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" alt="Custom business apparel" class="image-hover w-full h-80 object-cover" onerror="this.src='https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=800'; this.onerror=null;" />
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" alt="Custom business apparel" class="image-hover w-full h-80 object-cover" onerror="this.src='../assets/images/head_image.jpg'; this.onerror=null;" />
                     </div>
                     <div>
                         <h3 class="text-xl font-bold mb-2">Local Business Branding</h3>
@@ -270,7 +261,7 @@
     </section>
 
     <!-- CTA Section - Bold & Simple -->
-    <section class="section bg-black text-white">
+    <section class="section text-white" style="background-color: #9174a4;">
         <div class="container-sm text-center">
             <h2 class="heading-large text-white mb-6">Ready to Bring Your Vision to Life?</h2>
             <p class="text-large text-gray-300 mb-12">Join hundreds of satisfied customers who trust Ink Creek Studio for their custom apparel needs.</p>
@@ -320,16 +311,17 @@
                 <div class="footer-section">
                     <h3 class="font-semibold mb-4">Contact</h3>
                     <ul class="space-y-2 text-gray-600">
-                        <li>123 Creative Way</li>
-                        <li>Burnaby, BC V5A 1A1</li>
-                        <li>(604) 555-0123</li>
-                        <li>hello@inkcreekstudio.ca</li>
+                        <li>3051 Underhill Ave,</li>
+                        <li>Burnaby, BC V5A 3C2</li>
+                        <li>(236) 591-70-60</li>
+                         <li>inkcreekprint@gmail.com</li><a href="mailto:inkcreekprint@gmail.com" class="nav-link">Email Us</a>
+                        
                     </ul>
                 </div>
             </div>
 
             <div class="border-t border-gray-100 mt-12 pt-8 text-center text-gray-500">
-                <p>&copy; 2025 Ink Creek Studio. All Rights Reserved.</p>
+                <p>&copy; 2026 Ink Creek Studio. All Rights Reserved.</p>
             </div>
         </div>
     </footer>

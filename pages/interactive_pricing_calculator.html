@@ -10,22 +10,12 @@
 </head>
 <body class="bg-background text-text-primary">
     <!-- Navigation Header -->
-    <header class="bg-white shadow-card sticky top-0 z-50">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <nav class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <svg class="h-10 w-auto" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 45 Q30 15 50 45 Q70 15 90 45" stroke="#2E86AB" stroke-width="3" fill="none"/>
-                            <circle cx="20" cy="35" r="2" fill="#F18F01"/>
-                            <circle cx="40" cy="25" r="1.5" fill="#F18F01"/>
-                            <circle cx="60" cy="35" r="2" fill="#F18F01"/>
-                            <circle cx="80" cy="25" r="1.5" fill="#F18F01"/>
-                            <text x="110" y="25" font-family="Dancing Script" font-size="18" font-weight="700" fill="#000000">Ink Creek</text>
-                            <text x="110" y="45" font-family="Montserrat" font-size="12" font-weight="600" fill="#2E86AB">STUDIO</text>
-                        </svg>
-                    </div>
+                    <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-16 w-auto" />
                 </div>
 
                 <!-- Desktop Navigation -->
@@ -55,8 +45,8 @@
             </div>
 
             <!-- Mobile Navigation Menu -->
-            <div id="mobile-menu" class="md:hidden hidden">
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+            <div id="mobile-menu" class="md:hidden hidden border-t border-gray-100">
+                <div class="py-6 space-y-4 px-4 sm:px-6 lg:px-8 bg-white">
                     <a href="homepage_artisan_screen_printing_studio.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Home</a>
                     <a href="portfolio_gallery_work_showcase.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Portfolio</a>
                     <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Services</a>
@@ -72,7 +62,7 @@
     <section class="bg-surface py-12">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-4xl md:text-5xl font-montserrat font-bold mb-6">
-                Get Your <span class="font-accent text-accent">Instant Quote</span>
+                Get Your Instant Quote
             </h1>
             <p class="text-xl text-text-secondary mb-8">
                 Transparent pricing for your custom screen printing project. No hidden fees, no surprises.
@@ -129,7 +119,7 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                 <!-- T-Shirts -->
                                 <div class="garment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectGarment('tshirt', 'T-Shirts', 8.50)">
-                                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=300&h=300&auto=format&fit=crop" alt="Custom T-Shirts" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2'; this.onerror=null;" />
+                                    <img src="../assets/images/t-shirt_calculator_page.jpg" alt="Custom T-Shirts" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2'; this.onerror=null;" />
                                     <h3 class="font-montserrat font-semibold mb-2">T-Shirts</h3>
                                     <p class="text-sm text-text-secondary mb-2">100% Cotton, Premium Quality</p>
                                     <p class="text-accent font-semibold">Starting at $8.50</p>
@@ -137,7 +127,7 @@
 
                                 <!-- Hoodies -->
                                 <div class="garment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectGarment('hoodie', 'Hoodies', 24.00)">
-                                    <img src="https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2" alt="Custom Hoodies" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=300&h=300&auto=format&fit=crop'; this.onerror=null;" />
+                                    <img src="../assets/images/hoodie_calculator_page.jpg" alt="Custom Hoodies" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=300&h=300&auto=format&fit=crop'; this.onerror=null;" />
                                     <h3 class="font-montserrat font-semibold mb-2">Hoodies</h3>
                                     <p class="text-sm text-text-secondary mb-2">Cotton Blend, Fleece Lined</p>
                                     <p class="text-accent font-semibold">Starting at $24.00</p>
@@ -145,7 +135,7 @@
 
                                 <!-- Polo Shirts -->
                                 <div class="garment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectGarment('polo', 'Polo Shirts', 16.50)">
-                                    <img src="https://images.pixabay.com/photo/2016/03/27/19/43/fashion-1283863_1280.jpg" alt="Custom Polo Shirts" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=300&h=300&auto=format&fit=crop'; this.onerror=null;" />
+                                    <img src="../assets/images/polo_calculator_page.jpg" alt="Custom Polo Shirts" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=300&h=300&auto=format&fit=crop'; this.onerror=null;" />
                                     <h3 class="font-montserrat font-semibold mb-2">Polo Shirts</h3>
                                     <p class="text-sm text-text-secondary mb-2">Professional Cotton Pique</p>
                                     <p class="text-accent font-semibold">Starting at $16.50</p>
@@ -153,7 +143,7 @@
 
                                 <!-- Tank Tops -->
                                 <div class="garment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectGarment('tank', 'Tank Tops', 7.25)">
-                                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=300&h=300&auto=format&fit=crop" alt="Custom Tank Tops" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2'; this.onerror=null;" />
+                                    <img src="../assets/images/top_calculator_page.jpg" alt="Custom Tank Tops" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2'; this.onerror=null;" />
                                     <h3 class="font-montserrat font-semibold mb-2">Tank Tops</h3>
                                     <p class="text-sm text-text-secondary mb-2">Lightweight Cotton Blend</p>
                                     <p class="text-accent font-semibold">Starting at $7.25</p>
@@ -161,7 +151,7 @@
 
                                 <!-- Tote Bags -->
                                 <div class="garment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectGarment('tote', 'Tote Bags', 5.50)">
-                                    <img src="https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2" alt="Custom Tote Bags" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.pixabay.com/photo/2017/08/06/12/06/people-2591874_400.jpg'; this.onerror=null;" />
+                                    <img src="../assets/images/bag_calculator_page.jpg" alt="Custom Tote Bags" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.pixabay.com/photo/2017/08/06/12/06/people-2591874_400.jpg'; this.onerror=null;" />
                                     <h3 class="font-montserrat font-semibold mb-2">Tote Bags</h3>
                                     <p class="text-sm text-text-secondary mb-2">Durable Canvas Material</p>
                                     <p class="text-accent font-semibold">Starting at $5.50</p>
@@ -169,7 +159,7 @@
 
                                 <!-- Long Sleeve -->
                                 <div class="garment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectGarment('longsleeve', 'Long Sleeve', 12.75)">
-                                    <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=300&h=300&auto=format&fit=crop" alt="Custom Long Sleeve Shirts" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2'; this.onerror=null;" />
+                                    <img src="../assets/images/longsleeve_calculator_page.jpg" alt="Custom Long Sleeve Shirts" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2'; this.onerror=null;" />
                                     <h3 class="font-montserrat font-semibold mb-2">Long Sleeve</h3>
                                     <p class="text-sm text-text-secondary mb-2">Comfortable Cotton Blend</p>
                                     <p class="text-accent font-semibold">Starting at $12.75</p>
@@ -590,24 +580,16 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   <!-- Modern Footer -->
+    <footer class="bg-white border-t border-gray-100 py-16">
+        <div class="container">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Company Info -->
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center mb-4">
-                        <svg class="h-8 w-auto mr-3" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 45 Q30 15 50 45 Q70 15 90 45" stroke="#2E86AB" stroke-width="3" fill="none"/>
-                            <circle cx="20" cy="35" r="2" fill="#F18F01"/>
-                            <circle cx="40" cy="25" r="1.5" fill="#F18F01"/>
-                            <circle cx="60" cy="35" r="2" fill="#F18F01"/>
-                            <circle cx="80" cy="25" r="1.5" fill="#F18F01"/>
-                            <text x="110" y="25" font-family="Dancing Script" font-size="18" font-weight="700" fill="#FFFFFF">Ink Creek</text>
-                            <text x="110" y="45" font-family="Montserrat" font-size="12" font-weight="600" fill="#2E86AB">STUDIO</text>
-                        </svg>
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-6">
+                        <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-8 w-auto" />
                     </div>
-                    <p class="text-gray-300 mb-4">Burnaby's premier custom screen printing studio. Bringing your vision to life with quality, creativity, and local expertise.</p>
+                    <p class="text-gray-600 mb-6 max-w-md">Burnaby's premier custom screen printing studio. Bringing your vision to life with quality, creativity, and local expertise.</p>
                     <div class="flex space-x-4">
                         <a href="https://instagram.com/inkcreekstudio" class="text-gray-400 hover:text-accent transition-colors">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -623,34 +605,34 @@
                 </div>
 
                 <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-montserrat font-semibold mb-4">Quick Links</h3>
+                <div class="footer-section">
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="portfolio_gallery_work_showcase.html" class="text-gray-300 hover:text-accent transition-colors">Portfolio</a></li>
-                        <li><a href="services_capabilities_hub.html" class="text-gray-300 hover:text-accent transition-colors">Services</a></li>
-                        <li><a href="interactive_pricing_calculator.html" class="text-gray-300 hover:text-accent transition-colors">Pricing Calculator</a></li>
-                        <li><a href="contact_studio_location.html" class="text-gray-300 hover:text-accent transition-colors">Contact Us</a></li>
+                        <li><a href="portfolio_gallery_work_showcase.html" class="footer-link">Portfolio</a></li>
+                        <li><a href="services_capabilities_hub.html" class="footer-link">Services</a></li>
+                        <li><a href="interactive_pricing_calculator.html" class="footer-link">Calculator</a></li>
+                        <li><a href="contact_studio_location.html" class="footer-link">Contact</a></li>
                     </ul>
                 </div>
 
                 <!-- Contact Info -->
-                <div>
-                    <h3 class="text-lg font-montserrat font-semibold mb-4">Contact</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>123 Creative Way</li>
-                        <li>Burnaby, BC V5A 1A1</li>
-                        <li>(604) 555-0123</li>
-                        <li>hello@inkcreekstudio.ca</li>
+                <div class="footer-section">
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li>3051 Underhill Ave,</li>
+                        <li>Burnaby, BC V5A 3C2</li>
+                        <li>(236) 591-70-60</li>
+                         <li>inkcreekprint@gmail.com</li><a href="mailto:inkcreekprint@gmail.com" class="nav-link">Email Us</a>
+                        
                     </ul>
                 </div>
             </div>
 
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 Ink Creek Studio. All Rights Reserved.</p>
+            <div class="border-t border-gray-100 mt-12 pt-8 text-center text-gray-500">
+                <p>&copy; 2026 Ink Creek Studio. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
-
     <script>
         // Calculator State
         let currentStep = 1;

@@ -1,3 +1,17 @@
+/* Hero section background image and overlay */
+.hero {
+  position: relative;
+  background-image: url('../assets/images/head_image.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* White semi-transparent overlay above background image */
+.hero__overlay {
+  background-color: transparent !important;
+  display: none !important;
+}
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 *, ::before, ::after{

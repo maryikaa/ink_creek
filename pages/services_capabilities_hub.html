@@ -13,20 +13,12 @@
 </head>
 <body class="bg-background text-text-primary">
     <!-- Navigation Header -->
-    <header class="bg-white shadow-card sticky top-0 z-50">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <nav class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <svg class="h-12 w-auto" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="40" cy="40" r="30" fill="var(--accent-color)" opacity="0.1"/>
-                            <rect x="25" y="25" width="30" height="30" rx="8" fill="var(--accent-color)"/>
-                            <path d="M35 35h10M30 40h20M35 45h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                            <text x="85" y="35" font-family="Poppins" font-size="20" font-weight="700" fill="var(--primary-color)">Creative Print</text>
-                            <text x="85" y="55" font-family="Inter" font-size="14" font-weight="500" fill="var(--secondary-color)">STUDIO</text>
-                        </svg>
-                    </div>
+                    <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-16 w-auto" />
                 </div>
 
                 <!-- Desktop Navigation -->
@@ -56,8 +48,8 @@
             </div>
 
             <!-- Mobile Navigation Menu -->
-            <div id="mobile-menu" class="md:hidden hidden">
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+            <div id="mobile-menu" class="md:hidden hidden border-t border-gray-100">
+                <div class="py-6 space-y-4 px-4 sm:px-6 lg:px-8 bg-white">
                     <a href="homepage_artisan_screen_printing_studio.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Home</a>
                     <a href="portfolio_gallery_work_showcase.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Portfolio</a>
                     <a href="services_capabilities_hub.html" class="text-primary font-semibold block px-3 py-2 rounded-md text-base">Services</a>
@@ -70,13 +62,13 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="relative py-20 bg-gradient-to-br from-primary via-secondary to-accent text-white overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <img src="https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=2" alt="Screen printing equipment and process" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1920&auto=format&fit=crop'; this.onerror=null;" />
+    <section class="relative py-20 bg-transparent text-white overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="../assets/images/head_image.jpg" alt="Screen printing equipment and process" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1920&auto=format&fit=crop'; this.onerror=null;" />
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-4xl md:text-6xl font-heading font-bold mb-6 text-shadow">
-                Our <span class="font-accent">Services</span> & Capabilities
+                Our Services & Capabilities
             </h1>
             <p class="text-xl md:text-2xl mb-8 text-shadow max-w-3xl mx-auto">
                 From concept to creation, we bring your vision to life with premium screen printing services tailored to your unique needs.
@@ -766,7 +758,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-16 bg-primary text-white">
+   <section class="section text-white" style="background-color: #9174a4;">
         <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl md:text-4xl font-heading font-bold mb-6">Ready to Start Your Project?</h2>
             <p class="text-xl mb-8 opacity-90">Get an instant quote or schedule a consultation to discuss your custom printing needs with our expert team.</p>
@@ -777,29 +769,23 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   <!-- Modern Footer -->
+    <footer class="bg-white border-t border-gray-100 py-16">
+        <div class="container">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Company Info -->
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center mb-4">
-                        <svg class="h-10 w-auto mr-3" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="40" cy="40" r="30" fill="var(--accent-color)" opacity="0.1"/>
-                            <rect x="25" y="25" width="30" height="30" rx="8" fill="var(--accent-color)"/>
-                            <path d="M35 35h10M30 40h20M35 45h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                            <text x="85" y="35" font-family="Poppins" font-size="20" font-weight="700" fill="#FFFFFF">Creative Print</text>
-                            <text x="85" y="55" font-family="Inter" font-size="14" font-weight="500" fill="var(--accent-color)">STUDIO</text>
-                        </svg>
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-6">
+                        <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-8 w-auto" />
                     </div>
-                    <p class="text-gray-300 mb-4">Vancouver's premier custom screen printing studio. Bringing your vision to life with quality, creativity, and local expertise.</p>
+                    <p class="text-gray-600 mb-6 max-w-md">Burnaby's premier custom screen printing studio. Bringing your vision to life with quality, creativity, and local expertise.</p>
                     <div class="flex space-x-4">
-                        <a href="https://instagram.com/creativeprintstudio" class="text-gray-400 hover:text-accent transition-colors">
+                        <a href="https://instagram.com/inkcreekstudio" class="text-gray-400 hover:text-accent transition-colors">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.004 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323C5.902 8.198 7.053 7.708 8.35 7.708s2.448.49 3.323 1.297c.876.876 1.366 2.027 1.366 3.324s-.49 2.448-1.366 3.323c-.875.876-2.026 1.366-3.323 1.366zm7.718 0c-1.297 0-2.448-.49-3.323-1.297-.876-.875-1.366-2.026-1.366-3.323s.49-2.448 1.366-3.323c.875-.876 2.026-1.366 3.323-1.366s2.448.49 3.323 1.366c.876.875 1.366 2.026 1.366 3.323s-.49 2.448-1.366 3.323c-.875.876-2.026 1.366-3.323 1.366z"/>
                             </svg>
                         </a>
-                        <a href="https://facebook.com/creativeprintstudio" class="text-gray-400 hover:text-accent transition-colors">
+                        <a href="https://facebook.com/inkcreekstudio" class="text-gray-400 hover:text-accent transition-colors">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                             </svg>
@@ -808,30 +794,31 @@
                 </div>
 
                 <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-heading font-semibold mb-4">Quick Links</h3>
+                <div class="footer-section">
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="portfolio_gallery_work_showcase.html" class="text-gray-300 hover:text-accent transition-colors">Portfolio</a></li>
-                        <li><a href="services_capabilities_hub.html" class="text-gray-300 hover:text-accent transition-colors">Services</a></li>
-                        <li><a href="interactive_pricing_calculator.html" class="text-gray-300 hover:text-accent transition-colors">Pricing Calculator</a></li>
-                        <li><a href="contact_studio_location.html" class="text-gray-300 hover:text-accent transition-colors">Contact Us</a></li>
+                        <li><a href="portfolio_gallery_work_showcase.html" class="footer-link">Portfolio</a></li>
+                        <li><a href="services_capabilities_hub.html" class="footer-link">Services</a></li>
+                        <li><a href="interactive_pricing_calculator.html" class="footer-link">Calculator</a></li>
+                        <li><a href="contact_studio_location.html" class="footer-link">Contact</a></li>
                     </ul>
                 </div>
 
                 <!-- Contact Info -->
-                <div>
-                    <h3 class="text-lg font-heading font-semibold mb-4">Contact</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>456 Innovation Drive</li>
-                        <li>Vancouver, BC V6K 3L1</li>
-                        <li>(604) 555-0234</li>
-                        <li>hello@creativeprintstudio.ca</li>
+                <div class="footer-section">
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li>3051 Underhill Ave,</li>
+                        <li>Burnaby, BC V5A 3C2</li>
+                        <li>(236) 591-70-60</li>
+                         <li>inkcreekprint@gmail.com</li><a href="mailto:inkcreekprint@gmail.com" class="nav-link">Email Us</a>
+                        
                     </ul>
                 </div>
             </div>
 
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 Creative Print Studio. All Rights Reserved.</p>
+            <div class="border-t border-gray-100 mt-12 pt-8 text-center text-gray-500">
+                <p>&copy; 2026 Ink Creek Studio. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
