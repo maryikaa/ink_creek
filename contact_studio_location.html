@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Ink Creek Studio | Get in Touch for Custom Screen Printing</title>
+    <meta name="description" content="Contact Ink Creek Studio for your custom screen printing needs. Located in Burnaby, BC. Get quotes, schedule consultations, or visit our studio." />
+    <link rel="stylesheet" href="../css/main.css" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Finkcreek7691back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="bg-white text-black">
+    <!-- Modern Navigation Header -->
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <nav class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-16 w-auto" />
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="homepage_artisan_screen_printing_studio.html" class="nav-link">Home</a>
+                    <a href="portfolio_gallery_work_showcase.html" class="nav-link">Portfolio</a>
+                    <a href="services_capabilities_hub.html" class="nav-link">Services</a>
+                    <a href="interactive_pricing_calculator.html" class="nav-link">Calculator</a>
+                    <a href="contact_studio_location.html" class="nav-link active">Contact</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:block">
+                    <a href="interactive_pricing_calculator.html" class="btn-accent">Get Quote</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="p-2 text-black hover:text-accent transition-colors" onclick="toggleMobileMenu()">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="md:hidden hidden border-t border-gray-100">
+                <div class="py-6 space-y-4 px-4 sm:px-6 lg:px-8">
+                    <a href="homepage_artisan_screen_printing_studio.html" class="block nav-link">Home</a>
+                    <a href="portfolio_gallery_work_showcase.html" class="block nav-link">Portfolio</a>
+                    <a href="services_capabilities_hub.html" class="block nav-link">Services</a>
+                    <a href="interactive_pricing_calculator.html" class="block nav-link">Calculator</a>
+                    <a href="contact_studio_location.html" class="block nav-link active">Contact</a>
+                    <a href="interactive_pricing_calculator.html" class="btn-accent w-full text-center mt-6">Get Quote</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+ <!-- Hero Section - Modern & Clean -->
+        <section class="relative py-20 bg-transparent text-white overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="../assets/images/head_image.jpg" alt="Screen printing equipment and process" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1920&auto=format&fit=crop'; this.onerror=null;" />
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-heading font-bold mb-6 text-shadow">
+                 Let's Create Together
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-shadow max-w-3xl mx-auto">
+                Ready to bring your vision to life? Get in touch with our team of screen printing experts. We're here to help make your ideas a reality.
+            </p>
+            <div>
+            </div>
+        </div>
+    </section>
+   
+
+
+    <!-- Contact Section - Modern Grid Layout -->
+    <section class="section bg-white">
+        <div class="container">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                
+                <!-- Contact Form -->
+                <div class="space-y-8">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4">Send us a message</h2>
+                        <p class="text-gray-600">Fill out the form below and we'll get back to you within 24 hours.</p>
+                    </div>
+                    
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                <input type="text" id="firstName" name="firstName" class="input-field" required />
+                            </div>
+                            <div>
+                                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" class="input-field" required />
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" class="input-field" required />
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="input-field" />
+                        </div>
+                        
+                        <div>
+                            <label for="projectType" class="block text-sm font-medium text-gray-700 mb-2">Project Type</label>
+                            <select id="projectType" name="projectType" class="input-field">
+                                <option value>Select a project type</option>
+                                <option value="business-branding">Business Branding</option>
+                                <option value="event-merchandise">Event Merchandise</option>
+                                <option value="corporate-apparel">Corporate Apparel</option>
+                                <option value="personal-project">Personal Project</option>
+                                <option value="fundraiser">Fundraiser</option>
+                                <option value="artist-collaboration">Artist Collaboration</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="quantity" class="block text-sm font-medium text-gray-700 mb-2">Estimated Quantity</label>
+                            <select id="quantity" name="quantity" class="input-field">
+                                <option value>Select quantity range</option>
+                                <option value="1-25">1-25 pieces</option>
+                                <option value="26-50">26-50 pieces</option>
+                                <option value="51-100">51-100 pieces</option>
+                                <option value="101-250">101-250 pieces</option>
+                                <option value="251-500">251-500 pieces</option>
+                                <option value="500+">500+ pieces</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="timeline" class="block text-sm font-medium text-gray-700 mb-2">Timeline</label>
+                            <select id="timeline" name="timeline" class="input-field">
+                                <option value>When do you need this?</option>
+                                <option value="rush">Rush (1-3 days)</option>
+                                <option value="standard">Standard (1-2 weeks)</option>
+                                <option value="flexible">Flexible (2-4 weeks)</option>
+                                <option value="planning">Just planning ahead</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Project Details</label>
+                            <textarea id="message" name="message" rows="4" class="input-field" placeholder="Tell us about your project, design ideas, special requirements, or any questions you have..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-accent w-full">Send Message</button>
+                    </form>
+                </div>
+                
+                <!-- Contact Info & Studio Details -->
+                <div class="space-y-12">
+                    
+                    <!-- Studio Info -->
+                    <div class="card">
+                        <h3 class="text-xl font-bold mb-6">Visit Our Studio</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-accent mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                <div>
+                                    <p class="font-semibold">Address</p>
+                                    <p class="text-gray-600">3051 Underhill Ave,<br />Burnaby, BC V5A 3C2</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-accent mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                </svg>
+                                <div>
+                                    <p class="font-semibold">Phone</p>
+                                    <p class="text-gray-600">(236) 591-7060</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-accent mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <div>
+                                    <p class="font-semibold">Email</p>
+                                    <p class="text-gray-600">inkcreekprint@gmail.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Studio Hours -->
+                    <div class="card">
+                        <h3 class="text-xl font-bold mb-6">Studio Hours</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="font-medium">Monday - Friday</span>
+                                <span class="text-gray-600">10:00 AM - 6:00 PM</span>
+                            </div>
+                        
+                            <div class="flex justify-between">
+                                <span class="font-medium">Saturday - Sunday</span>
+                                <span class="text-gray-600">Closed</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-4 bg-gray-50 rounded-xl">
+                            <p class="text-sm text-gray-600">
+                                <strong>Note:</strong> We recommend scheduling an appointment for consultations to ensure we can give you our full attention.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold">Quick Actions</h3>
+                        <div class="space-y-3">
+                            <a href="interactive_pricing_calculator.html" class="btn-primary w-full text-center">Get Instant Quote</a>
+                            <a href="portfolio_gallery_work_showcase.html" class="btn-secondary w-full text-center">View Portfolio</a>
+                            <a href="services_capabilities_hub.html" class="btn-ghost w-full text-center">Our Services</a>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section - Clean Integration -->
+    <section class="section bg-gray-50">
+        <div class="container">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Find Our Studio</h2>
+                <p class="text-gray-600">Located in the heart of Burnaby, easily accessible from all Lower Mainland communities.</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl overflow-hidden shadow-subtle">
+                <!-- Map Placeholder -->
+                <div class="h-96">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2604.0458904311927!2d-122.92844989999999!3d49.2565761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548679bc6e8a1151%3A0xdea3a80cce916ee9!2sInk%20Creek%20Screenprinting!5e0!3m2!1sen!2sca!4v1765151912765!5m2!1sen!2sca"
+    width="100%"
+    height="100%"
+    style="border:0;"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</div>
+                
+                <!-- Directions Info -->
+                <div class="p-8 border-t border-gray-100">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold mb-2">Free Parking</h3>
+                            <p class="text-gray-600 text-sm">Ample parking available right in front of our studio</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold mb-2">Transit Accessible</h3>
+                            <p class="text-gray-600 text-sm">Just 15 min walk from Production Way-University SkyTrain station</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold mb-2">Walk-ins Welcome</h3>
+                            <p class="text-gray-600 text-sm">Drop by anytime during business hours for quick questions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section bg-white">
+        <div class="container">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Quick answers to common questions about our services and process.</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto space-y-8">
+                
+                <div class="card">
+                    <h3 class="font-bold text-lg mb-3">How quickly can you complete an order?</h3>
+                    <p class="text-gray-600">Standard turnaround is 7-10 business days. Rush orders (1-3 days) are available for an additional fee. Timeline depends on quantity, complexity, and current workload.</p>
+                </div>
+                
+                <div class="card">
+                    <h3 class="font-bold text-lg mb-3">What's the minimum order quantity?</h3>
+                    <p class="text-gray-600">We don't have a strict minimum, but orders under 12 pieces may have higher per-unit costs due to setup fees. We're happy to work with you on small personal projects!</p>
+                </div>
+                
+                <div class="card">
+                    <h3 class="font-bold text-lg mb-3">Do you provide design services?</h3>
+                    <p class="text-gray-600">Yes! Our in-house design team can help create or refine your artwork. We also offer design consultations to optimize your existing artwork for screen printing.</p>
+                </div>
+                
+                <div class="card">
+                    <h3 class="font-bold text-lg mb-3">What file formats do you accept?</h3>
+                    <p class="text-gray-600">We prefer vector files (AI, EPS, SVG) for the best quality, but we can work with high-resolution PNG, PDF, or JPG files. We'll let you know if we need any adjustments.</p>
+                </div>
+                
+                <div class="card">
+                    <h3 class="font-bold text-lg mb-3">Do you offer delivery in the Lower Mainland?</h3>
+                    <p class="text-gray-600">Yes, we offer delivery throughout the Lower Mainland for orders over $200. Pickup is always free, and we're conveniently located with free parking.</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+   <section class="section text-white" style="background-color: #9174a4;">
+        <div class="container-sm text-center">
+            <h2 class="heading-large text-white mb-6">Ready to Start Your Project?</h2>
+            <p class="text-large text-gray-300 mb-12">Don't see what you need above? Get in touch and let's discuss your unique project requirements.</p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="interactive_pricing_calculator.html" class="btn-accent">Get Quote Now</a>
+                <a href="tel:+12365917060" class="bg-white text-black px-8 py-4 rounded-xl font-medium transition-all duration-300 hover:bg-gray-100">Call (236) 591-7060</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modern Footer -->
+    <footer class="bg-white border-t border-gray-100 py-16">
+        <div class="container">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-6">
+                        <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-8 w-auto" />
+                    </div>
+                    <p class="text-gray-600 mb-6 max-w-md">Burnaby's premier custom screen printing studio. Bringing your vision to life with quality, creativity, and local expertise.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://instagram.com/inkcreekstudio" class="text-gray-400 hover:text-accent transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.004 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323C5.902 8.198 7.053 7.708 8.35 7.708s2.448.49 3.323 1.297c.876.876 1.366 2.027 1.366 3.324s-.49 2.448-1.366 3.323c-.875.876-2.026 1.366-3.323 1.366zm7.718 0c-1.297 0-2.448-.49-3.323-1.297-.876-.875-1.366-2.026-1.366-3.323s.49-2.448 1.366-3.323c.875-.876 2.026-1.366 3.323-1.366s2.448.49 3.323 1.366c.876.875 1.366 2.026 1.366 3.323s-.49 2.448-1.366 3.323c-.875.876-2.026 1.366-3.323 1.366z"/>
+                            </svg>
+                        </a>
+                        <a href="https://facebook.com/inkcreekstudio" class="text-gray-400 hover:text-accent transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="homepage_artisan_screen_printing_studio.html" class="footer-link">Home</a></li>
+                        <li><a href="portfolio_gallery_work_showcase.html" class="footer-link">Portfolio</a></li>
+                        <li><a href="services_capabilities_hub.html" class="footer-link">Services</a></li>
+                        <li><a href="interactive_pricing_calculator.html" class="footer-link">Calculator</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                 <div class="footer-section">
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li>3051 Underhill Ave,</li>
+                        <li>Burnaby, BC V5A 3C2</li>
+                        <li>(236) 591-70-60</li>
+                         <li>inkcreekprint@gmail.com</li><a href="mailto:inkcreekprint@gmail.com" class="nav-link">Email Us</a>
+                        
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-100 mt-12 pt-8 text-center text-gray-500">
+                <p>&copy; 2026 Ink Creek Studio. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Form submission handling
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            // Simple validation
+            if (!data.firstName || !data.lastName || !data.email) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Simulate form submission
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            
+            submitButton.textContent = 'Sending...';
+            submitButton.disabled = true;
+            
+            setTimeout(() => {
+                alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+                e.target.reset();
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }, 1500);
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 0) {
+                header.classList.add('shadow-subtle');
+            } else {
+                header.classList.remove('shadow-subtle');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
