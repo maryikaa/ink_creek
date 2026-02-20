@@ -425,6 +425,24 @@
                                         <option value="flexible">I'm flexible</option>
                                     </select>
                                 </div>
+
+                                <div>
+                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Upload your design</label>
+                                    <div id="design-upload-dropzone" class="mt-1 flex flex-col items-center justify-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg bg-white text-center cursor-pointer hover:border-secondary transition-colors">
+                                        <svg class="w-8 h-8 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M12 12v9m0-9l-3 3m3-3l3 3"/>
+                                        </svg>
+                                        <p class="mt-2 text-sm font-montserrat font-semibold text-text-primary">Click to upload or drag and drop</p>
+                                        <p class="mt-1 text-xs text-text-secondary">Accepted formats: JPG, PNG, SVG, PDF, AI, EPS. Max size: 10MB</p>
+                                        <input id="design-upload-input" name="designFile" type="file" class="hidden" accept=".jpg,.jpeg,.png,.svg,.pdf,.ai,.eps" />
+                                    </div>
+                                    <p id="design-error" class="mt-2 text-sm text-red-600 hidden"></p>
+                                    <div id="design-preview-wrapper" class="mt-4 hidden">
+                                        <img id="design-preview" alt="Design preview" class="mx-auto rounded-md border border-gray-200" style="max-height: 200px;" />
+                                        <p id="design-file-info" class="mt-2 text-sm text-text-secondary text-center"></p>
+                                        <button type="button" id="design-remove-btn" class="mt-3 text-xs font-semibold text-secondary hover:text-blue-700 underline">Remove</button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -993,6 +1011,133 @@
             quoteData.pricing = { basePrice, setupFees, addons, discount, total };
         }
 
+        // Design upload handling (Step 5)
+        function initDesignUpload() {
+            const dropzone = document.getElementById('design-upload-dropzone');
+            const fileInput = document.getElementById('design-upload-input');
+            const previewWrapper = document.getElementById('design-preview-wrapper');
+            const previewImg = document.getElementById('design-preview');
+            const fileInfo = document.getElementById('design-file-info');
+            const removeBtn = document.getElementById('design-remove-btn');
+            const errorEl = document.getElementById('design-error');
+
+            if (!dropzone || !fileInput) return;
+
+            const MAX_SIZE_BYTES = 10 * 1024 * 1024; // 10MB
+            const allowedExtensions = ['jpg', 'jpeg', 'png', 'svg', 'pdf', 'ai', 'eps'];
+
+            function clearPreview() {
+                if (fileInput) fileInput.value = '';
+                if (previewWrapper) previewWrapper.classList.add('hidden');
+                if (previewImg) {
+                    previewImg.src = '';
+                }
+                if (fileInfo) fileInfo.textContent = '';
+                if (errorEl) {
+                    errorEl.textContent = '';
+                    errorEl.classList.add('hidden');
+                }
+            }
+
+            function showError(message) {
+                if (errorEl) {
+                    errorEl.textContent = message;
+                    errorEl.classList.remove('hidden');
+                }
+                if (previewWrapper) previewWrapper.classList.add('hidden');
+            }
+
+            function humanFileSize(bytes) {
+                const mb = bytes / (1024 * 1024);
+                return `${mb.toFixed(2)} MB`;
+            }
+
+            function handleFile(file) {
+                if (!file) return;
+
+                // Reset previous state
+                if (errorEl) {
+                    errorEl.textContent = '';
+                    errorEl.classList.add('hidden');
+                }
+
+                const extension = file.name.split('.').pop().toLowerCase();
+                if (!allowedExtensions.includes(extension)) {
+                    showError('Unsupported file type. Accepted formats: JPG, PNG, SVG, PDF, AI, EPS.');
+                    return;
+                }
+
+                if (file.size > MAX_SIZE_BYTES) {
+                    showError('File is too large. Maximum size is 10MB.');
+                    return;
+                }
+
+                if (fileInfo) {
+                    fileInfo.textContent = `${file.name} (${humanFileSize(file.size)})`;
+                }
+
+                const isImagePreviewable = file.type.startsWith('image/') || ['jpg', 'jpeg', 'png', 'svg'].includes(extension);
+
+                if (isImagePreviewable && previewImg && previewWrapper) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImg.src = e.target.result;
+                        previewWrapper.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    // For non-image formats (PDF, AI, EPS), hide image but show file info
+                    if (previewWrapper) previewWrapper.classList.remove('hidden');
+                    if (previewImg) {
+                        previewImg.src = '';
+                        previewImg.alt = 'Preview not available for this file type.';
+                        previewImg.classList.add('hidden');
+                    }
+                }
+            }
+
+            // Click to open file dialog
+            dropzone.addEventListener('click', function() {
+                if (fileInput) fileInput.click();
+            });
+
+            // Handle standard file selection
+            fileInput.addEventListener('change', function(event) {
+                const file = event.target.files && event.target.files[0];
+                handleFile(file);
+            });
+
+            // Drag and drop handlers
+            ['dragenter', 'dragover'].forEach(function(eventName) {
+                dropzone.addEventListener(eventName, function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    dropzone.classList.add('border-secondary', 'bg-blue-50');
+                });
+            });
+
+            ['dragleave', 'drop'].forEach(function(eventName) {
+                dropzone.addEventListener(eventName, function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    dropzone.classList.remove('border-secondary', 'bg-blue-50');
+                });
+            });
+
+            dropzone.addEventListener('drop', function(event) {
+                const files = event.dataTransfer && event.dataTransfer.files;
+                if (files && files.length > 0) {
+                    handleFile(files[0]);
+                }
+            });
+
+            if (removeBtn) {
+                removeBtn.addEventListener('click', function() {
+                    clearPreview();
+                });
+            }
+        }
+
         // Save Quote
         function saveQuote() {
             const quoteId = 'quote_' + Date.now();
@@ -1035,6 +1180,7 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             updateNavigationButtons();
+            initDesignUpload();
             
             // Load saved quote if exists
             const urlParams = new URLSearchParams(window.location.search);
