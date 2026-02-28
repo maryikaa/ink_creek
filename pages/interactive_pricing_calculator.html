@@ -122,14 +122,35 @@
                             <!-- Search & Filters -->
                             <div class="mb-6 space-y-4">
                                 <input type="text" id="product-search" class="input-field" placeholder="Search by name or style number..." />
-                                <div class="flex flex-wrap gap-2">
-                                    <button type="button" class="product-category-btn btn-secondary border-secondary bg-blue-50" data-category="all">All</button>
-                                    <button type="button" class="product-category-btn btn-secondary" data-category="tshirts">T-Shirts</button>
-                                    <button type="button" class="product-category-btn btn-secondary" data-category="hoodies">Hoodies</button>
-                                    <button type="button" class="product-category-btn btn-secondary" data-category="hats">Hats</button>
-                                    <button type="button" class="product-category-btn btn-secondary" data-category="polos">Polos</button>
-                                    <button type="button" class="product-category-btn btn-secondary" data-category="jackets">Jackets</button>
-                                    <button type="button" class="product-category-btn btn-secondary" data-category="bags">Bags</button>
+                                <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 mb-6">
+                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-secondary bg-blue-50 transition-colors text-center" data-category="all">
+                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                                        <span class="text-xs font-semibold">All</span>
+                                    </button>
+                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="tshirts">
+                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 3l-4 5h4v13h8V8h4L14 3H6z"/></svg>
+                                        <span class="text-xs font-semibold">T-Shirts</span>
+                                    </button>
+                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="hoodies">
+                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3C9 3 6 5 5 7L2 10l3 2 1-1v10h12V11l1 1 3-2-3-3c-1-2-4-4-7-4z"/></svg>
+                                        <span class="text-xs font-semibold">Hoodies</span>
+                                    </button>
+                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="hats">
+                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3C7 3 3 7 3 11h18c0-4-4-8-9-8z M3 11v2h18v-2"/></svg>
+                                        <span class="text-xs font-semibold">Hats</span>
+                                    </button>
+                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="polos">
+                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3l2 4h-4l2-4z M8 7L5 8v14h14V8l-3-1"/></svg>
+                                        <span class="text-xs font-semibold">Polos</span>
+                                    </button>
+                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="jackets">
+                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3l3 4H9l3-4z M6 7L2 9v13h8V12h4v10h8V9l-4-2"/></svg>
+                                        <span class="text-xs font-semibold">Jackets</span>
+                                    </button>
+                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="bags">
+                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 2h12l2 6H4L6 2z M4 8v13a1 1 0 001 1h14a1 1 0 001-1V8"/></svg>
+                                        <span class="text-xs font-semibold">Bags</span>
+                                    </button>
                                 </div>
                             </div>
                             <!-- Loading / Error / Grid -->
@@ -167,7 +188,7 @@
                             <div id="step2-content" class="hidden">
                                 <div class="mb-6">
                                     <h3 class="font-montserrat font-semibold mb-3">Color</h3>
-                                    <div id="color-swatches-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
+                                    <div id="color-grid" class="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3"></div>
                                 </div>
                                 <div>
                                     <h3 class="font-montserrat font-semibold mb-3">Size</h3>
@@ -579,6 +600,20 @@
             if (app.accentColor) document.documentElement.style.setProperty('--color-accent', app.accentColor);
         }
 
+        function applyMarkup(wholesalePrice, config) {
+            if (!config || !config.markup) return wholesalePrice;
+            var markup = config.markup;
+            var type = markup.type || 'percentage';
+            var value = parseFloat(markup.value) || 0;
+            var round = markup.round;
+            var retail = type === 'percentage'
+                ? wholesalePrice * (1 + value / 100)
+                : wholesalePrice + value;
+            if (round === 0.50) retail = Math.ceil(retail * 2) / 2;
+            else if (round === 1) retail = Math.ceil(retail);
+            return retail;
+        }
+
         function getCatalogButtonClass() {
             if (!calculatorConfig || !calculatorConfig.appearance) return 'btn-accent mt-auto w-full';
             var app = calculatorConfig.appearance;
@@ -736,6 +771,17 @@
                     filteredProducts = allProducts.slice();
                     renderProductGrid(gridEl);
                     gridEl.classList.remove('hidden');
+                    searchInput.addEventListener('input', filterProducts);
+                    searchInput.addEventListener('keyup', filterProducts);
+                    categoryBtns.forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            categoryBtns.forEach(function(b) {
+                                b.classList.remove('border-secondary', 'bg-blue-50');
+                            });
+                            btn.classList.add('border-secondary', 'bg-blue-50');
+                            filterProducts();
+                        });
+                    });
                 })
                 .catch(function() {
                     loadingEl.classList.add('hidden');
@@ -775,14 +821,18 @@
             }
 
             function filterProducts() {
-                const q = (searchInput.value || '').trim().toLowerCase();
-                const activeCat = document.querySelector('.product-category-btn.border-secondary');
-                const catKey = (activeCat && activeCat.getAttribute('data-category')) || 'all';
+                if (!allProducts || !allProducts.length) return;
+                var q = (document.getElementById('product-search').value || '').trim().toLowerCase();
+                var activeCat = document.querySelector('.product-category-btn.border-secondary');
+                var catKey = activeCat ? activeCat.getAttribute('data-category') : 'all';
                 filteredProducts = allProducts.filter(function(p) {
-                    const matchSearch = !q || (p.name || '').toLowerCase().indexOf(q) !== -1 || (p.style || '').toLowerCase().indexOf(q) !== -1 || (p.brand || '').toLowerCase().indexOf(q) !== -1;
+                    var matchSearch = !q ||
+                        (p.name || '').toLowerCase().includes(q) ||
+                        (p.style || '').toString().toLowerCase().includes(q) ||
+                        (p.brand || '').toLowerCase().includes(q);
                     return matchSearch && matchCategory(catKey, p);
                 });
-                renderProductGrid(gridEl);
+                renderProductGrid(document.getElementById('product-catalog-grid'));
             }
 
             function renderProductGrid(container) {
@@ -813,17 +863,6 @@
                 });
             }
 
-            searchInput.addEventListener('input', filterProducts);
-            searchInput.addEventListener('keyup', filterProducts);
-            categoryBtns.forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    categoryBtns.forEach(function(b) {
-                        b.classList.remove('border-secondary', 'bg-blue-50');
-                    });
-                    btn.classList.add('border-secondary', 'bg-blue-50');
-                    filterProducts();
-                });
-            });
         }
 
         function selectProduct(product, cardEl) {
@@ -873,9 +912,12 @@
                         if (!colorMap[key]) {
                             var rawImg = sku.colorFrontImage || sku.ColorFrontImage || sku.colorImage || '';
                             var img = rawImg && (rawImg.indexOf('http') === 0 ? rawImg : 'https://cdn.ssactivewear.com/' + rawImg);
+                            var rawSwatch = sku.colorSwatchImage || sku.ColorSwatchImage || '';
+                            var swatch = rawSwatch && (rawSwatch.indexOf('http') === 0 ? rawSwatch : 'https://cdn.ssactivewear.com/' + rawSwatch);
                             colorMap[key] = {
                                 name: key,
                                 image: img || null,
+                                swatch: swatch || null,
                                 price: parseFloat(sku.ourPrice || sku.OurPrice || sku.price || sku.Price || 0) || 0
                             };
                         }
@@ -899,18 +941,39 @@
                 });
         }
 
-        function renderStep2Content() {
-            var grid = document.getElementById('color-swatches-grid');
-            var sizeWrap = document.getElementById('size-buttons');
-            grid.innerHTML = '';
-            styleDetailColors.forEach(function(c, i) {
-                var el = document.createElement('div');
-                el.className = 'color-swatch border-2 border-gray-200 rounded-lg p-2 cursor-pointer hover:border-secondary transition-colors text-center';
-                el.setAttribute('data-color-index', i);
-                el.innerHTML = '<img src="' + (c.image || '') + '" alt="" class="w-full h-20 object-cover rounded bg-gray-100 mb-2" onerror="this.style.display=\'none\'" /><span class="text-xs font-montserrat font-semibold">' + (c.name || '') + '</span>';
-                el.addEventListener('click', function() { selectColor(i); });
-                grid.appendChild(el);
+        function renderColorGrid(colors) {
+            var container = document.getElementById('color-grid');
+            if (!container) return;
+            container.className = 'grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3';
+            container.innerHTML = '';
+            colors.forEach(function(color, idx) {
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'color-swatch-btn flex flex-col items-center p-2 rounded-xl border-2 border-gray-200 hover:border-secondary transition-all text-center';
+                btn.setAttribute('data-color-idx', idx);
+                var imgHtml = color.swatch
+                    ? '<img src="' + color.swatch + '" alt="' + (color.name || '') + '" class="w-full h-full object-cover" onerror="this.parentElement.style.background=\'#ccc\'"/>'
+                    : '<div class="w-full h-full bg-gray-300"></div>';
+                if (!color.swatch && color.image) {
+                    imgHtml = '<img src="' + color.image + '" alt="' + (color.name || '') + '" class="w-full h-full object-cover" onerror="this.parentElement.style.background=\'#ccc\'"/>';
+                }
+                btn.innerHTML = '<div class="w-12 h-12 rounded-lg mb-2 border border-gray-200 overflow-hidden bg-gray-100">' + imgHtml + '</div><span class="text-xs font-medium leading-tight line-clamp-2">' + (color.name || '') + '</span>';
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.color-swatch-btn').forEach(function(b) {
+                        b.classList.remove('border-secondary', 'bg-blue-50');
+                        b.classList.add('border-gray-200');
+                    });
+                    btn.classList.remove('border-gray-200');
+                    btn.classList.add('border-secondary', 'bg-blue-50');
+                    selectColor(idx);
+                });
+                container.appendChild(btn);
             });
+        }
+
+        function renderStep2Content() {
+            renderColorGrid(styleDetailColors);
+            var sizeWrap = document.getElementById('size-buttons');
             sizeWrap.innerHTML = '';
             styleDetailSizes.forEach(function(s) {
                 var btn = document.createElement('button');
@@ -926,13 +989,15 @@
         function selectColor(index) {
             var c = styleDetailColors[index];
             if (!c) return;
-            quoteData.color = { name: c.name, image: c.image, price: c.price };
-            quoteData.unitPrice = c.price;
-            document.querySelectorAll('.color-swatch').forEach(function(el) {
+            var wholesalePrice = c.price;
+            var retailPrice = applyMarkup(wholesalePrice, calculatorConfig);
+            quoteData.color = { name: c.name, image: c.image, price: retailPrice };
+            quoteData.unitPrice = retailPrice;
+            document.querySelectorAll('.color-swatch-btn').forEach(function(el) {
                 el.classList.remove('border-secondary', 'bg-blue-50');
                 el.classList.add('border-gray-200');
             });
-            var el = document.querySelector('.color-swatch[data-color-index="' + index + '"]');
+            var el = document.querySelector('.color-swatch-btn[data-color-idx="' + index + '"]');
             if (el) { el.classList.remove('border-gray-200'); el.classList.add('border-secondary', 'bg-blue-50'); }
             updateSummary();
             updateNavigationButtons();
@@ -1310,6 +1375,7 @@
                 })
                 .catch(function() {
                     calculatorConfig = {
+                        markup: { type: 'percentage', value: 40, round: 0.50 },
                         pricing: {
                             printLocations: { front: 0, back: 2.5, leftSleeve: 1.5, rightSleeve: 1.5 },
                             inkColors: { '1': 0, '2': 1.5, '3': 2.75, '4': 3.75, '5': 4.5, '6': 5.25 },

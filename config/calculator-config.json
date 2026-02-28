@@ -1,5 +1,10 @@
 {
   "password": "inkcreek2026",
+  "markup": {
+    "type": "percentage",
+    "value": 40,
+    "round": 0.50
+  },
   "general": {
     "calculatorPageTitle": "Get Your Instant Quote",
     "minimumOrderNote": "Minimum order: 12 pieces"

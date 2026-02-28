@@ -62,6 +62,33 @@
 
                 <!-- Tab: Print Prices -->
                 <div id="tab-print" class="admin-tab-content card">
+                    <h2 class="text-xl font-montserrat font-bold mb-4">Garment Markup</h2>
+                    <div class="p-4 border border-gray-200 rounded-lg mb-8 space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Type</label>
+                            <div class="flex gap-4">
+                                <label class="flex items-center gap-2"><input type="radio" name="markup-type" value="percentage" class="markup-type" /> Percentage</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="markup-type" value="fixed" class="markup-type" /> Fixed amount</label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Value</label>
+                            <input type="number" id="markup-value" class="input-field w-32" min="0" step="0.01" value="40" />
+                            <span id="markup-value-suffix" class="ml-2 text-sm text-text-secondary">% per item</span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Rounding</label>
+                            <div class="flex flex-wrap gap-4">
+                                <label class="flex items-center gap-2"><input type="radio" name="markup-round" value="exact" class="markup-round" /> Exact</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="markup-round" value="0.50" class="markup-round" checked /> $0.50</label>
+                                <label class="flex items-center gap-2"><input type="radio" name="markup-round" value="1" class="markup-round" /> $1.00</label>
+                            </div>
+                        </div>
+                        <div class="pt-2 border-t border-gray-200">
+                            <span class="text-sm font-semibold">Preview:</span>
+                            <p id="markup-preview" class="text-sm text-text-secondary mt-1">Wholesale $8.00 → You charge $11.20</p>
+                        </div>
+                    </div>
                     <h2 class="text-xl font-montserrat font-bold mb-4">Print Locations (price per item)</h2>
                     <div id="print-locations-fields" class="space-y-3 mb-8"></div>
                     <h2 class="text-xl font-montserrat font-bold mb-4">Ink Colors (extra per item per location)</h2>
@@ -300,6 +327,19 @@
                 if (!config) return;
                 var p = config.pricing || {};
                 var g = config.general || {};
+                var m = config.markup || { type: 'percentage', value: 40, round: 0.50 };
+                var typeRadios = document.querySelectorAll('input[name="markup-type"]');
+                typeRadios.forEach(function(r) { r.checked = (r.value === (m.type || 'percentage')); });
+                document.getElementById('markup-value').value = m.value != null ? m.value : 40;
+                var roundRadios = document.querySelectorAll('input[name="markup-round"]');
+                var roundVal = m.round;
+                roundRadios.forEach(function(r) {
+                    r.checked = (r.value === 'exact' && (roundVal === null || roundVal === undefined || roundVal === 'exact')) || (r.value === '0.50' && roundVal === 0.5) || (r.value === '1' && roundVal === 1);
+                });
+                if (!document.querySelector('input[name="markup-round"]:checked')) document.querySelector('input[name="markup-round"][value="0.50"]').checked = true;
+                updateMarkupSuffix();
+                updateMarkupPreview();
+                bindMarkupListeners();
 
                 // Print locations
                 var locs = p.printLocations || { front: 0, back: 2.5, leftSleeve: 1.5, rightSleeve: 1.5 };
@@ -507,6 +547,38 @@
                 });
             }
 
+            function updateMarkupSuffix() {
+                var typeEl = document.querySelector('input[name="markup-type"]:checked');
+                var suffix = document.getElementById('markup-value-suffix');
+                if (suffix) suffix.textContent = (typeEl && typeEl.value === 'fixed') ? ' per item' : '% per item';
+            }
+            function updateMarkupPreview() {
+                var typeEl = document.querySelector('input[name="markup-type"]:checked');
+                var type = typeEl ? typeEl.value : 'percentage';
+                var val = parseFloat(document.getElementById('markup-value').value) || 0;
+                var roundEl = document.querySelector('input[name="markup-round"]:checked');
+                var round = roundEl ? roundEl.value : '0.50';
+                var wholesale = 8;
+                var retail = type === 'percentage' ? wholesale * (1 + val / 100) : wholesale + val;
+                if (round === '0.50') retail = Math.ceil(retail * 2) / 2;
+                else if (round === '1') retail = Math.ceil(retail);
+                var preview = document.getElementById('markup-preview');
+                if (preview) preview.textContent = 'Wholesale $' + wholesale.toFixed(2) + ' → You charge $' + retail.toFixed(2);
+            }
+            var markupListenersBound = false;
+            function bindMarkupListeners() {
+                if (markupListenersBound) return;
+                markupListenersBound = true;
+                document.querySelectorAll('.markup-type').forEach(function(r) {
+                    r.addEventListener('change', function() { updateMarkupSuffix(); updateMarkupPreview(); });
+                });
+                document.querySelectorAll('.markup-round').forEach(function(r) {
+                    r.addEventListener('change', updateMarkupPreview);
+                });
+                var markupVal = document.getElementById('markup-value');
+                if (markupVal) markupVal.addEventListener('input', updateMarkupPreview);
+            }
+
             function collectConfig() {
                 var p = config.pricing || {};
                 p.printLocations = p.printLocations || {};
@@ -555,6 +627,14 @@
                 config.general.calculatorPageTitle = document.getElementById('calculator-title').value.trim();
                 config.general.minimumOrderNote = document.getElementById('minimum-order-note').value.trim();
                 config.password = document.getElementById('general-password').value || config.password || DEFAULT_PASSWORD;
+                var markupTypeEl = document.querySelector('input[name="markup-type"]:checked');
+                var markupValEl = document.getElementById('markup-value');
+                var markupRoundEl = document.querySelector('input[name="markup-round"]:checked');
+                config.markup = {
+                    type: markupTypeEl ? markupTypeEl.value : 'percentage',
+                    value: parseFloat(markupValEl && markupValEl.value ? markupValEl.value : 40) || 40,
+                    round: !markupRoundEl || markupRoundEl.value === 'exact' ? null : (markupRoundEl.value === '1' ? 1 : 0.50)
+                };
                 var appCol = document.querySelector('input[name="app-card-size"]:checked');
                 config.appearance = config.appearance || {};
                 config.appearance.catalogColumns = appCol ? parseInt(appCol.value, 10) : 4;
@@ -597,6 +677,7 @@
             }).catch(function() {
                 config = {
                     password: DEFAULT_PASSWORD,
+                    markup: { type: 'percentage', value: 40, round: 0.50 },
                     general: { calculatorPageTitle: 'Get Your Instant Quote', minimumOrderNote: 'Minimum order: 12 pieces' },
                     pricing: {
                         printLocations: { front: 0, back: 2.5, leftSleeve: 1.5, rightSleeve: 1.5 },
