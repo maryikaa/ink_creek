@@ -145,7 +145,7 @@
                         </div>
                     </div>
 
-                    <!-- Step 2: Garment Selection -->
+                    <!-- Step 2: Choose Color & Size -->
                     <div id="step-2" class="calculator-step hidden">
                         <div class="card">
                             <div id="selected-product-banner" class="mb-4 hidden p-4 bg-blue-50 border border-secondary rounded-lg flex items-center gap-4">
@@ -156,271 +156,186 @@
                                     <p id="selected-product-style" class="text-sm text-text-secondary"></p>
                                 </div>
                             </div>
-                            <h2 class="text-2xl font-montserrat font-bold mb-6">Choose Your Garment</h2>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <!-- T-Shirts -->
-                                <div class="garment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectGarment('tshirt', 'T-Shirts', 8.50)">
-                                    <img src="../assets/images/t-shirt_calculator_page.jpg" alt="Custom T-Shirts" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2'; this.onerror=null;" />
-                                    <h3 class="font-montserrat font-semibold mb-2">T-Shirts</h3>
-                                    <p class="text-sm text-text-secondary mb-2">100% Cotton, Premium Quality</p>
-                                    <p class="text-accent font-semibold">Starting at $8.50</p>
+                            <h2 class="text-2xl font-montserrat font-bold mb-6">Choose Color & Size</h2>
+                            <div id="step2-loading" class="flex flex-col items-center justify-center py-12 hidden">
+                                <svg class="animate-spin h-10 w-10 text-secondary mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                <p class="text-text-secondary font-montserrat font-semibold">Loading options...</p>
+                            </div>
+                            <div id="step2-error" class="hidden py-4 px-4 bg-red-50 border border-red-200 rounded-lg text-center mb-4">
+                                <p class="font-montserrat font-semibold text-red-800">Unable to load colors and sizes. Please try again.</p>
+                            </div>
+                            <div id="step2-content" class="hidden">
+                                <div class="mb-6">
+                                    <h3 class="font-montserrat font-semibold mb-3">Color</h3>
+                                    <div id="color-swatches-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
                                 </div>
-
-                                <!-- Hoodies -->
-                                <div class="garment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectGarment('hoodie', 'Hoodies', 24.00)">
-                                    <img src="../assets/images/hoodie_calculator_page.jpg" alt="Custom Hoodies" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=300&h=300&auto=format&fit=crop'; this.onerror=null;" />
-                                    <h3 class="font-montserrat font-semibold mb-2">Hoodies</h3>
-                                    <p class="text-sm text-text-secondary mb-2">Cotton Blend, Fleece Lined</p>
-                                    <p class="text-accent font-semibold">Starting at $24.00</p>
-                                </div>
-
-                                <!-- Polo Shirts -->
-                                <div class="garment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectGarment('polo', 'Polo Shirts', 16.50)">
-                                    <img src="../assets/images/polo_calculator_page.jpg" alt="Custom Polo Shirts" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=300&h=300&auto=format&fit=crop'; this.onerror=null;" />
-                                    <h3 class="font-montserrat font-semibold mb-2">Polo Shirts</h3>
-                                    <p class="text-sm text-text-secondary mb-2">Professional Cotton Pique</p>
-                                    <p class="text-accent font-semibold">Starting at $16.50</p>
-                                </div>
-
-                                <!-- Tank Tops -->
-                                <div class="garment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectGarment('tank', 'Tank Tops', 7.25)">
-                                    <img src="../assets/images/top_calculator_page.jpg" alt="Custom Tank Tops" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.pexels.com/photos/7679720/pexels-photo-7679720.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2'; this.onerror=null;" />
-                                    <h3 class="font-montserrat font-semibold mb-2">Tank Tops</h3>
-                                    <p class="text-sm text-text-secondary mb-2">Lightweight Cotton Blend</p>
-                                    <p class="text-accent font-semibold">Starting at $7.25</p>
-                                </div>
-
-                                <!-- Tote Bags -->
-                                <div class="garment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectGarment('tote', 'Tote Bags', 5.50)">
-                                    <img src="../assets/images/bag_calculator_page.jpg" alt="Custom Tote Bags" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.pixabay.com/photo/2017/08/06/12/06/people-2591874_400.jpg'; this.onerror=null;" />
-                                    <h3 class="font-montserrat font-semibold mb-2">Tote Bags</h3>
-                                    <p class="text-sm text-text-secondary mb-2">Durable Canvas Material</p>
-                                    <p class="text-accent font-semibold">Starting at $5.50</p>
-                                </div>
-
-                                <!-- Long Sleeve -->
-                                <div class="garment-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectGarment('longsleeve', 'Long Sleeve', 12.75)">
-                                    <img src="../assets/images/longsleeve_calculator_page.jpg" alt="Custom Long Sleeve Shirts" class="w-full h-32 object-cover rounded-lg mb-3" onerror="this.src='https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2'; this.onerror=null;" />
-                                    <h3 class="font-montserrat font-semibold mb-2">Long Sleeve</h3>
-                                    <p class="text-sm text-text-secondary mb-2">Comfortable Cotton Blend</p>
-                                    <p class="text-accent font-semibold">Starting at $12.75</p>
+                                <div>
+                                    <h3 class="font-montserrat font-semibold mb-3">Size</h3>
+                                    <div id="size-buttons" class="flex flex-wrap gap-2"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Step 3: Quantity Selection -->
+                    <!-- Step 3: Quantity -->
                     <div id="step-3" class="calculator-step hidden">
                         <div class="card">
-                            <h2 class="text-2xl font-montserrat font-bold mb-6">How Many Do You Need?</h2>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" onclick="selectQuantity(12, '5% off')">
-                                    <div class="text-2xl font-montserrat font-bold text-primary">12</div>
-                                    <div class="text-sm text-text-secondary">Minimum Order</div>
-                                    <div class="text-xs text-success font-semibold mt-1">Base Price</div>
+                            <h2 class="text-2xl font-montserrat font-bold mb-6">Quantity</h2>
+                            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" data-qty="12">
+                                    <div class="text-xl font-montserrat font-bold text-primary">12</div>
+                                    <div class="text-xs text-text-secondary">Minimum</div>
                                 </div>
-                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" onclick="selectQuantity(25, '10% off')">
-                                    <div class="text-2xl font-montserrat font-bold text-primary">25</div>
-                                    <div class="text-sm text-text-secondary">Popular Choice</div>
-                                    <div class="text-xs text-success font-semibold mt-1">10% off</div>
+                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" data-qty="25">
+                                    <div class="text-xl font-montserrat font-bold text-primary">25</div>
+                                    <div class="text-xs text-success font-semibold">10% off</div>
                                 </div>
-                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" onclick="selectQuantity(50, '15% off')">
-                                    <div class="text-2xl font-montserrat font-bold text-primary">50</div>
-                                    <div class="text-sm text-text-secondary">Great Value</div>
-                                    <div class="text-xs text-success font-semibold mt-1">15% off</div>
+                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" data-qty="50">
+                                    <div class="text-xl font-montserrat font-bold text-primary">50</div>
+                                    <div class="text-xs text-success font-semibold">15% off</div>
                                 </div>
-                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" onclick="selectQuantity(100, '20% off')">
-                                    <div class="text-2xl font-montserrat font-bold text-primary">100+</div>
-                                    <div class="text-sm text-text-secondary">Best Deal</div>
-                                    <div class="text-xs text-success font-semibold mt-1">20% off</div>
+                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" data-qty="100">
+                                    <div class="text-xl font-montserrat font-bold text-primary">100</div>
+                                    <div class="text-xs text-success font-semibold">20% off</div>
+                                </div>
+                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" data-qty="250">
+                                    <div class="text-xl font-montserrat font-bold text-primary">250</div>
+                                    <div class="text-xs text-success font-semibold">20% off</div>
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Custom Quantity</label>
-                                <input type="number" id="custom-quantity" class="input-field" placeholder="Enter exact quantity" min="12" onchange="selectCustomQuantity()" />
-                            </div>
-                            <div class="bg-surface p-4 rounded-lg">
-                                <h3 class="font-montserrat font-semibold mb-2">Bulk Pricing Benefits</h3>
-                                <ul class="text-sm text-text-secondary space-y-1">
-                                    <li>• 25+ items: 10% discount on unit price</li>
-                                    <li>• 50+ items: 15% discount + free setup</li>
-                                    <li>• 100+ items: 20% discount + free design consultation</li>
-                                </ul>
+                                <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Custom Quantity (min 12)</label>
+                                <input type="number" id="custom-quantity" class="input-field" placeholder="Enter quantity" min="12" />
                             </div>
                         </div>
                     </div>
 
-                    <!-- Step 4: Ink Colors & Effects -->
+                    <!-- Step 4: Print Options -->
                     <div id="step-4" class="calculator-step hidden">
                         <div class="card">
-                            <h2 class="text-2xl font-montserrat font-bold mb-6">Ink Colors & Special Effects</h2>
-                            
-                            <!-- Number of Colors -->
+                            <h2 class="text-2xl font-montserrat font-bold mb-6">Print Options</h2>
                             <div class="mb-6">
-                                <h3 class="font-montserrat font-semibold mb-4">Number of Ink Colors</h3>
-                                <div class="grid grid-cols-3 md:grid-cols-6 gap-3">
-                                    <div class="color-option border-2 border-gray-200 rounded-lg p-3 text-center cursor-pointer hover:border-secondary transition-colors" onclick="selectColors(1, 0)">
-                                        <div class="text-lg font-montserrat font-bold">1</div>
-                                        <div class="text-xs text-text-secondary">Color</div>
-                                        <div class="text-xs text-success">+$0</div>
-                                    </div>
-                                    <div class="color-option border-2 border-gray-200 rounded-lg p-3 text-center cursor-pointer hover:border-secondary transition-colors" onclick="selectColors(2, 1.50)">
-                                        <div class="text-lg font-montserrat font-bold">2</div>
-                                        <div class="text-xs text-text-secondary">Colors</div>
-                                        <div class="text-xs text-accent">+$1.50</div>
-                                    </div>
-                                    <div class="color-option border-2 border-gray-200 rounded-lg p-3 text-center cursor-pointer hover:border-secondary transition-colors" onclick="selectColors(3, 2.75)">
-                                        <div class="text-lg font-montserrat font-bold">3</div>
-                                        <div class="text-xs text-text-secondary">Colors</div>
-                                        <div class="text-xs text-accent">+$2.75</div>
-                                    </div>
-                                    <div class="color-option border-2 border-gray-200 rounded-lg p-3 text-center cursor-pointer hover:border-secondary transition-colors" onclick="selectColors(4, 3.75)">
-                                        <div class="text-lg font-montserrat font-bold">4</div>
-                                        <div class="text-xs text-text-secondary">Colors</div>
-                                        <div class="text-xs text-accent">+$3.75</div>
-                                    </div>
-                                    <div class="color-option border-2 border-gray-200 rounded-lg p-3 text-center cursor-pointer hover:border-secondary transition-colors" onclick="selectColors(5, 4.50)">
-                                        <div class="text-lg font-montserrat font-bold">5</div>
-                                        <div class="text-xs text-text-secondary">Colors</div>
-                                        <div class="text-xs text-accent">+$4.50</div>
-                                    </div>
-                                    <div class="color-option border-2 border-gray-200 rounded-lg p-3 text-center cursor-pointer hover:border-secondary transition-colors" onclick="selectColors(6, 5.25)">
-                                        <div class="text-lg font-montserrat font-bold">6</div>
-                                        <div class="text-xs text-text-secondary">Colors</div>
-                                        <div class="text-xs text-accent">+$5.25</div>
-                                    </div>
+                                <h3 class="font-montserrat font-semibold mb-3">Print Locations</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
+                                        <span class="font-montserrat font-semibold">Front</span>
+                                        <span class="text-success text-sm">+$0</span>
+                                        <input type="checkbox" class="print-location w-5 h-5 text-secondary" data-location="front" data-cost="0" />
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
+                                        <span class="font-montserrat font-semibold">Back</span>
+                                        <span class="text-accent text-sm">+$2.50/item</span>
+                                        <input type="checkbox" class="print-location w-5 h-5 text-secondary" data-location="back" data-cost="2.5" />
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
+                                        <span class="font-montserrat font-semibold">Left Sleeve</span>
+                                        <span class="text-accent text-sm">+$1.50/item</span>
+                                        <input type="checkbox" class="print-location w-5 h-5 text-secondary" data-location="leftSleeve" data-cost="1.5" />
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
+                                        <span class="font-montserrat font-semibold">Right Sleeve</span>
+                                        <span class="text-accent text-sm">+$1.50/item</span>
+                                        <input type="checkbox" class="print-location w-5 h-5 text-secondary" data-location="rightSleeve" data-cost="1.5" />
+                                    </label>
                                 </div>
                             </div>
-
-                            <!-- Special Effects -->
                             <div class="mb-6">
-                                <h3 class="font-montserrat font-semibold mb-4">Special Effects (Optional)</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="effect-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="toggleEffect('metallic', 3.00)">
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <h4 class="font-montserrat font-semibold">Metallic Ink</h4>
-                                                <p class="text-sm text-text-secondary">Shimmering gold or silver finish</p>
-                                            </div>
-                                            <div class="text-accent font-semibold">+$3.00</div>
-                                        </div>
-                                    </div>
-                                    <div class="effect-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="toggleEffect('glow', 4.50)">
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <h4 class="font-montserrat font-semibold">Glow-in-Dark</h4>
-                                                <p class="text-sm text-text-secondary">Phosphorescent ink that glows</p>
-                                            </div>
-                                            <div class="text-accent font-semibold">+$4.50</div>
-                                        </div>
-                                    </div>
-                                    <div class="effect-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="toggleEffect('vintage', 2.25)">
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <h4 class="font-montserrat font-semibold">Vintage Distressed</h4>
-                                                <p class="text-sm text-text-secondary">Weathered, worn-in appearance</p>
-                                            </div>
-                                            <div class="text-accent font-semibold">+$2.25</div>
-                                        </div>
-                                    </div>
-                                    <div class="effect-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="toggleEffect('eco', 1.75)">
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <h4 class="font-montserrat font-semibold">Eco-Friendly Ink</h4>
-                                                <p class="text-sm text-text-secondary">Water-based, sustainable option</p>
-                                            </div>
-                                            <div class="text-success font-semibold">+$1.75</div>
-                                        </div>
-                                    </div>
+                                <h3 class="font-montserrat font-semibold mb-3">Ink Colors per Location</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="1" data-cost="0">1</button>
+                                    <button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="2" data-cost="1.5">2</button>
+                                    <button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="3" data-cost="2.75">3</button>
+                                    <button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="4" data-cost="3.75">4</button>
+                                    <button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="5" data-cost="4.5">5</button>
+                                    <button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="6" data-cost="5.25">6+</button>
+                                </div>
+                                <p class="text-xs text-text-secondary mt-2">1 color = $0, 2 = +$1.50, 3 = +$2.75, 4 = +$3.75, 5 = +$4.50, 6+ = +$5.25 per item</p>
+                            </div>
+                            <div>
+                                <h3 class="font-montserrat font-semibold mb-3">Special Effects</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
+                                        <span class="font-montserrat font-semibold">Metallic Ink</span>
+                                        <span class="text-accent text-sm">+$3.00/item</span>
+                                        <input type="checkbox" class="effect-cb w-5 h-5 text-secondary" data-effect="metallic" data-cost="3" />
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
+                                        <span class="font-montserrat font-semibold">Glow in the Dark</span>
+                                        <span class="text-accent text-sm">+$4.50/item</span>
+                                        <input type="checkbox" class="effect-cb w-5 h-5 text-secondary" data-effect="glow" data-cost="4.5" />
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
+                                        <span class="font-montserrat font-semibold">Puff Ink</span>
+                                        <span class="text-accent text-sm">+$2.00/item</span>
+                                        <input type="checkbox" class="effect-cb w-5 h-5 text-secondary" data-effect="puff" data-cost="2" />
+                                    </label>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Step 5: Design Complexity -->
+                    <!-- Step 5: Turnaround & Extras -->
                     <div id="step-5" class="calculator-step hidden">
                         <div class="card">
-                            <h2 class="text-2xl font-montserrat font-bold mb-6">Design Complexity & Services</h2>
-                            
-                            <!-- Design Complexity -->
+                            <h2 class="text-2xl font-montserrat font-bold mb-6">Turnaround & Extras</h2>
                             <div class="mb-6">
-                                <h3 class="font-montserrat font-semibold mb-4">Design Complexity</h3>
-                                <div class="space-y-4">
-                                    <div class="complexity-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectComplexity('simple', 0)">
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <h4 class="font-montserrat font-semibold">Simple Design</h4>
-                                                <p class="text-sm text-text-secondary">Text only or basic logo (1-2 colors)</p>
-                                            </div>
-                                            <div class="text-success font-semibold">Included</div>
-                                        </div>
-                                    </div>
-                                    <div class="complexity-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectComplexity('moderate', 25)">
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <h4 class="font-montserrat font-semibold">Moderate Design</h4>
-                                                <p class="text-sm text-text-secondary">Detailed graphics, multiple elements (3-4 colors)</p>
-                                            </div>
-                                            <div class="text-accent font-semibold">+$25 setup</div>
-                                        </div>
-                                    </div>
-                                    <div class="complexity-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" onclick="selectComplexity('complex', 50)">
-                                        <div class="flex items-center justify-between">
-                                            <div>
-                                                <h4 class="font-montserrat font-semibold">Complex Design</h4>
-                                                <p class="text-sm text-text-secondary">Intricate artwork, photo reproduction (5+ colors)</p>
-                                            </div>
-                                            <div class="text-accent font-semibold">+$50 setup</div>
-                                        </div>
-                                    </div>
+                                <h3 class="font-montserrat font-semibold mb-3">Turnaround Time</h3>
+                                <div class="space-y-2">
+                                    <label class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors turnaround-option">
+                                        <span class="font-montserrat font-semibold">Standard (7-10 days)</span>
+                                        <span class="text-success text-sm">No extra charge</span>
+                                        <input type="radio" name="turnaround" class="w-5 h-5 text-secondary" value="standard" data-fee="0" checked />
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors turnaround-option">
+                                        <span class="font-montserrat font-semibold">Rush (3-5 days)</span>
+                                        <span class="text-accent text-sm">+$25 flat</span>
+                                        <input type="radio" name="turnaround" class="w-5 h-5 text-secondary" value="rush" data-fee="25" />
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors turnaround-option">
+                                        <span class="font-montserrat font-semibold">Super Rush (1-2 days)</span>
+                                        <span class="text-accent text-sm">+$75 flat</span>
+                                        <input type="radio" name="turnaround" class="w-5 h-5 text-secondary" value="superRush" data-fee="75" />
+                                    </label>
                                 </div>
                             </div>
-
-                            <!-- Additional Services -->
-                            <div class="mb-6">
-                                <h3 class="font-montserrat font-semibold mb-4">Additional Services</h3>
-                                <div class="space-y-3">
+                            <div>
+                                <h3 class="font-montserrat font-semibold mb-3">Add-ons</h3>
+                                <div class="space-y-2">
                                     <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <div>
-                                            <span class="font-montserrat font-semibold">Rush Delivery (24-48 hours)</span>
-                                            <p class="text-sm text-text-secondary">Priority processing and expedited production</p>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <span class="text-accent font-semibold mr-3">+$75</span>
-                                            <input type="checkbox" class="w-5 h-5 text-secondary" onchange="toggleService('rush', 75)" />
-                                        </div>
+                                        <span class="font-montserrat font-semibold">Design Setup</span>
+                                        <span class="text-accent text-sm">+$45 one-time</span>
+                                        <input type="checkbox" class="extra-cb w-5 h-5 text-secondary" data-extra="designSetup" data-cost="45" data-type="onetime" />
                                     </label>
                                     <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <div>
-                                            <span class="font-montserrat font-semibold">Design Consultation</span>
-                                            <p class="text-sm text-text-secondary">30-minute session with our design team</p>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <span class="text-accent font-semibold mr-3">+$45</span>
-                                            <input type="checkbox" class="w-5 h-5 text-secondary" onchange="toggleService('consultation', 45)" />
-                                        </div>
+                                        <span class="font-montserrat font-semibold">Design Consultation 30min</span>
+                                        <span class="text-accent text-sm">+$45</span>
+                                        <input type="checkbox" class="extra-cb w-5 h-5 text-secondary" data-extra="consultation" data-cost="45" data-type="onetime" />
                                     </label>
                                     <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <div>
-                                            <span class="font-montserrat font-semibold">Sample Print</span>
-                                            <p class="text-sm text-text-secondary">Physical sample before full production</p>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <span class="text-accent font-semibold mr-3">+$15</span>
-                                            <input type="checkbox" class="w-5 h-5 text-secondary" onchange="toggleService('sample', 15)" />
-                                        </div>
+                                        <span class="font-montserrat font-semibold">Sample Print</span>
+                                        <span class="text-accent text-sm">+$15</span>
+                                        <input type="checkbox" class="extra-cb w-5 h-5 text-secondary" data-extra="sample" data-cost="15" data-type="onetime" />
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
+                                        <span class="font-montserrat font-semibold">Individual Bagging</span>
+                                        <span class="text-accent text-sm">+$0.50/item</span>
+                                        <input type="checkbox" class="extra-cb w-5 h-5 text-secondary" data-extra="bagging" data-cost="0.5" data-type="peritem" />
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
+                                        <span class="font-montserrat font-semibold">Folding & Stacking</span>
+                                        <span class="text-accent text-sm">+$0.25/item</span>
+                                        <input type="checkbox" class="extra-cb w-5 h-5 text-secondary" data-extra="folding" data-cost="0.25" data-type="peritem" />
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Step 6: Contact Information -->
+                    <!-- Step 6: Contact & Submit -->
                     <div id="step-6" class="calculator-step hidden">
                         <div class="card">
                             <h2 class="text-2xl font-montserrat font-bold mb-6">Get Your Detailed Quote</h2>
                             <p class="text-text-secondary mb-6">We'll send you a comprehensive quote within 2 hours, including design mockups and timeline.</p>
-                            
                             <form id="quote-form" class="space-y-4">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
@@ -432,13 +347,15 @@
                                         <input type="text" name="lastName" class="input-field" required />
                                     </div>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Email Address *</label>
-                                    <input type="email" name="email" class="input-field" required />
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Phone Number *</label>
-                                    <input type="tel" name="phone" class="input-field" required />
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Email *</label>
+                                        <input type="email" name="email" class="input-field" required />
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Phone *</label>
+                                        <input type="tel" name="phone" class="input-field" required />
+                                    </div>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Company/Organization</label>
@@ -466,7 +383,6 @@
                                         <option value="flexible">I'm flexible</option>
                                     </select>
                                 </div>
-
                                 <div>
                                     <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Upload your design</label>
                                     <div id="design-upload-dropzone" class="mt-1 flex flex-col items-center justify-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg bg-white text-center cursor-pointer hover:border-secondary transition-colors">
@@ -516,77 +432,32 @@
                     <div class="sticky top-24">
                         <div class="card">
                             <h3 class="text-xl font-montserrat font-bold mb-4">Quote Summary</h3>
-                            
-                            <!-- Selected Items -->
-                            <div class="space-y-3 mb-6">
-                                <div id="product-summary" class="hidden">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-sm text-text-secondary">Product:</span>
-                                        <span id="product-name" class="font-semibold">-</span>
-                                    </div>
-                                </div>
-                                <div id="garment-summary" class="hidden">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-sm text-text-secondary">Garment:</span>
-                                        <span id="garment-name" class="font-semibold">-</span>
-                                    </div>
-                                </div>
-                                <div id="quantity-summary" class="hidden">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-sm text-text-secondary">Quantity:</span>
-                                        <span id="quantity-value" class="font-semibold">-</span>
-                                    </div>
-                                    <div id="discount-info" class="text-xs text-success hidden"></div>
-                                </div>
-                                <div id="colors-summary" class="hidden">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-sm text-text-secondary">Ink Colors:</span>
-                                        <span id="colors-value" class="font-semibold">-</span>
-                                    </div>
-                                </div>
-                                <div id="effects-summary" class="hidden">
-                                    <div class="text-sm text-text-secondary mb-1">Special Effects:</div>
-                                    <div id="effects-list" class="text-sm"></div>
-                                </div>
-                                <div id="complexity-summary" class="hidden">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-sm text-text-secondary">Design:</span>
-                                        <span id="complexity-value" class="font-semibold">-</span>
-                                    </div>
-                                </div>
-                                <div id="services-summary" class="hidden">
-                                    <div class="text-sm text-text-secondary mb-1">Additional Services:</div>
-                                    <div id="services-list" class="text-sm"></div>
-                                </div>
+                            <div class="space-y-2 text-sm mb-4">
+                                <div class="flex justify-between"><span class="text-text-secondary">Product:</span><span id="summary-product-name" class="font-semibold">-</span></div>
+                                <div class="flex justify-between"><span class="text-text-secondary">Style:</span><span id="summary-style">-</span></div>
+                                <div class="flex justify-between"><span class="text-text-secondary">Color:</span><span id="summary-color">-</span></div>
+                                <div class="flex justify-between"><span class="text-text-secondary">Size:</span><span id="summary-size">-</span></div>
+                                <div class="flex justify-between"><span class="text-text-secondary">Quantity:</span><span id="summary-quantity">-</span></div>
                             </div>
-
-                            <!-- Price Breakdown -->
-                            <div class="border-t border-gray-200 pt-4">
-                                <div class="space-y-2 text-sm">
-                                    <div class="flex justify-between">
-                                        <span>Base Price:</span>
-                                        <span id="base-price">$0.00</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Setup Fees:</span>
-                                        <span id="setup-fees">$0.00</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Add-ons:</span>
-                                        <span id="addons-price">$0.00</span>
-                                    </div>
-                                    <div id="discount-line" class="flex justify-between text-success hidden">
-                                        <span>Bulk Discount:</span>
-                                        <span id="discount-amount">-$0.00</span>
-                                    </div>
+                            <div class="border-t border-gray-200 pt-4 space-y-2 text-sm">
+                                <div class="flex justify-between"><span>Garment cost:</span><span id="line-garment-cost">$0.00</span></div>
+                                <div class="flex justify-between"><span>Print setup:</span><span id="line-print-setup">$0.00</span></div>
+                                <div class="flex justify-between"><span>Ink colors:</span><span id="line-ink-colors">$0.00</span></div>
+                                <div class="flex justify-between"><span>Special effects:</span><span id="line-effects">$0.00</span></div>
+                                <div class="flex justify-between"><span>Rush fee:</span><span id="line-rush">$0.00</span></div>
+                                <div class="flex justify-between"><span>Extras:</span><span id="line-extras">$0.00</span></div>
+                                <div id="line-bulk-wrap" class="flex justify-between text-success hidden"><span>Bulk discount:</span><span id="line-bulk">-$0.00</span></div>
+                            </div>
+                            <div class="border-t border-gray-200 mt-3 pt-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-montserrat font-bold">ESTIMATED TOTAL:</span>
+                                    <span id="total-price" class="text-2xl font-montserrat font-bold text-accent">$0.00</span>
                                 </div>
-                                <div class="border-t border-gray-200 mt-3 pt-3">
-                                    <div class="flex justify-between items-center">
-                                        <span class="font-montserrat font-bold">Estimated Total:</span>
-                                        <span id="total-price" class="text-2xl font-montserrat font-bold text-accent">$0.00</span>
-                                    </div>
-                                    <p class="text-xs text-text-secondary mt-1">*Final price may vary based on design complexity</p>
+                                <div class="flex justify-between text-sm text-text-secondary mt-1">
+                                    <span>Per item:</span>
+                                    <span id="per-item-price">$0.00</span>
                                 </div>
+                                <p class="text-xs text-text-secondary mt-1">*Final price may vary</p>
                             </div>
 
                             <!-- Trust Indicators -->
@@ -719,61 +590,60 @@
         let currentStep = 1;
         let quoteData = {
             product: null,
-            garment: null,
+            color: null,
+            size: null,
             quantity: 0,
-            colors: 1,
+            discountPercent: 0,
+            unitPrice: 0,
+            printLocations: [],
+            inkColors: 1,
+            inkColorCost: 0,
             effects: [],
-            complexity: 'simple',
-            services: [],
-            pricing: {
-                basePrice: 0,
-                setupFees: 0,
-                addons: 0,
-                discount: 0,
-                total: 0
-            }
+            turnaround: 'standard',
+            rushFee: 0,
+            extras: [],
+            styleDetail: null
         };
 
-        // Mobile menu toggle
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
         }
 
-        // Step Navigation
         function nextStep() {
             if (currentStep < TOTAL_STEPS) {
-                document.getElementById(`step-${currentStep}`).classList.add('hidden');
+                document.getElementById('step-' + currentStep).classList.add('hidden');
                 currentStep++;
-                document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+                document.getElementById('step-' + currentStep).classList.remove('hidden');
                 updateProgressBar();
                 updateNavigationButtons();
-                if (currentStep === 2 && quoteData.product) updateSelectedProductBanner();
+                if (currentStep === 2 && quoteData.product) {
+                    updateSelectedProductBanner();
+                    loadStyleDetail();
+                }
             }
         }
 
         function previousStep() {
             if (currentStep > 1) {
-                document.getElementById(`step-${currentStep}`).classList.add('hidden');
+                document.getElementById('step-' + currentStep).classList.add('hidden');
                 currentStep--;
-                document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+                document.getElementById('step-' + currentStep).classList.remove('hidden');
                 updateProgressBar();
                 updateNavigationButtons();
             }
         }
 
         function updateProgressBar() {
-            const progress = (currentStep / TOTAL_STEPS) * 100;
-            document.getElementById('progress-bar').style.width = `${progress}%`;
+            var progress = (currentStep / TOTAL_STEPS) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
             document.getElementById('current-step').textContent = currentStep;
         }
 
         function updateNavigationButtons() {
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const submitBtn = document.getElementById('submit-btn');
-
-            // Previous button
+            var prevBtn = document.getElementById('prev-btn');
+            var nextBtn = document.getElementById('next-btn');
+            var submitBtn = document.getElementById('submit-btn');
             if (currentStep === 1) {
                 prevBtn.disabled = true;
                 prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
@@ -781,48 +651,34 @@
                 prevBtn.disabled = false;
                 prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             }
-
-            // Next/Submit button
             if (currentStep === TOTAL_STEPS) {
                 nextBtn.classList.add('hidden');
                 submitBtn.classList.remove('hidden');
             } else {
                 nextBtn.classList.remove('hidden');
                 submitBtn.classList.add('hidden');
-                
-                // Check if current step is valid
-                if (isStepValid(currentStep)) {
-                    nextBtn.disabled = false;
-                    nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                } else {
-                    nextBtn.disabled = true;
-                    nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                }
+                nextBtn.disabled = !isStepValid(currentStep);
+                if (isStepValid(currentStep)) nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                else nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
             }
         }
 
         function isStepValid(step) {
-            switch(step) {
-                case 1: return quoteData.product !== null;
-                case 2: return quoteData.garment !== null;
-                case 3: return quoteData.quantity > 0;
-                case 4: return quoteData.colors > 0;
-                case 5: return quoteData.complexity !== null;
-                default: return true;
-            }
+            if (step === 1) return quoteData.product !== null;
+            if (step === 2) return quoteData.color !== null && quoteData.size !== null;
+            if (step === 3) return quoteData.quantity >= 12;
+            if (step === 4) return quoteData.printLocations.length > 0 && quoteData.inkColors >= 1;
+            if (step === 5) return true;
+            return true;
         }
 
         function updateSelectedProductBanner() {
-            const banner = document.getElementById('selected-product-banner');
+            var banner = document.getElementById('selected-product-banner');
             if (!quoteData.product) { banner.classList.add('hidden'); return; }
             banner.classList.remove('hidden');
-            const img = document.getElementById('selected-product-image');
-            const nameEl = document.getElementById('selected-product-name');
-            const styleEl = document.getElementById('selected-product-style');
-            img.src = quoteData.product.image || '';
-            img.alt = quoteData.product.name || 'Product';
-            nameEl.textContent = quoteData.product.name || '';
-            styleEl.textContent = quoteData.product.style ? `Style #${quoteData.product.style}` : '';
+            document.getElementById('selected-product-image').src = quoteData.product.image || '';
+            document.getElementById('selected-product-name').textContent = quoteData.product.name || '';
+            document.getElementById('selected-product-style').textContent = quoteData.product.style ? 'Style #' + quoteData.product.style : '';
         }
 
         // S&S Activewear API (via Netlify proxy to avoid CORS)
@@ -940,6 +796,10 @@
 
         function selectProduct(product, cardEl) {
             quoteData.product = { name: product.name, style: product.style, image: product.image };
+            quoteData.color = null;
+            quoteData.size = null;
+            quoteData.unitPrice = 0;
+            quoteData.styleDetail = null;
             document.querySelectorAll('.product-card').forEach(function(el) {
                 el.classList.remove('border-secondary', 'bg-blue-50');
                 el.classList.add('border-gray-200');
@@ -955,261 +815,252 @@
             updateProgressBar();
             updateNavigationButtons();
             updateSelectedProductBanner();
+            loadStyleDetail();
         }
 
-        // Step 2: Garment Selection
-        function selectGarment(type, name, price) {
-            // Remove previous selection
-            document.querySelectorAll('.garment-option').forEach(el => {
-                el.classList.remove('border-secondary', 'bg-blue-50');
-                el.classList.add('border-gray-200');
-            });
+        var styleDetailColors = [];
+        var styleDetailSizes = [];
 
-            // Add selection to clicked option
-            event.currentTarget.classList.remove('border-gray-200');
-            event.currentTarget.classList.add('border-secondary', 'bg-blue-50');
-
-            quoteData.garment = { type, name, price };
-            updateSummary();
-            updateNavigationButtons();
-        }
-
-        // Step 2: Quantity Selection
-        function selectQuantity(qty, discount) {
-            // Remove previous selection
-            document.querySelectorAll('.quantity-option').forEach(el => {
-                el.classList.remove('border-secondary', 'bg-blue-50');
-                el.classList.add('border-gray-200');
-            });
-
-            // Add selection to clicked option
-            event.currentTarget.classList.remove('border-gray-200');
-            event.currentTarget.classList.add('border-secondary', 'bg-blue-50');
-
-            quoteData.quantity = qty;
-            quoteData.discount = discount;
-            document.getElementById('custom-quantity').value = '';
-            updateSummary();
-            updateNavigationButtons();
-        }
-
-        function selectCustomQuantity() {
-            const customQty = parseInt(document.getElementById('custom-quantity').value);
-            if (customQty >= 12) {
-                // Remove previous selections
-                document.querySelectorAll('.quantity-option').forEach(el => {
-                    el.classList.remove('border-secondary', 'bg-blue-50');
-                    el.classList.add('border-gray-200');
+        function loadStyleDetail() {
+            var styleID = quoteData.product && quoteData.product.style;
+            if (!styleID) return;
+            var loadingEl = document.getElementById('step2-loading');
+            var errorEl = document.getElementById('step2-error');
+            var contentEl = document.getElementById('step2-content');
+            loadingEl.classList.remove('hidden');
+            errorEl.classList.add('hidden');
+            contentEl.classList.add('hidden');
+            fetch('/api/ss-style-detail?styleID=' + encodeURIComponent(styleID))
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    loadingEl.classList.add('hidden');
+                    var list = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.Items) ? data.Items : (data && data.data) ? data.data : [];
+                    var colorMap = {};
+                    list.forEach(function(sku) {
+                        var key = (sku.colorName || sku.ColorName || sku.color || '').trim() || 'Default';
+                        if (!colorMap[key]) {
+                            var rawImg = sku.colorFrontImage || sku.ColorFrontImage || sku.colorImage || '';
+                            var img = rawImg && (rawImg.indexOf('http') === 0 ? rawImg : 'https://cdn.ssactivewear.com/' + rawImg);
+                            colorMap[key] = {
+                                name: key,
+                                image: img || null,
+                                price: parseFloat(sku.ourPrice || sku.OurPrice || sku.price || sku.Price || 0) || 0
+                            };
+                        }
+                    });
+                    styleDetailColors = Object.values(colorMap);
+                    var sizeOrder = ['OSFA','XS','S','M','L','XL','2XL','3XL','4XL','5XL'];
+                    var sizeSet = {};
+                    list.forEach(function(sku) {
+                        var s = (sku.sizeName || sku.SizeName || sku.size || '').trim();
+                        if (s) sizeSet[s] = true;
+                    });
+                    styleDetailSizes = sizeOrder.filter(function(s) { return sizeSet[s]; });
+                    if (styleDetailSizes.length === 0) styleDetailSizes = Object.keys(sizeSet);
+                    quoteData.styleDetail = { colors: styleDetailColors, sizes: styleDetailSizes };
+                    renderStep2Content();
+                    contentEl.classList.remove('hidden');
+                })
+                .catch(function() {
+                    loadingEl.classList.add('hidden');
+                    errorEl.classList.remove('hidden');
                 });
-
-                let discount = 'Base Price';
-                if (customQty >= 100) discount = '20% off';
-                else if (customQty >= 50) discount = '15% off';
-                else if (customQty >= 25) discount = '10% off';
-
-                quoteData.quantity = customQty;
-                quoteData.discount = discount;
-                updateSummary();
-                updateNavigationButtons();
-            }
         }
 
-        // Step 3: Colors & Effects
-        function selectColors(colorCount, additionalCost) {
-            // Remove previous selection
-            document.querySelectorAll('.color-option').forEach(el => {
+        function renderStep2Content() {
+            var grid = document.getElementById('color-swatches-grid');
+            var sizeWrap = document.getElementById('size-buttons');
+            grid.innerHTML = '';
+            styleDetailColors.forEach(function(c, i) {
+                var el = document.createElement('div');
+                el.className = 'color-swatch border-2 border-gray-200 rounded-lg p-2 cursor-pointer hover:border-secondary transition-colors text-center';
+                el.setAttribute('data-color-index', i);
+                el.innerHTML = '<img src="' + (c.image || '') + '" alt="" class="w-full h-20 object-cover rounded bg-gray-100 mb-2" onerror="this.style.display=\'none\'" /><span class="text-xs font-montserrat font-semibold">' + (c.name || '') + '</span>';
+                el.addEventListener('click', function() { selectColor(i); });
+                grid.appendChild(el);
+            });
+            sizeWrap.innerHTML = '';
+            styleDetailSizes.forEach(function(s) {
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'size-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg';
+                btn.textContent = s;
+                btn.setAttribute('data-size', s);
+                btn.addEventListener('click', function() { selectSize(s); });
+                sizeWrap.appendChild(btn);
+            });
+        }
+
+        function selectColor(index) {
+            var c = styleDetailColors[index];
+            if (!c) return;
+            quoteData.color = { name: c.name, image: c.image, price: c.price };
+            quoteData.unitPrice = c.price;
+            document.querySelectorAll('.color-swatch').forEach(function(el) {
                 el.classList.remove('border-secondary', 'bg-blue-50');
                 el.classList.add('border-gray-200');
             });
-
-            // Add selection to clicked option
-            event.currentTarget.classList.remove('border-gray-200');
-            event.currentTarget.classList.add('border-secondary', 'bg-blue-50');
-
-            quoteData.colors = colorCount;
-            quoteData.colorCost = additionalCost;
+            var el = document.querySelector('.color-swatch[data-color-index="' + index + '"]');
+            if (el) { el.classList.remove('border-gray-200'); el.classList.add('border-secondary', 'bg-blue-50'); }
             updateSummary();
             updateNavigationButtons();
         }
 
-        function toggleEffect(effectType, cost) {
-            const element = event.currentTarget;
-            const effectIndex = quoteData.effects.findIndex(e => e.type === effectType);
-
-            if (effectIndex > -1) {
-                // Remove effect
-                quoteData.effects.splice(effectIndex, 1);
-                element.classList.remove('border-secondary', 'bg-blue-50');
-                element.classList.add('border-gray-200');
-            } else {
-                // Add effect
-                quoteData.effects.push({ type: effectType, cost });
-                element.classList.remove('border-gray-200');
-                element.classList.add('border-secondary', 'bg-blue-50');
-            }
-            updateSummary();
-        }
-
-        // Step 4: Design Complexity
-        function selectComplexity(level, setupCost) {
-            // Remove previous selection
-            document.querySelectorAll('.complexity-option').forEach(el => {
-                el.classList.remove('border-secondary', 'bg-blue-50');
-                el.classList.add('border-gray-200');
+        function selectSize(sizeName) {
+            quoteData.size = sizeName;
+            document.querySelectorAll('.size-btn').forEach(function(btn) {
+                btn.classList.remove('border-secondary', 'bg-blue-50');
+                btn.classList.add('border-gray-200');
             });
-
-            // Add selection to clicked option
-            event.currentTarget.classList.remove('border-gray-200');
-            event.currentTarget.classList.add('border-secondary', 'bg-blue-50');
-
-            quoteData.complexity = level;
-            quoteData.setupCost = setupCost;
+            var btn = document.querySelector('.size-btn[data-size="' + sizeName + '"]');
+            if (btn) { btn.classList.remove('border-gray-200'); btn.classList.add('border-secondary', 'bg-blue-50'); }
             updateSummary();
             updateNavigationButtons();
         }
 
-        function toggleService(serviceType, cost) {
-            const serviceIndex = quoteData.services.findIndex(s => s.type === serviceType);
-
-            if (serviceIndex > -1) {
-                // Remove service
-                quoteData.services.splice(serviceIndex, 1);
-            } else {
-                // Add service
-                quoteData.services.push({ type: serviceType, cost });
-            }
-            updateSummary();
-        }
-
-        // Update Summary
         function updateSummary() {
-            // Product (Step 1)
-            if (quoteData.product) {
-                document.getElementById('product-summary').classList.remove('hidden');
-                document.getElementById('product-name').textContent = quoteData.product.name || '-';
-            }
-            // Garment
-            if (quoteData.garment) {
-                document.getElementById('garment-summary').classList.remove('hidden');
-                document.getElementById('garment-name').textContent = quoteData.garment.name;
-            }
-
-            // Quantity
-            if (quoteData.quantity > 0) {
-                document.getElementById('quantity-summary').classList.remove('hidden');
-                document.getElementById('quantity-value').textContent = quoteData.quantity;
-                if (quoteData.discount && quoteData.discount !== 'Base Price') {
-                    document.getElementById('discount-info').classList.remove('hidden');
-                    document.getElementById('discount-info').textContent = `Bulk discount: ${quoteData.discount}`;
-                }
-            }
-
-            // Colors
-            if (quoteData.colors > 0) {
-                document.getElementById('colors-summary').classList.remove('hidden');
-                document.getElementById('colors-value').textContent = `${quoteData.colors} color${quoteData.colors > 1 ? 's' : ''}`;
-            }
-
-            // Effects
-            if (quoteData.effects.length > 0) {
-                document.getElementById('effects-summary').classList.remove('hidden');
-                const effectsList = quoteData.effects.map(e => {
-                    const names = {
-                        metallic: 'Metallic Ink',
-                        glow: 'Glow-in-Dark',
-                        vintage: 'Vintage Distressed',
-                        eco: 'Eco-Friendly Ink'
-                    };
-                    return `${names[e.type]} (+$${e.cost.toFixed(2)})`;
-                }).join(', ');
-                document.getElementById('effects-list').textContent = effectsList;
-            }
-
-            // Complexity
-            if (quoteData.complexity) {
-                document.getElementById('complexity-summary').classList.remove('hidden');
-                const complexityNames = {
-                    simple: 'Simple Design',
-                    moderate: 'Moderate Design',
-                    complex: 'Complex Design'
-                };
-                document.getElementById('complexity-value').textContent = complexityNames[quoteData.complexity];
-            }
-
-            // Services
-            if (quoteData.services.length > 0) {
-                document.getElementById('services-summary').classList.remove('hidden');
-                const servicesList = quoteData.services.map(s => {
-                    const names = {
-                        rush: 'Rush Delivery',
-                        consultation: 'Design Consultation',
-                        sample: 'Sample Print'
-                    };
-                    return `${names[s.type]} (+$${s.cost.toFixed(2)})`;
-                }).join(', ');
-                document.getElementById('services-list').textContent = servicesList;
-            }
-
-            // Calculate pricing
+            document.getElementById('summary-product-name').textContent = quoteData.product ? quoteData.product.name : '-';
+            document.getElementById('summary-style').textContent = quoteData.product && quoteData.product.style ? quoteData.product.style : '-';
+            document.getElementById('summary-color').textContent = quoteData.color ? quoteData.color.name : '-';
+            document.getElementById('summary-size').textContent = quoteData.size || '-';
+            document.getElementById('summary-quantity').textContent = quoteData.quantity >= 12 ? quoteData.quantity : '-';
             calculatePricing();
         }
 
         function calculatePricing() {
-            let basePrice = 0;
-            let setupFees = 0;
-            let addons = 0;
-            let discount = 0;
-
-            if (quoteData.garment && quoteData.quantity > 0) {
-                // Base price calculation
-                basePrice = quoteData.garment.price * quoteData.quantity;
-
-                // Color costs
-                if (quoteData.colorCost) {
-                    addons += quoteData.colorCost * quoteData.quantity;
-                }
-
-                // Effects
-                quoteData.effects.forEach(effect => {
-                    addons += effect.cost * quoteData.quantity;
+            var garmentCost = 0, printSetup = 0, inkCost = 0, effectsCost = 0, rushFee = 0, extrasCost = 0, bulkDiscount = 0;
+            var qty = quoteData.quantity >= 12 ? quoteData.quantity : 0;
+            if (qty > 0 && quoteData.unitPrice > 0) {
+                garmentCost = quoteData.unitPrice * qty;
+                var locationCost = 0;
+                quoteData.printLocations.forEach(function(loc) { locationCost += (loc.cost || 0) * qty; });
+                printSetup = locationCost;
+                inkCost = (quoteData.inkColorCost || 0) * qty;
+                quoteData.effects.forEach(function(e) { effectsCost += (e.cost || 0) * qty; });
+                rushFee = quoteData.rushFee || 0;
+                quoteData.extras.forEach(function(e) {
+                    if (e.type === 'onetime') extrasCost += e.cost || 0;
+                    else extrasCost += (e.cost || 0) * qty;
                 });
-
-                // Setup fees
-                if (quoteData.setupCost) {
-                    setupFees += quoteData.setupCost;
-                }
-
-                // Services
-                quoteData.services.forEach(service => {
-                    setupFees += service.cost;
-                });
-
-                // Bulk discounts
-                let discountPercent = 0;
-                if (quoteData.quantity >= 100) discountPercent = 0.20;
-                else if (quoteData.quantity >= 50) discountPercent = 0.15;
-                else if (quoteData.quantity >= 25) discountPercent = 0.10;
-
-                discount = (basePrice + addons) * discountPercent;
+                var subtotal = garmentCost + printSetup + inkCost + effectsCost + rushFee + extrasCost;
+                var pct = quoteData.discountPercent || 0;
+                bulkDiscount = (garmentCost + printSetup + inkCost + effectsCost) * pct;
             }
-
-            const total = basePrice + setupFees + addons - discount;
-
-            // Update display
-            document.getElementById('base-price').textContent = `$${basePrice.toFixed(2)}`;
-            document.getElementById('setup-fees').textContent = `$${setupFees.toFixed(2)}`;
-            document.getElementById('addons-price').textContent = `$${addons.toFixed(2)}`;
-            document.getElementById('total-price').textContent = `$${total.toFixed(2)}`;
-
-            if (discount > 0) {
-                document.getElementById('discount-line').classList.remove('hidden');
-                document.getElementById('discount-amount').textContent = `-$${discount.toFixed(2)}`;
+            var total = garmentCost + printSetup + inkCost + effectsCost + rushFee + extrasCost - bulkDiscount;
+            var perItem = qty > 0 ? total / qty : 0;
+            document.getElementById('line-garment-cost').textContent = '$' + garmentCost.toFixed(2);
+            document.getElementById('line-print-setup').textContent = '$' + printSetup.toFixed(2);
+            document.getElementById('line-ink-colors').textContent = '$' + inkCost.toFixed(2);
+            document.getElementById('line-effects').textContent = '$' + effectsCost.toFixed(2);
+            document.getElementById('line-rush').textContent = '$' + rushFee.toFixed(2);
+            document.getElementById('line-extras').textContent = '$' + extrasCost.toFixed(2);
+            if (bulkDiscount > 0) {
+                document.getElementById('line-bulk-wrap').classList.remove('hidden');
+                document.getElementById('line-bulk').textContent = '-$' + bulkDiscount.toFixed(2);
             } else {
-                document.getElementById('discount-line').classList.add('hidden');
+                document.getElementById('line-bulk-wrap').classList.add('hidden');
             }
+            document.getElementById('total-price').textContent = '$' + total.toFixed(2);
+            document.getElementById('per-item-price').textContent = '$' + perItem.toFixed(2);
+        }
 
-            // Store in quote data
-            quoteData.pricing = { basePrice, setupFees, addons, discount, total };
+        function bindSteps3to5() {
+            var qtyOpts = document.querySelectorAll('.quantity-option[data-qty]');
+            qtyOpts.forEach(function(el) {
+                el.addEventListener('click', function() {
+                    var qty = parseInt(el.getAttribute('data-qty'), 10);
+                    quoteData.quantity = qty;
+                    quoteData.discountPercent = qty >= 100 ? 0.20 : qty >= 50 ? 0.15 : qty >= 25 ? 0.10 : 0;
+                    document.querySelectorAll('.quantity-option').forEach(function(o) {
+                        o.classList.remove('border-secondary', 'bg-blue-50');
+                        o.classList.add('border-gray-200');
+                    });
+                    el.classList.remove('border-gray-200');
+                    el.classList.add('border-secondary', 'bg-blue-50');
+                    document.getElementById('custom-quantity').value = '';
+                    updateSummary();
+                    updateNavigationButtons();
+                });
+            });
+            document.getElementById('custom-quantity').addEventListener('change', function() {
+                var qty = parseInt(this.value, 10);
+                if (qty >= 12) {
+                    quoteData.quantity = qty;
+                    quoteData.discountPercent = qty >= 100 ? 0.20 : qty >= 50 ? 0.15 : qty >= 25 ? 0.10 : 0;
+                    document.querySelectorAll('.quantity-option').forEach(function(o) {
+                        o.classList.remove('border-secondary', 'bg-blue-50');
+                        o.classList.add('border-gray-200');
+                    });
+                    updateSummary();
+                    updateNavigationButtons();
+                }
+            });
+
+            document.querySelectorAll('.print-location').forEach(function(cb) {
+                cb.addEventListener('change', function() {
+                    var loc = this.getAttribute('data-location');
+                    var cost = parseFloat(this.getAttribute('data-cost') || 0);
+                    if (this.checked) quoteData.printLocations.push({ location: loc, cost: cost });
+                    else quoteData.printLocations = quoteData.printLocations.filter(function(l) { return l.location !== loc; });
+                    updateSummary();
+                    updateNavigationButtons();
+                });
+            });
+            document.querySelectorAll('.ink-color-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    quoteData.inkColors = parseInt(this.getAttribute('data-colors'), 10);
+                    quoteData.inkColorCost = parseFloat(this.getAttribute('data-cost') || 0);
+                    document.querySelectorAll('.ink-color-btn').forEach(function(b) {
+                        b.classList.remove('border-secondary', 'bg-blue-50');
+                        b.classList.add('border-gray-200');
+                    });
+                    this.classList.remove('border-gray-200');
+                    this.classList.add('border-secondary', 'bg-blue-50');
+                    updateSummary();
+                    updateNavigationButtons();
+                });
+            });
+            document.querySelectorAll('.effect-cb').forEach(function(cb) {
+                cb.addEventListener('change', function() {
+                    var effect = this.getAttribute('data-effect');
+                    var cost = parseFloat(this.getAttribute('data-cost') || 0);
+                    if (this.checked) quoteData.effects.push({ effect: effect, cost: cost });
+                    else quoteData.effects = quoteData.effects.filter(function(e) { return e.effect !== effect; });
+                    updateSummary();
+                });
+            });
+            document.querySelectorAll('input[name="turnaround"]').forEach(function(radio) {
+                radio.addEventListener('change', function() {
+                    quoteData.turnaround = this.value;
+                    quoteData.rushFee = parseFloat(this.getAttribute('data-fee') || 0);
+                    document.querySelectorAll('.turnaround-option').forEach(function(l) {
+                        l.classList.remove('border-secondary', 'bg-blue-50');
+                        l.classList.add('border-gray-200');
+                    });
+                    this.closest('label').classList.remove('border-gray-200');
+                    this.closest('label').classList.add('border-secondary', 'bg-blue-50');
+                    updateSummary();
+                });
+            });
+            document.querySelectorAll('.turnaround-option').forEach(function(l) {
+                if (l.querySelector('input[checked]')) l.classList.add('border-secondary', 'bg-blue-50');
+            });
+            document.querySelectorAll('.extra-cb').forEach(function(cb) {
+                cb.addEventListener('change', function() {
+                    var extra = this.getAttribute('data-extra');
+                    var cost = parseFloat(this.getAttribute('data-cost') || 0);
+                    var type = this.getAttribute('data-type') || 'onetime';
+                    if (this.checked) quoteData.extras.push({ extra: extra, cost: cost, type: type });
+                    else quoteData.extras = quoteData.extras.filter(function(e) { return e.extra !== extra; });
+                    updateSummary();
+                });
+            });
+            var defaultInk = document.querySelector('.ink-color-btn[data-colors="1"]');
+            if (defaultInk) {
+                defaultInk.classList.add('border-secondary', 'bg-blue-50');
+                quoteData.inkColors = 1;
+                quoteData.inkColorCost = 0;
+            }
         }
 
         // Design upload handling (Step 5)
@@ -1378,30 +1229,38 @@
             }
         }
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             updateNavigationButtons();
             initProductCatalog();
             initDesignUpload();
-            
-            // Load saved quote if exists
-            const urlParams = new URLSearchParams(window.location.search);
-            const quoteId = urlParams.get('quote');
+            bindSteps3to5();
+            var urlParams = new URLSearchParams(window.location.search);
+            var quoteId = urlParams.get('quote');
             if (quoteId) {
-                const savedQuote = localStorage.getItem(quoteId);
-                if (savedQuote) {
-                    quoteData = JSON.parse(savedQuote);
+                var saved = localStorage.getItem(quoteId);
+                if (saved) {
+                    try {
+                        var parsed = JSON.parse(saved);
+                        quoteData.product = parsed.product || null;
+                        quoteData.color = parsed.color || null;
+                        quoteData.size = parsed.size || null;
+                        quoteData.quantity = parsed.quantity || 0;
+                        quoteData.discountPercent = parsed.discountPercent || 0;
+                        quoteData.unitPrice = parsed.unitPrice || 0;
+                        quoteData.printLocations = parsed.printLocations || [];
+                        quoteData.inkColors = parsed.inkColors || 1;
+                        quoteData.inkColorCost = parsed.inkColorCost || 0;
+                        quoteData.effects = parsed.effects || [];
+                        quoteData.turnaround = parsed.turnaround || 'standard';
+                        quoteData.rushFee = parsed.rushFee || 0;
+                        quoteData.extras = parsed.extras || [];
+                    } catch (e) {}
                     updateSummary();
-                    // Restore UI state based on saved data
-                    restoreUIState();
                 }
             }
         });
 
-        function restoreUIState() {
-            // This would restore the UI state based on saved quote data
-            // Implementation would depend on the specific requirements
-        }
+        function restoreUIState() {}
     </script>
 <script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
 </body>
