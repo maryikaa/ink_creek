@@ -216,60 +216,16 @@
                             <h2 class="text-2xl font-montserrat font-bold mb-6">Print Options</h2>
                             <div class="mb-6">
                                 <h3 class="font-montserrat font-semibold mb-3">Print Locations</h3>
-                                <div class="space-y-2">
-                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <span class="font-montserrat font-semibold">Front</span>
-                                        <span class="text-success text-sm">+$0</span>
-                                        <input type="checkbox" class="print-location w-5 h-5 text-secondary" data-location="front" data-cost="0" />
-                                    </label>
-                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <span class="font-montserrat font-semibold">Back</span>
-                                        <span class="text-accent text-sm">+$2.50/item</span>
-                                        <input type="checkbox" class="print-location w-5 h-5 text-secondary" data-location="back" data-cost="2.5" />
-                                    </label>
-                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <span class="font-montserrat font-semibold">Left Sleeve</span>
-                                        <span class="text-accent text-sm">+$1.50/item</span>
-                                        <input type="checkbox" class="print-location w-5 h-5 text-secondary" data-location="leftSleeve" data-cost="1.5" />
-                                    </label>
-                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <span class="font-montserrat font-semibold">Right Sleeve</span>
-                                        <span class="text-accent text-sm">+$1.50/item</span>
-                                        <input type="checkbox" class="print-location w-5 h-5 text-secondary" data-location="rightSleeve" data-cost="1.5" />
-                                    </label>
-                                </div>
+                                <div id="step4-print-locations" class="space-y-2"></div>
                             </div>
                             <div class="mb-6">
                                 <h3 class="font-montserrat font-semibold mb-3">Ink Colors per Location</h3>
-                                <div class="flex flex-wrap gap-2">
-                                    <button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="1" data-cost="0">1</button>
-                                    <button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="2" data-cost="1.5">2</button>
-                                    <button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="3" data-cost="2.75">3</button>
-                                    <button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="4" data-cost="3.75">4</button>
-                                    <button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="5" data-cost="4.5">5</button>
-                                    <button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="6" data-cost="5.25">6+</button>
-                                </div>
-                                <p class="text-xs text-text-secondary mt-2">1 color = $0, 2 = +$1.50, 3 = +$2.75, 4 = +$3.75, 5 = +$4.50, 6+ = +$5.25 per item</p>
+                                <div id="step4-ink-colors" class="flex flex-wrap gap-2"></div>
+                                <p id="step4-ink-note" class="text-xs text-text-secondary mt-2"></p>
                             </div>
                             <div>
                                 <h3 class="font-montserrat font-semibold mb-3">Special Effects</h3>
-                                <div class="space-y-2">
-                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <span class="font-montserrat font-semibold">Metallic Ink</span>
-                                        <span class="text-accent text-sm">+$3.00/item</span>
-                                        <input type="checkbox" class="effect-cb w-5 h-5 text-secondary" data-effect="metallic" data-cost="3" />
-                                    </label>
-                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <span class="font-montserrat font-semibold">Glow in the Dark</span>
-                                        <span class="text-accent text-sm">+$4.50/item</span>
-                                        <input type="checkbox" class="effect-cb w-5 h-5 text-secondary" data-effect="glow" data-cost="4.5" />
-                                    </label>
-                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <span class="font-montserrat font-semibold">Puff Ink</span>
-                                        <span class="text-accent text-sm">+$2.00/item</span>
-                                        <input type="checkbox" class="effect-cb w-5 h-5 text-secondary" data-effect="puff" data-cost="2" />
-                                    </label>
-                                </div>
+                                <div id="step4-effects" class="space-y-2"></div>
                             </div>
                         </div>
                     </div>
@@ -280,53 +236,11 @@
                             <h2 class="text-2xl font-montserrat font-bold mb-6">Turnaround & Extras</h2>
                             <div class="mb-6">
                                 <h3 class="font-montserrat font-semibold mb-3">Turnaround Time</h3>
-                                <div class="space-y-2">
-                                    <label class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors turnaround-option">
-                                        <span class="font-montserrat font-semibold">Standard (7-10 days)</span>
-                                        <span class="text-success text-sm">No extra charge</span>
-                                        <input type="radio" name="turnaround" class="w-5 h-5 text-secondary" value="standard" data-fee="0" checked />
-                                    </label>
-                                    <label class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors turnaround-option">
-                                        <span class="font-montserrat font-semibold">Rush (3-5 days)</span>
-                                        <span class="text-accent text-sm">+$25 flat</span>
-                                        <input type="radio" name="turnaround" class="w-5 h-5 text-secondary" value="rush" data-fee="25" />
-                                    </label>
-                                    <label class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors turnaround-option">
-                                        <span class="font-montserrat font-semibold">Super Rush (1-2 days)</span>
-                                        <span class="text-accent text-sm">+$75 flat</span>
-                                        <input type="radio" name="turnaround" class="w-5 h-5 text-secondary" value="superRush" data-fee="75" />
-                                    </label>
-                                </div>
+                                <div id="step5-turnaround" class="space-y-2"></div>
                             </div>
                             <div>
                                 <h3 class="font-montserrat font-semibold mb-3">Add-ons</h3>
-                                <div class="space-y-2">
-                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <span class="font-montserrat font-semibold">Design Setup</span>
-                                        <span class="text-accent text-sm">+$45 one-time</span>
-                                        <input type="checkbox" class="extra-cb w-5 h-5 text-secondary" data-extra="designSetup" data-cost="45" data-type="onetime" />
-                                    </label>
-                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <span class="font-montserrat font-semibold">Design Consultation 30min</span>
-                                        <span class="text-accent text-sm">+$45</span>
-                                        <input type="checkbox" class="extra-cb w-5 h-5 text-secondary" data-extra="consultation" data-cost="45" data-type="onetime" />
-                                    </label>
-                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <span class="font-montserrat font-semibold">Sample Print</span>
-                                        <span class="text-accent text-sm">+$15</span>
-                                        <input type="checkbox" class="extra-cb w-5 h-5 text-secondary" data-extra="sample" data-cost="15" data-type="onetime" />
-                                    </label>
-                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <span class="font-montserrat font-semibold">Individual Bagging</span>
-                                        <span class="text-accent text-sm">+$0.50/item</span>
-                                        <input type="checkbox" class="extra-cb w-5 h-5 text-secondary" data-extra="bagging" data-cost="0.5" data-type="peritem" />
-                                    </label>
-                                    <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors">
-                                        <span class="font-montserrat font-semibold">Folding & Stacking</span>
-                                        <span class="text-accent text-sm">+$0.25/item</span>
-                                        <input type="checkbox" class="extra-cb w-5 h-5 text-secondary" data-extra="folding" data-cost="0.25" data-type="peritem" />
-                                    </label>
-                                </div>
+                                <div id="step5-extras" class="space-y-2"></div>
                             </div>
                         </div>
                     </div>
@@ -581,10 +495,99 @@
 
             <div class="border-t border-gray-100 mt-12 pt-8 text-center text-gray-500">
                 <p>&copy; 2026 Ink Creek Studio. All Rights Reserved.</p>
+                <a href="admin.html" class="text-xs text-gray-300 hover:text-gray-500">Admin</a>
             </div>
         </div>
     </footer>
     <script>
+        var calculatorConfig = null;
+
+        function loadCalculatorConfig() {
+            try {
+                var raw = localStorage.getItem('calculatorConfig');
+                if (raw) return Promise.resolve(JSON.parse(raw));
+            } catch (e) {}
+            return fetch('../config/calculator-config.json').then(function(r) { return r.json(); });
+        }
+
+        function getDiscountPercent(qty) {
+            if (!calculatorConfig || !calculatorConfig.pricing || !calculatorConfig.pricing.volumeDiscounts) return 0;
+            var tiers = Object.keys(calculatorConfig.pricing.volumeDiscounts).map(Number).sort(function(a,b) { return b - a; });
+            for (var i = 0; i < tiers.length; i++) {
+                if (qty >= tiers[i]) return (calculatorConfig.pricing.volumeDiscounts[tiers[i]] || 0) / 100;
+            }
+            return 0;
+        }
+
+        function getMinQuantity() {
+            return (calculatorConfig && calculatorConfig.pricing && calculatorConfig.pricing.minimumQuantity) ? calculatorConfig.pricing.minimumQuantity : 12;
+        }
+
+        function renderStep4FromConfig(cfg) {
+            var p = (cfg && cfg.pricing) || {};
+            var locs = p.printLocations || { front: 0, back: 2.5, leftSleeve: 1.5, rightSleeve: 1.5 };
+            var locLabels = { front: 'Front', back: 'Back', leftSleeve: 'Left Sleeve', rightSleeve: 'Right Sleeve' };
+            var locHtml = '';
+            Object.keys(locLabels).forEach(function(key) {
+                var cost = locs[key] != null ? locs[key] : 0;
+                var cls = cost === 0 ? 'text-success' : 'text-accent';
+                locHtml += '<label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors"><span class="font-montserrat font-semibold">' + locLabels[key] + '</span><span class="' + cls + ' text-sm">' + (cost === 0 ? '+' + cost.toFixed(2) : '+$' + cost.toFixed(2) + '/item') + '</span><input type="checkbox" class="print-location w-5 h-5 text-secondary" data-location="' + key + '" data-cost="' + cost + '" /></label>';
+            });
+            document.getElementById('step4-print-locations').innerHTML = locHtml;
+
+            var inks = p.inkColors || { '1': 0, '2': 1.5, '3': 2.75, '4': 3.75, '5': 4.5, '6': 5.25 };
+            var inkHtml = '';
+            var noteParts = [];
+            ['1','2','3','4','5','6'].forEach(function(key) {
+                var cost = inks[key] != null ? inks[key] : 0;
+                var label = key === '6' ? '6+' : key;
+                inkHtml += '<button type="button" class="ink-color-btn btn-secondary border-2 border-gray-200 px-4 py-2 rounded-lg" data-colors="' + key + '" data-cost="' + cost + '">' + label + '</button>';
+                noteParts.push(key === '6' ? '6+' : key + ' = +$' + cost.toFixed(2));
+            });
+            document.getElementById('step4-ink-colors').innerHTML = inkHtml;
+            document.getElementById('step4-ink-note').textContent = noteParts.join(', ') + ' per item';
+
+            var effects = p.specialEffects || {};
+            var effectHtml = '';
+            Object.keys(effects).forEach(function(key) {
+                var o = effects[key];
+                var label = (o && o.label) ? o.label : key;
+                var price = (o && o.price != null) ? o.price : 0;
+                effectHtml += '<label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors"><span class="font-montserrat font-semibold">' + label + '</span><span class="text-accent text-sm">+$' + price.toFixed(2) + '/item</span><input type="checkbox" class="effect-cb w-5 h-5 text-secondary" data-effect="' + key + '" data-cost="' + price + '" /></label>';
+            });
+            document.getElementById('step4-effects').innerHTML = effectHtml;
+        }
+
+        function renderStep5FromConfig(cfg) {
+            var p = (cfg && cfg.pricing) || {};
+            var turn = p.turnaround || { standard: { label: 'Standard (7-10 days)', price: 0 }, rush: { label: 'Rush (3-5 days)', price: 25 }, superRush: { label: 'Super Rush (1-2 days)', price: 75 } };
+            var turnKeys = ['standard', 'rush', 'superRush'];
+            var turnHtml = '';
+            turnKeys.forEach(function(key, idx) {
+                var o = turn[key];
+                var label = (o && o.label) ? o.label : key;
+                var price = (o && o.price != null) ? o.price : 0;
+                var priceText = price === 0 ? 'No extra charge' : '+$' + price.toFixed(0) + ' flat';
+                var cls = price === 0 ? 'text-success' : 'text-accent';
+                var checked = idx === 0 ? ' checked' : '';
+                turnHtml += '<label class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors turnaround-option"><span class="font-montserrat font-semibold">' + label + '</span><span class="' + cls + ' text-sm">' + priceText + '</span><input type="radio" name="turnaround" class="w-5 h-5 text-secondary" value="' + key + '" data-fee="' + price + '"' + checked + ' /></label>';
+            });
+            document.getElementById('step5-turnaround').innerHTML = turnHtml;
+
+            var extras = p.extras || {};
+            var extraHtml = '';
+            Object.keys(extras).forEach(function(key) {
+                var o = extras[key];
+                if (o && o.enabled === false) return;
+                var label = (o && o.label) ? o.label : key;
+                var price = (o && o.price != null) ? o.price : 0;
+                var type = (o && o.type) ? o.type : 'onetime';
+                var priceText = type === 'peritem' ? '+$' + price.toFixed(2) + '/item' : '+$' + price.toFixed(0) + (type === 'onetime' ? ' one-time' : '');
+                extraHtml += '<label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-secondary transition-colors"><span class="font-montserrat font-semibold">' + label + '</span><span class="text-accent text-sm">' + priceText + '</span><input type="checkbox" class="extra-cb w-5 h-5 text-secondary" data-extra="' + key + '" data-cost="' + price + '" data-type="' + type + '" /></label>';
+            });
+            document.getElementById('step5-extras').innerHTML = extraHtml;
+        }
+
         // Calculator State
         const TOTAL_STEPS = 6;
         let currentStep = 1;
@@ -666,7 +669,7 @@
         function isStepValid(step) {
             if (step === 1) return quoteData.product !== null;
             if (step === 2) return quoteData.color !== null && quoteData.size !== null;
-            if (step === 3) return quoteData.quantity >= 12;
+            if (step === 3) return quoteData.quantity >= getMinQuantity();
             if (step === 4) return quoteData.printLocations.length > 0 && quoteData.inkColors >= 1;
             if (step === 5) return true;
             return true;
@@ -965,28 +968,31 @@
         }
 
         function bindSteps3to5() {
+            var minQty = getMinQuantity();
+            var customQtyEl = document.getElementById('custom-quantity');
+            if (customQtyEl) customQtyEl.setAttribute('min', minQty);
             var qtyOpts = document.querySelectorAll('.quantity-option[data-qty]');
             qtyOpts.forEach(function(el) {
                 el.addEventListener('click', function() {
                     var qty = parseInt(el.getAttribute('data-qty'), 10);
                     quoteData.quantity = qty;
-                    quoteData.discountPercent = qty >= 100 ? 0.20 : qty >= 50 ? 0.15 : qty >= 25 ? 0.10 : 0;
+                    quoteData.discountPercent = getDiscountPercent(qty);
                     document.querySelectorAll('.quantity-option').forEach(function(o) {
                         o.classList.remove('border-secondary', 'bg-blue-50');
                         o.classList.add('border-gray-200');
                     });
                     el.classList.remove('border-gray-200');
                     el.classList.add('border-secondary', 'bg-blue-50');
-                    document.getElementById('custom-quantity').value = '';
+                    if (customQtyEl) customQtyEl.value = '';
                     updateSummary();
                     updateNavigationButtons();
                 });
             });
-            document.getElementById('custom-quantity').addEventListener('change', function() {
+            if (customQtyEl) customQtyEl.addEventListener('change', function() {
                 var qty = parseInt(this.value, 10);
-                if (qty >= 12) {
+                if (qty >= minQty) {
                     quoteData.quantity = qty;
-                    quoteData.discountPercent = qty >= 100 ? 0.20 : qty >= 50 ? 0.15 : qty >= 25 ? 0.10 : 0;
+                    quoteData.discountPercent = getDiscountPercent(qty);
                     document.querySelectorAll('.quantity-option').forEach(function(o) {
                         o.classList.remove('border-secondary', 'bg-blue-50');
                         o.classList.add('border-gray-200');
@@ -1045,6 +1051,12 @@
             document.querySelectorAll('.turnaround-option').forEach(function(l) {
                 if (l.querySelector('input[checked]')) l.classList.add('border-secondary', 'bg-blue-50');
             });
+            var defaultInk = document.querySelector('.ink-color-btn[data-colors="1"]');
+            if (defaultInk) {
+                defaultInk.classList.add('border-secondary', 'bg-blue-50');
+                quoteData.inkColors = 1;
+                quoteData.inkColorCost = (calculatorConfig && calculatorConfig.pricing && calculatorConfig.pricing.inkColors && calculatorConfig.pricing.inkColors['1'] != null) ? calculatorConfig.pricing.inkColors['1'] : 0;
+            }
             document.querySelectorAll('.extra-cb').forEach(function(cb) {
                 cb.addEventListener('change', function() {
                     var extra = this.getAttribute('data-extra');
@@ -1055,12 +1067,6 @@
                     updateSummary();
                 });
             });
-            var defaultInk = document.querySelector('.ink-color-btn[data-colors="1"]');
-            if (defaultInk) {
-                defaultInk.classList.add('border-secondary', 'bg-blue-50');
-                quoteData.inkColors = 1;
-                quoteData.inkColorCost = 0;
-            }
         }
 
         // Design upload handling (Step 5)
@@ -1230,34 +1236,57 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            updateNavigationButtons();
-            initProductCatalog();
-            initDesignUpload();
-            bindSteps3to5();
-            var urlParams = new URLSearchParams(window.location.search);
-            var quoteId = urlParams.get('quote');
-            if (quoteId) {
-                var saved = localStorage.getItem(quoteId);
-                if (saved) {
-                    try {
-                        var parsed = JSON.parse(saved);
-                        quoteData.product = parsed.product || null;
-                        quoteData.color = parsed.color || null;
-                        quoteData.size = parsed.size || null;
-                        quoteData.quantity = parsed.quantity || 0;
-                        quoteData.discountPercent = parsed.discountPercent || 0;
-                        quoteData.unitPrice = parsed.unitPrice || 0;
-                        quoteData.printLocations = parsed.printLocations || [];
-                        quoteData.inkColors = parsed.inkColors || 1;
-                        quoteData.inkColorCost = parsed.inkColorCost || 0;
-                        quoteData.effects = parsed.effects || [];
-                        quoteData.turnaround = parsed.turnaround || 'standard';
-                        quoteData.rushFee = parsed.rushFee || 0;
-                        quoteData.extras = parsed.extras || [];
-                    } catch (e) {}
-                    updateSummary();
-                }
-            }
+            loadCalculatorConfig()
+                .then(function(cfg) {
+                    calculatorConfig = cfg || {};
+                    renderStep4FromConfig(calculatorConfig);
+                    renderStep5FromConfig(calculatorConfig);
+                    var g = (calculatorConfig.general) || {};
+                    var heroTitle = document.querySelector('.bg-surface.py-12 h1');
+                    if (heroTitle && g.calculatorPageTitle) heroTitle.textContent = g.calculatorPageTitle;
+                    var customQtyLabel = document.querySelector('#step-3 .mb-4 label');
+                    if (customQtyLabel) {
+                        if (g.minimumOrderNote) customQtyLabel.textContent = g.minimumOrderNote;
+                        else customQtyLabel.textContent = 'Custom Quantity (min ' + getMinQuantity() + ')';
+                    }
+                    updateNavigationButtons();
+                    initProductCatalog();
+                    initDesignUpload();
+                    bindSteps3to5();
+                    var urlParams = new URLSearchParams(window.location.search);
+                    var quoteId = urlParams.get('quote');
+                    if (quoteId) {
+                        var saved = localStorage.getItem(quoteId);
+                        if (saved) {
+                            try {
+                                var parsed = JSON.parse(saved);
+                                quoteData.product = parsed.product || null;
+                                quoteData.color = parsed.color || null;
+                                quoteData.size = parsed.size || null;
+                                quoteData.quantity = parsed.quantity || 0;
+                                quoteData.discountPercent = parsed.discountPercent || 0;
+                                quoteData.unitPrice = parsed.unitPrice || 0;
+                                quoteData.printLocations = parsed.printLocations || [];
+                                quoteData.inkColors = parsed.inkColors || 1;
+                                quoteData.inkColorCost = parsed.inkColorCost || 0;
+                                quoteData.effects = parsed.effects || [];
+                                quoteData.turnaround = parsed.turnaround || 'standard';
+                                quoteData.rushFee = parsed.rushFee || 0;
+                                quoteData.extras = parsed.extras || [];
+                            } catch (e) {}
+                            updateSummary();
+                        }
+                    }
+                })
+                .catch(function() {
+                    calculatorConfig = { pricing: { printLocations: {}, inkColors: {}, specialEffects: {}, turnaround: {}, extras: {}, volumeDiscounts: {}, minimumQuantity: 12 } };
+                    renderStep4FromConfig(calculatorConfig);
+                    renderStep5FromConfig(calculatorConfig);
+                    updateNavigationButtons();
+                    initProductCatalog();
+                    initDesignUpload();
+                    bindSteps3to5();
+                });
         });
 
         function restoreUIState() {}

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel — Calculator Settings - Ink Creek Studio</title>
+    <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body class="bg-background text-text-primary">
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <nav class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek" class="h-16 w-auto" />
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="interactive_pricing_calculator.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Calculator</a>
+                    <a href="homepage_artisan_screen_printing_studio.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Home</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="min-h-screen py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Login (default) -->
+            <div id="login-screen" class="flex justify-center items-center py-24">
+                <div class="card w-full max-w-md">
+                    <h1 class="text-2xl font-montserrat font-bold mb-6">Admin Login</h1>
+                    <p id="login-error" class="text-red-600 text-sm mb-4 hidden">Incorrect password</p>
+                    <div class="mb-4">
+                        <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Password</label>
+                        <input type="password" id="admin-password" class="input-field w-full" placeholder="Enter password" />
+                    </div>
+                    <button type="button" id="login-btn" class="btn-accent w-full">Login</button>
+                </div>
+            </div>
+
+            <!-- Dashboard (after login) -->
+            <div id="dashboard" class="hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <div>
+                        <h1 class="text-2xl font-montserrat font-bold">Calculator Settings</h1>
+                        <p id="last-saved" class="text-sm text-text-secondary mt-1">Not saved yet</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button type="button" id="save-all-btn" class="btn-accent bg-green-600 hover:bg-green-700">Save All Changes</button>
+                        <a href="#" id="logout-link" class="text-sm text-text-secondary hover:text-primary">Logout</a>
+                    </div>
+                </div>
+                <div id="save-success" class="hidden mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 font-semibold">✓ Settings saved!</div>
+
+                <!-- Tabs -->
+                <div class="mb-4 flex flex-wrap gap-2 border-b border-gray-200 pb-2">
+                    <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg border-secondary bg-blue-50" data-tab="print">Print Prices</button>
+                    <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg" data-tab="discounts">Discounts</button>
+                    <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg" data-tab="extras">Extras</button>
+                    <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg" data-tab="turnaround">Turnaround</button>
+                    <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg" data-tab="general">General</button>
+                </div>
+
+                <!-- Tab: Print Prices -->
+                <div id="tab-print" class="admin-tab-content card">
+                    <h2 class="text-xl font-montserrat font-bold mb-4">Print Locations (price per item)</h2>
+                    <div id="print-locations-fields" class="space-y-3 mb-8"></div>
+                    <h2 class="text-xl font-montserrat font-bold mb-4">Ink Colors (extra per item per location)</h2>
+                    <div id="ink-colors-fields" class="space-y-3 mb-8"></div>
+                    <h2 class="text-xl font-montserrat font-bold mb-4">Special Effects</h2>
+                    <div id="special-effects-list" class="space-y-3"></div>
+                    <button type="button" id="add-effect-btn" class="btn-secondary mt-4">+ Add Effect</button>
+                </div>
+
+                <!-- Tab: Discounts -->
+                <div id="tab-discounts" class="admin-tab-content card hidden">
+                    <h2 class="text-xl font-montserrat font-bold mb-4">Volume Discounts</h2>
+                    <div id="volume-discounts-list" class="space-y-3 mb-6"></div>
+                    <button type="button" id="add-tier-btn" class="btn-secondary mb-6">+ Add Tier</button>
+                    <div>
+                        <label class="block text-sm font-montserrat font-semibold mb-2">Minimum Order Quantity</label>
+                        <input type="number" id="min-quantity" class="input-field w-32" min="1" />
+                    </div>
+                </div>
+
+                <!-- Tab: Extras -->
+                <div id="tab-extras" class="admin-tab-content card hidden">
+                    <h2 class="text-xl font-montserrat font-bold mb-4">Additional Services</h2>
+                    <div id="extras-list" class="space-y-3"></div>
+                    <button type="button" id="add-extra-btn" class="btn-secondary mt-4">+ Add Service</button>
+                </div>
+
+                <!-- Tab: Turnaround -->
+                <div id="tab-turnaround" class="admin-tab-content card hidden">
+                    <h2 class="text-xl font-montserrat font-bold mb-4">Turnaround Options</h2>
+                    <div id="turnaround-list" class="space-y-3"></div>
+                </div>
+
+                <!-- Tab: General -->
+                <div id="tab-general" class="admin-tab-content card hidden">
+                    <h2 class="text-xl font-montserrat font-bold mb-4">General</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-montserrat font-semibold mb-2">Admin Password</label>
+                            <input type="password" id="general-password" class="input-field w-full max-w-xs" />
+                            <button type="button" id="change-password-btn" class="btn-secondary mt-2">Change Password</button>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-montserrat font-semibold mb-2">Calculator page title</label>
+                            <input type="text" id="calculator-title" class="input-field w-full" />
+                        </div>
+                        <div>
+                            <label class="block text-sm font-montserrat font-semibold mb-2">Minimum order note</label>
+                            <input type="text" id="minimum-order-note" class="input-field w-full" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-100 py-8 mt-12">
+        <div class="container text-center text-gray-500">
+            <p>&copy; 2026 Ink Creek Studio. All Rights Reserved.</p>
+            <a href="admin.html" class="text-xs text-gray-300 hover:text-gray-500">Admin</a>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            var CONFIG_KEY = 'calculatorConfig';
+            var LOGIN_KEY = 'adminLoggedIn';
+            var DEFAULT_PASSWORD = 'inkcreek2026';
+            var config = null;
+
+            function getConfig() {
+                return config;
+            }
+
+            function loadConfigFromStorage() {
+                try {
+                    var raw = localStorage.getItem(CONFIG_KEY);
+                    if (raw) return JSON.parse(raw);
+                } catch (e) {}
+                return null;
+            }
+
+            function loadConfigFromFetch() {
+                return fetch('../config/calculator-config.json').then(function(r) { return r.json(); });
+            }
+
+            function loadConfig() {
+                var stored = loadConfigFromStorage();
+                if (stored) {
+                    config = stored;
+                    return Promise.resolve(config);
+                }
+                return loadConfigFromFetch().then(function(c) {
+                    config = c;
+                    return c;
+                });
+            }
+
+            function saveConfigToStorage(obj) {
+                localStorage.setItem(CONFIG_KEY, JSON.stringify(obj));
+            }
+
+            // --- Login ---
+            var loginScreen = document.getElementById('login-screen');
+            var dashboard = document.getElementById('dashboard');
+            var adminPassword = document.getElementById('admin-password');
+            var loginError = document.getElementById('login-error');
+            var loginBtn = document.getElementById('login-btn');
+            var logoutLink = document.getElementById('logout-link');
+
+            function checkAuth() {
+                if (sessionStorage.getItem(LOGIN_KEY) === '1') {
+                    loginScreen.classList.add('hidden');
+                    dashboard.classList.remove('hidden');
+                    loadConfig().then(populateAll);
+                    return;
+                }
+                loginScreen.classList.remove('hidden');
+                dashboard.classList.add('hidden');
+            }
+
+            loginBtn.addEventListener('click', function() {
+                var pwd = (config && config.password) || DEFAULT_PASSWORD;
+                if (adminPassword.value === pwd) {
+                    sessionStorage.setItem(LOGIN_KEY, '1');
+                    loginError.classList.add('hidden');
+                    loginScreen.classList.add('hidden');
+                    dashboard.classList.remove('hidden');
+                    loadConfig().then(populateAll);
+                } else {
+                    loginError.classList.remove('hidden');
+                }
+            });
+
+            logoutLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                sessionStorage.removeItem(LOGIN_KEY);
+                loginScreen.classList.remove('hidden');
+                dashboard.classList.add('hidden');
+                adminPassword.value = '';
+            });
+
+            // --- Tabs ---
+            document.querySelectorAll('.admin-tab').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var tab = btn.getAttribute('data-tab');
+                    document.querySelectorAll('.admin-tab').forEach(function(b) {
+                        b.classList.remove('border-secondary', 'bg-blue-50');
+                    });
+                    btn.classList.add('border-secondary', 'bg-blue-50');
+                    document.querySelectorAll('.admin-tab-content').forEach(function(el) { el.classList.add('hidden'); });
+                    document.getElementById('tab-' + tab).classList.remove('hidden');
+                });
+            });
+
+            // --- Populate from config ---
+            function populateAll() {
+                if (!config) return;
+                var p = config.pricing || {};
+                var g = config.general || {};
+
+                // Print locations
+                var locs = p.printLocations || { front: 0, back: 2.5, leftSleeve: 1.5, rightSleeve: 1.5 };
+                var locLabels = { front: 'Front', back: 'Back', leftSleeve: 'Left Sleeve', rightSleeve: 'Right Sleeve' };
+                var locWrap = document.getElementById('print-locations-fields');
+                locWrap.innerHTML = '';
+                Object.keys(locLabels).forEach(function(key) {
+                    var val = locs[key] != null ? locs[key] : 0;
+                    locWrap.innerHTML += '<div class="flex items-center justify-between gap-4"><label class="font-semibold w-32">' + locLabels[key] + '</label><span>$</span><input type="number" step="0.01" class="input-field flex-1 print-loc-input" data-key="' + key + '" value="' + val + '" /></div>';
+                });
+
+                // Ink colors
+                var inks = p.inkColors || { '1': 0, '2': 1.5, '3': 2.75, '4': 3.75, '5': 4.5, '6': 5.25 };
+                var inkWrap = document.getElementById('ink-colors-fields');
+                inkWrap.innerHTML = '';
+                ['1','2','3','4','5','6'].forEach(function(key) {
+                    var val = inks[key] != null ? inks[key] : 0;
+                    var label = key === '6' ? '6+ colors' : key + ' color' + (key === '1' ? '' : 's');
+                    inkWrap.innerHTML += '<div class="flex items-center justify-between gap-4"><label class="font-semibold w-32">' + label + '</label><span>$</span><input type="number" step="0.01" class="input-field flex-1 ink-color-input" data-key="' + key + '" value="' + val + '" /></div>';
+                });
+
+                // Special effects (dynamic list)
+                var effects = p.specialEffects || {};
+                var effectWrap = document.getElementById('special-effects-list');
+                function renderEffects() {
+                    effectWrap.innerHTML = '';
+                    Object.keys(effects).forEach(function(key) {
+                        var o = effects[key];
+                        var row = document.createElement('div');
+                        row.className = 'flex items-center gap-2 flex-wrap';
+                        row.innerHTML = '<input type="text" class="input-field flex-1 min-w-40 effect-label" data-key="' + key + '" value="' + (o && o.label ? o.label : '') + '" placeholder="Label" /><span>$</span><input type="number" step="0.01" class="input-field w-24 effect-price" data-key="' + key + '" value="' + (o && o.price != null ? o.price : 0) + '" /><button type="button" class="remove-effect text-red-600 px-2" data-key="' + key + '">×</button>';
+                        effectWrap.appendChild(row);
+                    });
+                    effectWrap.querySelectorAll('.remove-effect').forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            delete effects[btn.getAttribute('data-key')];
+                            renderEffects();
+                        });
+                    });
+                }
+                renderEffects();
+                document.getElementById('add-effect-btn').onclick = function() {
+                    var newKey = 'effect_' + Date.now();
+                    effects[newKey] = { label: 'New Effect', price: 0 };
+                    renderEffects();
+                };
+
+                // Volume discounts
+                var vol = p.volumeDiscounts || { '25': 10, '50': 15, '100': 20, '250': 25 };
+                var volWrap = document.getElementById('volume-discounts-list');
+                var volOrder = Object.keys(vol).map(Number).sort(function(a,b) { return a - b; });
+                function renderVol() {
+                    volWrap.innerHTML = '';
+                    volOrder.forEach(function(qty) {
+                        var pct = vol[qty] != null ? vol[qty] : 0;
+                        var row = document.createElement('div');
+                        row.className = 'flex items-center gap-2';
+                        row.innerHTML = '<input type="number" class="input-field w-20 vol-qty" value="' + qty + '" min="1" />+ items → <input type="number" class="input-field w-20 vol-pct" value="' + pct + '" min="0" max="100" /> % off <button type="button" class="remove-tier text-red-600 px-2" data-qty="' + qty + '">×</button>';
+                        volWrap.appendChild(row);
+                    });
+                    volWrap.querySelectorAll('.remove-tier').forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            var q = parseInt(btn.getAttribute('data-qty'), 10);
+                            volOrder.splice(volOrder.indexOf(q), 1);
+                            delete vol[q];
+                            renderVol();
+                        });
+                    });
+                }
+                renderVol();
+                document.getElementById('add-tier-btn').onclick = function() {
+                    var q = 50;
+                    if (volOrder.length) q = volOrder[volOrder.length - 1] + 25;
+                    volOrder.push(q);
+                    vol[q] = 10;
+                    renderVol();
+                };
+
+                document.getElementById('min-quantity').value = p.minimumQuantity != null ? p.minimumQuantity : 12;
+
+                // Extras
+                var extras = p.extras || {};
+                var extraWrap = document.getElementById('extras-list');
+                function renderExtras() {
+                    extraWrap.innerHTML = '';
+                    Object.keys(extras).forEach(function(key) {
+                        var o = extras[key];
+                        var row = document.createElement('div');
+                        row.className = 'flex items-center gap-2 flex-wrap';
+                        row.innerHTML = '<input type="checkbox" class="extra-enabled w-5 h-5" data-key="' + key + '" ' + (o && o.enabled !== false ? 'checked' : '') + ' /><input type="text" class="input-field flex-1 min-w-40 extra-label" data-key="' + key + '" value="' + (o && o.label ? o.label : '') + '" /><span>$</span><input type="number" step="0.01" class="input-field w-24 extra-price" data-key="' + key + '" value="' + (o && o.price != null ? o.price : 0) + '" /><select class="input-field w-32 extra-type" data-key="' + key + '"><option value="onetime"' + (o && o.type === 'onetime' ? ' selected' : '') + '>One-time</option><option value="peritem"' + (o && o.type === 'peritem' ? ' selected' : '') + '>Per item</option></select><button type="button" class="remove-extra text-red-600 px-2" data-key="' + key + '">×</button>';
+                        extraWrap.appendChild(row);
+                    });
+                    extraWrap.querySelectorAll('.remove-extra').forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            delete extras[btn.getAttribute('data-key')];
+                            renderExtras();
+                        });
+                    });
+                }
+                renderExtras();
+                document.getElementById('add-extra-btn').onclick = function() {
+                    var newKey = 'extra_' + Date.now();
+                    extras[newKey] = { label: 'New Service', price: 0, type: 'onetime', enabled: true };
+                    renderExtras();
+                };
+
+                // Turnaround
+                var turn = p.turnaround || { standard: { label: 'Standard (7-10 days)', price: 0 }, rush: { label: 'Rush (3-5 days)', price: 25 }, superRush: { label: 'Super Rush (1-2 days)', price: 75 } };
+                var turnWrap = document.getElementById('turnaround-list');
+                turnWrap.innerHTML = '';
+                Object.keys(turn).forEach(function(key) {
+                    var o = turn[key];
+                    turnWrap.innerHTML += '<div class="flex items-center gap-2 flex-wrap"><input type="text" class="input-field flex-1 min-w-48 turnaround-label" data-key="' + key + '" value="' + (o && o.label ? o.label : '') + '" /><span>$</span><input type="number" step="0.01" class="input-field w-24 turnaround-price" data-key="' + key + '" value="' + (o && o.price != null ? o.price : 0) + '" /></div>';
+                });
+
+                // General
+                document.getElementById('general-password').value = config.password || '';
+                document.getElementById('calculator-title').value = (g.calculatorPageTitle || '').trim() || 'Get Your Instant Quote';
+                document.getElementById('minimum-order-note').value = (g.minimumOrderNote || '').trim() || 'Minimum order: 12 pieces';
+            }
+
+            function collectConfig() {
+                var p = config.pricing || {};
+                p.printLocations = p.printLocations || {};
+                document.querySelectorAll('.print-loc-input').forEach(function(inp) {
+                    p.printLocations[inp.getAttribute('data-key')] = parseFloat(inp.value) || 0;
+                });
+                p.inkColors = p.inkColors || {};
+                document.querySelectorAll('.ink-color-input').forEach(function(inp) {
+                    p.inkColors[inp.getAttribute('data-key')] = parseFloat(inp.value) || 0;
+                });
+                p.specialEffects = {};
+                document.querySelectorAll('.effect-label').forEach(function(inp) {
+                    var key = inp.getAttribute('data-key');
+                    var priceInp = document.querySelector('.effect-price[data-key="' + key + '"]');
+                    p.specialEffects[key] = { label: inp.value.trim() || 'Effect', price: parseFloat(priceInp && priceInp.value ? priceInp.value : 0) || 0 };
+                });
+                p.volumeDiscounts = {};
+                document.querySelectorAll('#volume-discounts-list .vol-qty').forEach(function(inp) {
+                    var row = inp.closest('div');
+                    var pctInp = row ? row.querySelector('.vol-pct') : null;
+                    var qty = parseInt(inp.value, 10) || 0;
+                    if (qty && pctInp) p.volumeDiscounts[qty] = parseInt(pctInp.value, 10) || 0;
+                });
+                p.minimumQuantity = parseInt(document.getElementById('min-quantity').value, 10) || 12;
+                p.extras = {};
+                document.querySelectorAll('.extra-label').forEach(function(inp) {
+                    var key = inp.getAttribute('data-key');
+                    var priceInp = document.querySelector('.extra-price[data-key="' + key + '"]');
+                    var typeSel = document.querySelector('.extra-type[data-key="' + key + '"]');
+                    var enabledCb = document.querySelector('.extra-enabled[data-key="' + key + '"]');
+                    p.extras[key] = {
+                        label: inp.value.trim() || 'Extra',
+                        price: parseFloat(priceInp && priceInp.value ? priceInp.value : 0) || 0,
+                        type: (typeSel && typeSel.value) || 'onetime',
+                        enabled: enabledCb ? enabledCb.checked : true
+                    };
+                });
+                p.turnaround = p.turnaround || {};
+                document.querySelectorAll('.turnaround-label').forEach(function(inp) {
+                    var key = inp.getAttribute('data-key');
+                    var priceInp = document.querySelector('.turnaround-price[data-key="' + key + '"]');
+                    p.turnaround[key] = { label: inp.value.trim() || key, price: parseFloat(priceInp && priceInp.value ? priceInp.value : 0) || 0 };
+                });
+                config.pricing = p;
+                config.general = config.general || {};
+                config.general.calculatorPageTitle = document.getElementById('calculator-title').value.trim();
+                config.general.minimumOrderNote = document.getElementById('minimum-order-note').value.trim();
+                config.password = document.getElementById('general-password').value || config.password || DEFAULT_PASSWORD;
+                return config;
+            }
+
+            document.getElementById('save-all-btn').addEventListener('click', function() {
+                collectConfig();
+                saveConfigToStorage(config);
+                document.getElementById('last-saved').textContent = 'Last saved: ' + new Date().toLocaleString();
+                var banner = document.getElementById('save-success');
+                banner.classList.remove('hidden');
+                setTimeout(function() { banner.classList.add('hidden'); }, 3000);
+            });
+
+            document.getElementById('change-password-btn').addEventListener('click', function() {
+                config.password = document.getElementById('general-password').value || config.password;
+                saveConfigToStorage(config);
+                alert('Password updated. Save All Changes to persist.');
+            });
+
+            // Load config on first load (for login check)
+            loadConfig().then(function() {
+                checkAuth();
+            }).catch(function() {
+                config = {
+                    password: DEFAULT_PASSWORD,
+                    general: { calculatorPageTitle: 'Get Your Instant Quote', minimumOrderNote: 'Minimum order: 12 pieces' },
+                    pricing: {
+                        printLocations: { front: 0, back: 2.5, leftSleeve: 1.5, rightSleeve: 1.5 },
+                        inkColors: { '1': 0, '2': 1.5, '3': 2.75, '4': 3.75, '5': 4.5, '6': 5.25 },
+                        specialEffects: { metallic: { label: 'Metallic Ink', price: 3 }, glow: { label: 'Glow in the Dark', price: 4.5 }, puff: { label: 'Puff Ink', price: 2 } },
+                        turnaround: { standard: { label: 'Standard (7-10 days)', price: 0 }, rush: { label: 'Rush (3-5 days)', price: 25 }, superRush: { label: 'Super Rush (1-2 days)', price: 75 } },
+                        extras: { designSetup: { label: 'Design Setup', price: 45, type: 'onetime' }, consultation: { label: 'Design Consultation', price: 45, type: 'onetime' }, samplePrint: { label: 'Sample Print', price: 15, type: 'onetime' }, bagging: { label: 'Individual Bagging', price: 0.5, type: 'peritem' }, folding: { label: 'Folding & Stacking', price: 0.25, type: 'peritem' } },
+                        volumeDiscounts: { 25: 10, 50: 15, 100: 20, 250: 25 },
+                        minimumQuantity: 12
+                    }
+                };
+                checkAuth();
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+  "password": "inkcreek2026",
+  "general": {
+    "calculatorPageTitle": "Get Your Instant Quote",
+    "minimumOrderNote": "Minimum order: 12 pieces"
+  },
+  "pricing": {
+    "printLocations": {
+      "front": 0,
+      "back": 2.50,
+      "leftSleeve": 1.50,
+      "rightSleeve": 1.50
+    },
+    "inkColors": {
+      "1": 0,
+      "2": 1.50,
+      "3": 2.75,
+      "4": 3.75,
+      "5": 4.50,
+      "6": 5.25
+    },
+    "specialEffects": {
+      "metallic": { "label": "Metallic Ink", "price": 3.00 },
+      "glow": { "label": "Glow in the Dark", "price": 4.50 },
+      "puff": { "label": "Puff Ink", "price": 2.00 }
+    },
+    "turnaround": {
+      "standard": { "label": "Standard (7-10 days)", "price": 0 },
+      "rush": { "label": "Rush (3-5 days)", "price": 25 },
+      "superRush": { "label": "Super Rush (1-2 days)", "price": 75 }
+    },
+    "extras": {
+      "designSetup": { "label": "Design Setup", "price": 45, "type": "onetime" },
+      "consultation": { "label": "Design Consultation", "price": 45, "type": "onetime" },
+      "samplePrint": { "label": "Sample Print", "price": 15, "type": "onetime" },
+      "bagging": { "label": "Individual Bagging", "price": 0.50, "type": "peritem" },
+      "folding": { "label": "Folding & Stacking", "price": 0.25, "type": "peritem" }
+    },
+    "volumeDiscounts": {
+      "25": 10,
+      "50": 15,
+      "100": 20,
+      "250": 25
+    },
+    "minimumQuantity": 12
+  }
+}
