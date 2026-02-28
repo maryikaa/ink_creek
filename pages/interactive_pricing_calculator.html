@@ -25,6 +25,7 @@
                         <a href="portfolio_gallery_work_showcase.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Portfolio</a>
                         <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Services</a>
                         <a href="interactive_pricing_calculator.html" class="text-primary font-semibold px-3 py-2 rounded-md text-sm">Calculator</a>
+                        <a href="dtf_calculator.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">DTF Prints</a>
                         <a href="contact_studio_location.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Contact</a>
                     </div>
                 </div>
@@ -51,6 +52,7 @@
                     <a href="portfolio_gallery_work_showcase.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Portfolio</a>
                     <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Services</a>
                     <a href="interactive_pricing_calculator.html" class="text-primary font-semibold block px-3 py-2 rounded-md text-base">Calculator</a>
+                    <a href="dtf_calculator.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">DTF Prints</a>
                     <a href="contact_studio_location.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Contact</a>
                     <a href="contact_studio_location.html" class="btn-accent block text-center mt-4">Contact Studio</a>
                 </div>
@@ -99,7 +101,7 @@
                     <!-- Progress Indicator -->
                     <div class="mb-8">
                         <div class="flex items-center justify-between mb-4">
-                            <span class="text-sm font-montserrat font-semibold text-text-secondary">Step <span id="current-step">1</span> of 5</span>
+                            <span class="text-sm font-montserrat font-semibold text-text-secondary">Step <span id="current-step">1</span> of 6</span>
                             <button onclick="saveQuote()" class="text-sm text-secondary hover:text-blue-700 font-semibold">
                                 <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
@@ -112,9 +114,48 @@
                         </div>
                     </div>
 
-                    <!-- Step 1: Garment Selection -->
+                    <!-- Step 1: Choose Your Product (S&S Catalog) -->
                     <div id="step-1" class="calculator-step">
                         <div class="card">
+                            <h2 class="text-2xl font-montserrat font-bold mb-6">Choose Your Product</h2>
+                            <p class="text-text-secondary mb-4">Browse the S&S Activewear Canada catalog and select a product to get started.</p>
+                            <!-- Search & Filters -->
+                            <div class="mb-6 space-y-4">
+                                <input type="text" id="product-search" class="input-field" placeholder="Search by name or style number..." />
+                                <div class="flex flex-wrap gap-2">
+                                    <button type="button" class="product-category-btn btn-secondary border-secondary bg-blue-50" data-category="all">All</button>
+                                    <button type="button" class="product-category-btn btn-secondary" data-category="tshirts">T-Shirts</button>
+                                    <button type="button" class="product-category-btn btn-secondary" data-category="hoodies">Hoodies</button>
+                                    <button type="button" class="product-category-btn btn-secondary" data-category="hats">Hats</button>
+                                    <button type="button" class="product-category-btn btn-secondary" data-category="polos">Polos</button>
+                                    <button type="button" class="product-category-btn btn-secondary" data-category="jackets">Jackets</button>
+                                    <button type="button" class="product-category-btn btn-secondary" data-category="bags">Bags</button>
+                                </div>
+                            </div>
+                            <!-- Loading / Error / Grid -->
+                            <div id="product-catalog-loading" class="flex flex-col items-center justify-center py-12">
+                                <svg class="animate-spin h-10 w-10 text-secondary mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                <p class="text-text-secondary font-montserrat font-semibold">Loading products...</p>
+                            </div>
+                            <div id="product-catalog-error" class="hidden py-8 px-4 bg-red-50 border border-red-200 rounded-lg text-center">
+                                <p class="font-montserrat font-semibold text-red-800 mb-2">Unable to load products</p>
+                                <p class="text-sm text-red-700">Please check your connection and try again later.</p>
+                            </div>
+                            <div id="product-catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 hidden"></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Garment Selection -->
+                    <div id="step-2" class="calculator-step hidden">
+                        <div class="card">
+                            <div id="selected-product-banner" class="mb-4 hidden p-4 bg-blue-50 border border-secondary rounded-lg flex items-center gap-4">
+                                <img id="selected-product-image" src="" alt="" class="w-16 h-16 object-cover rounded-md" />
+                                <div class="flex-1">
+                                    <p class="text-sm text-text-secondary">Selected product</p>
+                                    <p id="selected-product-name" class="font-montserrat font-semibold text-text-primary"></p>
+                                    <p id="selected-product-style" class="text-sm text-text-secondary"></p>
+                                </div>
+                            </div>
                             <h2 class="text-2xl font-montserrat font-bold mb-6">Choose Your Garment</h2>
                             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                 <!-- T-Shirts -->
@@ -168,8 +209,8 @@
                         </div>
                     </div>
 
-                    <!-- Step 2: Quantity Selection -->
-                    <div id="step-2" class="calculator-step hidden">
+                    <!-- Step 3: Quantity Selection -->
+                    <div id="step-3" class="calculator-step hidden">
                         <div class="card">
                             <h2 class="text-2xl font-montserrat font-bold mb-6">How Many Do You Need?</h2>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -209,8 +250,8 @@
                         </div>
                     </div>
 
-                    <!-- Step 3: Ink Colors & Effects -->
-                    <div id="step-3" class="calculator-step hidden">
+                    <!-- Step 4: Ink Colors & Effects -->
+                    <div id="step-4" class="calculator-step hidden">
                         <div class="card">
                             <h2 class="text-2xl font-montserrat font-bold mb-6">Ink Colors & Special Effects</h2>
                             
@@ -296,8 +337,8 @@
                         </div>
                     </div>
 
-                    <!-- Step 4: Design Complexity -->
-                    <div id="step-4" class="calculator-step hidden">
+                    <!-- Step 5: Design Complexity -->
+                    <div id="step-5" class="calculator-step hidden">
                         <div class="card">
                             <h2 class="text-2xl font-montserrat font-bold mb-6">Design Complexity & Services</h2>
                             
@@ -374,8 +415,8 @@
                         </div>
                     </div>
 
-                    <!-- Step 5: Contact Information -->
-                    <div id="step-5" class="calculator-step hidden">
+                    <!-- Step 6: Contact Information -->
+                    <div id="step-6" class="calculator-step hidden">
                         <div class="card">
                             <h2 class="text-2xl font-montserrat font-bold mb-6">Get Your Detailed Quote</h2>
                             <p class="text-text-secondary mb-6">We'll send you a comprehensive quote within 2 hours, including design mockups and timeline.</p>
@@ -478,6 +519,12 @@
                             
                             <!-- Selected Items -->
                             <div class="space-y-3 mb-6">
+                                <div id="product-summary" class="hidden">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm text-text-secondary">Product:</span>
+                                        <span id="product-name" class="font-semibold">-</span>
+                                    </div>
+                                </div>
                                 <div id="garment-summary" class="hidden">
                                     <div class="flex justify-between items-center">
                                         <span class="text-sm text-text-secondary">Garment:</span>
@@ -668,8 +715,10 @@
     </footer>
     <script>
         // Calculator State
+        const TOTAL_STEPS = 6;
         let currentStep = 1;
         let quoteData = {
+            product: null,
             garment: null,
             quantity: 0,
             colors: 1,
@@ -693,12 +742,13 @@
 
         // Step Navigation
         function nextStep() {
-            if (currentStep < 5) {
+            if (currentStep < TOTAL_STEPS) {
                 document.getElementById(`step-${currentStep}`).classList.add('hidden');
                 currentStep++;
                 document.getElementById(`step-${currentStep}`).classList.remove('hidden');
                 updateProgressBar();
                 updateNavigationButtons();
+                if (currentStep === 2 && quoteData.product) updateSelectedProductBanner();
             }
         }
 
@@ -713,7 +763,7 @@
         }
 
         function updateProgressBar() {
-            const progress = (currentStep / 5) * 100;
+            const progress = (currentStep / TOTAL_STEPS) * 100;
             document.getElementById('progress-bar').style.width = `${progress}%`;
             document.getElementById('current-step').textContent = currentStep;
         }
@@ -733,7 +783,7 @@
             }
 
             // Next/Submit button
-            if (currentStep === 5) {
+            if (currentStep === TOTAL_STEPS) {
                 nextBtn.classList.add('hidden');
                 submitBtn.classList.remove('hidden');
             } else {
@@ -753,15 +803,161 @@
 
         function isStepValid(step) {
             switch(step) {
-                case 1: return quoteData.garment !== null;
-                case 2: return quoteData.quantity > 0;
-                case 3: return quoteData.colors > 0;
-                case 4: return quoteData.complexity !== null;
+                case 1: return quoteData.product !== null;
+                case 2: return quoteData.garment !== null;
+                case 3: return quoteData.quantity > 0;
+                case 4: return quoteData.colors > 0;
+                case 5: return quoteData.complexity !== null;
                 default: return true;
             }
         }
 
-        // Step 1: Garment Selection
+        function updateSelectedProductBanner() {
+            const banner = document.getElementById('selected-product-banner');
+            if (!quoteData.product) { banner.classList.add('hidden'); return; }
+            banner.classList.remove('hidden');
+            const img = document.getElementById('selected-product-image');
+            const nameEl = document.getElementById('selected-product-name');
+            const styleEl = document.getElementById('selected-product-style');
+            img.src = quoteData.product.image || '';
+            img.alt = quoteData.product.name || 'Product';
+            nameEl.textContent = quoteData.product.name || '';
+            styleEl.textContent = quoteData.product.style ? `Style #${quoteData.product.style}` : '';
+        }
+
+        // S&S Activewear API (via Netlify proxy to avoid CORS)
+        let allProducts = [];
+        let filteredProducts = [];
+
+        function initProductCatalog() {
+            const loadingEl = document.getElementById('product-catalog-loading');
+            const errorEl = document.getElementById('product-catalog-error');
+            const gridEl = document.getElementById('product-catalog-grid');
+            const searchInput = document.getElementById('product-search');
+            const categoryBtns = document.querySelectorAll('.product-category-btn');
+
+            fetch('/api/ss-products')
+                .then(function(res) {
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    return res.json();
+                })
+                .then(function(data) {
+                    loadingEl.classList.add('hidden');
+                    const list = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.Items) ? data.Items : (data && data.data) ? data.data : [];
+                    allProducts = list.map(normalizeProduct);
+                    filteredProducts = allProducts.slice();
+                    renderProductGrid(gridEl);
+                    gridEl.classList.remove('hidden');
+                })
+                .catch(function() {
+                    loadingEl.classList.add('hidden');
+                    errorEl.classList.remove('hidden');
+                });
+
+            function normalizeProduct(p) {
+                const name = p.title || p.styleName || p.productName || p.name || '';
+                const style = p.styleID || p.partNumber || p.style || '';
+                const brand = p.brandName || p.brand || '';
+                // Image: combine CDN base with relative path from API
+                let image = '';
+                const rawImg = p.styleImage || p.brandImage || p.colorFrontImage || '';
+                if (rawImg) {
+                    image = rawImg.startsWith('http')
+                        ? rawImg
+                        : 'https://cdn.ssactivewear.com/' + rawImg;
+                }
+                const cat = (p.baseCategory || p.categoryName || p.category || '').toLowerCase();
+                return { name, style, brand, image, colors: [], category: cat, raw: p };
+            }
+
+            function matchCategory(catKey, product) {
+                if (catKey === 'all') return true;
+                const cat = product.category;
+                const name = (product.name || '').toLowerCase();
+                const style = (product.style || '').toLowerCase();
+                const brand = (product.brand || '').toLowerCase();
+                const combined = cat + ' ' + name + ' ' + style + ' ' + brand;
+                if (catKey === 'tshirts') return /t-?shirt|tee|tshirt/.test(combined);
+                if (catKey === 'hoodies') return /hoodie|hood|sweatshirt/.test(combined);
+                if (catKey === 'hats') return /hat|cap|visor/.test(combined);
+                if (catKey === 'polos') return /polo/.test(combined);
+                if (catKey === 'jackets') return /jacket|coat|vest/.test(combined);
+                if (catKey === 'bags') return /bag|tote|backpack|duffel/.test(combined);
+                return false;
+            }
+
+            function filterProducts() {
+                const q = (searchInput.value || '').trim().toLowerCase();
+                const activeCat = document.querySelector('.product-category-btn.border-secondary');
+                const catKey = (activeCat && activeCat.getAttribute('data-category')) || 'all';
+                filteredProducts = allProducts.filter(function(p) {
+                    const matchSearch = !q || (p.name || '').toLowerCase().indexOf(q) !== -1 || (p.style || '').toLowerCase().indexOf(q) !== -1 || (p.brand || '').toLowerCase().indexOf(q) !== -1;
+                    return matchSearch && matchCategory(catKey, p);
+                });
+                renderProductGrid(gridEl);
+            }
+
+            function renderProductGrid(container) {
+                container.innerHTML = '';
+                filteredProducts.forEach(function(p, index) {
+                    const card = document.createElement('div');
+                    card.className = 'product-card border-2 border-gray-200 rounded-lg p-4 flex flex-col hover:border-secondary transition-colors';
+                    card.setAttribute('data-product-index', index);
+                    const colorSwatches = (p.colors || []).slice(0, 8).map(function(c) {
+                        const hex = c.hex || c.hexCode || c.Hex || c.colorCode || '#ccc';
+                        return '<span class="inline-block w-4 h-4 rounded-full border border-gray-300" style="background-color:' + hex + '" title="' + (c.name || c.Name || '') + '"></span>';
+                    }).join('');
+                    card.innerHTML =
+                        '<img src="' + (p.image || '') + '" alt="" class="w-full h-32 object-cover rounded-lg mb-3 bg-gray-100" onerror="this.style.visibility=\'hidden\'" />' +
+                        '<p class="text-xs text-text-secondary mb-1">' + (p.brand || '') + '</p>' +
+                        '<h3 class="font-montserrat font-semibold mb-1 line-clamp-2">' + (p.name || '') + '</h3>' +
+                        '<p class="text-xs text-text-secondary mb-2">Style ' + (p.style || '') + '</p>' +
+                        (colorSwatches ? '<div class="flex flex-wrap gap-1 mb-3">' + colorSwatches + '</div>' : '') +
+                        '<button type="button" class="btn-accent mt-auto w-full select-product-btn">Select</button>';
+                    container.appendChild(card);
+                });
+                container.querySelectorAll('.select-product-btn').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        const card = btn.closest('.product-card');
+                        const idx = parseInt(card.getAttribute('data-product-index'), 10);
+                        selectProduct(filteredProducts[idx], card);
+                    });
+                });
+            }
+
+            searchInput.addEventListener('input', filterProducts);
+            searchInput.addEventListener('keyup', filterProducts);
+            categoryBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    categoryBtns.forEach(function(b) {
+                        b.classList.remove('border-secondary', 'bg-blue-50');
+                    });
+                    btn.classList.add('border-secondary', 'bg-blue-50');
+                    filterProducts();
+                });
+            });
+        }
+
+        function selectProduct(product, cardEl) {
+            quoteData.product = { name: product.name, style: product.style, image: product.image };
+            document.querySelectorAll('.product-card').forEach(function(el) {
+                el.classList.remove('border-secondary', 'bg-blue-50');
+                el.classList.add('border-gray-200');
+            });
+            if (cardEl) {
+                cardEl.classList.remove('border-gray-200');
+                cardEl.classList.add('border-secondary', 'bg-blue-50');
+            }
+            updateNavigationButtons();
+            document.getElementById('step-1').classList.add('hidden');
+            currentStep = 2;
+            document.getElementById('step-2').classList.remove('hidden');
+            updateProgressBar();
+            updateNavigationButtons();
+            updateSelectedProductBanner();
+        }
+
+        // Step 2: Garment Selection
         function selectGarment(type, name, price) {
             // Remove previous selection
             document.querySelectorAll('.garment-option').forEach(el => {
@@ -887,6 +1083,11 @@
 
         // Update Summary
         function updateSummary() {
+            // Product (Step 1)
+            if (quoteData.product) {
+                document.getElementById('product-summary').classList.remove('hidden');
+                document.getElementById('product-name').textContent = quoteData.product.name || '-';
+            }
             // Garment
             if (quoteData.garment) {
                 document.getElementById('garment-summary').classList.remove('hidden');
@@ -1180,6 +1381,7 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             updateNavigationButtons();
+            initProductCatalog();
             initDesignUpload();
             
             // Load saved quote if exists
