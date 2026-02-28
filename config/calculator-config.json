@@ -43,5 +43,21 @@
       "250": 25
     },
     "minimumQuantity": 12
+  },
+  "appearance": {
+    "catalogColumns": 4,
+    "cardImageHeight": 128,
+    "fonts": {
+      "brandName": 12,
+      "productName": 14,
+      "styleNumber": 12,
+      "button": 14,
+      "stepHeading": 24,
+      "bodyText": 14,
+      "price": 16
+    },
+    "buttonStyle": "filled",
+    "buttonWidth": "full",
+    "accentColor": "#9174a4"
   }
 }

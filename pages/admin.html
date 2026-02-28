@@ -57,6 +57,7 @@
                     <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg" data-tab="extras">Extras</button>
                     <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg" data-tab="turnaround">Turnaround</button>
                     <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg" data-tab="general">General</button>
+                    <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg" data-tab="appearance">Appearance</button>
                 </div>
 
                 <!-- Tab: Print Prices -->
@@ -110,6 +111,84 @@
                         <div>
                             <label class="block text-sm font-montserrat font-semibold mb-2">Minimum order note</label>
                             <input type="text" id="minimum-order-note" class="input-field w-full" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Appearance -->
+                <div id="tab-appearance" class="admin-tab-content card hidden">
+                    <h2 class="text-xl font-montserrat font-bold mb-4">Appearance</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="font-montserrat font-semibold mb-3">Product Catalog (Step 1)</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-semibold mb-2">Product card size</label>
+                                        <div class="flex flex-wrap gap-3">
+                                            <label class="flex items-center gap-2"><input type="radio" name="app-card-size" value="5" class="appearance-card-columns" /> Small (5 cols)</label>
+                                            <label class="flex items-center gap-2"><input type="radio" name="app-card-size" value="4" class="appearance-card-columns" checked /> Medium (4 cols)</label>
+                                            <label class="flex items-center gap-2"><input type="radio" name="app-card-size" value="3" class="appearance-card-columns" /> Large (3 cols)</label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-semibold mb-2">Product image height</label>
+                                        <div class="flex items-center gap-3">
+                                            <input type="range" id="app-card-image-height" min="100" max="300" value="128" class="flex-1" />
+                                            <span id="app-card-image-height-value" class="text-sm font-mono w-12">128px</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-semibold mb-2">Font sizes</label>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between gap-2"><label class="text-sm">Brand name font</label><input type="number" id="app-font-brand" class="input-field w-20" min="10" max="24" value="12" /> px</div>
+                                            <div class="flex items-center justify-between gap-2"><label class="text-sm">Product name font</label><input type="number" id="app-font-product" class="input-field w-20" min="10" max="24" value="14" /> px</div>
+                                            <div class="flex items-center justify-between gap-2"><label class="text-sm">Style number font</label><input type="number" id="app-font-style" class="input-field w-20" min="10" max="24" value="12" /> px</div>
+                                            <div class="flex items-center justify-between gap-2"><label class="text-sm">Button font</label><input type="number" id="app-font-button" class="input-field w-20" min="10" max="24" value="14" /> px</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-semibold mb-2">Select button style</label>
+                                        <div class="flex flex-wrap gap-3">
+                                            <label class="flex items-center gap-2"><input type="radio" name="app-button-style" value="filled" class="appearance-button-style" checked /> Filled</label>
+                                            <label class="flex items-center gap-2"><input type="radio" name="app-button-style" value="outline" class="appearance-button-style" /> Outline</label>
+                                            <label class="flex items-center gap-2"><input type="radio" name="app-button-style" value="pill" class="appearance-button-style" /> Rounded pill</label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-semibold mb-2">Button width</label>
+                                        <div class="flex flex-wrap gap-3">
+                                            <label class="flex items-center gap-2"><input type="radio" name="app-button-width" value="full" class="appearance-button-width" checked /> Full width</label>
+                                            <label class="flex items-center gap-2"><input type="radio" name="app-button-width" value="auto" class="appearance-button-width" /> Auto (fit text)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="font-montserrat font-semibold mb-3">General Typography</h3>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between gap-2"><label class="text-sm">Step headings font</label><input type="number" id="app-font-step" class="input-field w-20" min="16" max="36" value="24" /> px</div>
+                                    <div class="flex items-center justify-between gap-2"><label class="text-sm">Body text font</label><input type="number" id="app-font-body" class="input-field w-20" min="10" max="20" value="14" /> px</div>
+                                    <div class="flex items-center justify-between gap-2"><label class="text-sm">Price font size</label><input type="number" id="app-font-price" class="input-field w-20" min="12" max="24" value="16" /> px</div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Accent Color</label>
+                                <div class="flex items-center gap-3">
+                                    <input type="color" id="app-accent-color" value="#9174a4" class="w-12 h-10 rounded border border-gray-300 cursor-pointer" />
+                                    <span id="app-accent-hex" class="text-sm font-mono">#9174a4</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-montserrat font-semibold mb-3">Live Preview</h3>
+                            <div id="appearance-preview-card" class="border-2 border-gray-200 rounded-lg p-4 max-w-xs bg-white shadow-sm">
+                                <div id="appearance-preview-img" class="w-full rounded-lg mb-3 bg-gray-200 flex items-center justify-center text-gray-500 text-xs" style="height: 128px;">Image</div>
+                                <p id="appearance-preview-brand" class="mb-1 text-text-secondary">Brand Name</p>
+                                <p id="appearance-preview-product" class="font-montserrat font-semibold mb-1 line-clamp-2">Product Title Example</p>
+                                <p id="appearance-preview-style" class="text-text-secondary mb-3">Style #12345</p>
+                                <button type="button" id="appearance-preview-btn" class="btn-accent w-full">Select</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -340,6 +419,92 @@
                 document.getElementById('general-password').value = config.password || '';
                 document.getElementById('calculator-title').value = (g.calculatorPageTitle || '').trim() || 'Get Your Instant Quote';
                 document.getElementById('minimum-order-note').value = (g.minimumOrderNote || '').trim() || 'Minimum order: 12 pieces';
+
+                // Appearance
+                var app = config.appearance || {};
+                var cols = app.catalogColumns != null ? app.catalogColumns : 4;
+                document.querySelectorAll('.appearance-card-columns').forEach(function(r) {
+                    r.checked = (r.value === String(cols));
+                });
+                var imgH = app.cardImageHeight != null ? app.cardImageHeight : 128;
+                document.getElementById('app-card-image-height').value = imgH;
+                document.getElementById('app-card-image-height-value').textContent = imgH + 'px';
+                var fonts = app.fonts || {};
+                document.getElementById('app-font-brand').value = fonts.brandName != null ? fonts.brandName : 12;
+                document.getElementById('app-font-product').value = fonts.productName != null ? fonts.productName : 14;
+                document.getElementById('app-font-style').value = fonts.styleNumber != null ? fonts.styleNumber : 12;
+                document.getElementById('app-font-button').value = fonts.button != null ? fonts.button : 14;
+                document.getElementById('app-font-step').value = fonts.stepHeading != null ? fonts.stepHeading : 24;
+                document.getElementById('app-font-body').value = fonts.bodyText != null ? fonts.bodyText : 14;
+                document.getElementById('app-font-price').value = fonts.price != null ? fonts.price : 16;
+                document.querySelectorAll('.appearance-button-style').forEach(function(r) {
+                    r.checked = (r.value === (app.buttonStyle || 'filled'));
+                });
+                document.querySelectorAll('.appearance-button-width').forEach(function(r) {
+                    r.checked = (r.value === (app.buttonWidth || 'full'));
+                });
+                var accent = app.accentColor || '#9174a4';
+                document.getElementById('app-accent-color').value = accent;
+                document.getElementById('app-accent-hex').textContent = accent;
+                updateAppearancePreview();
+                bindAppearanceListeners();
+            }
+
+            function updateAppearancePreview() {
+                var imgH = parseInt(document.getElementById('app-card-image-height').value, 10) || 128;
+                var fontBrand = parseInt(document.getElementById('app-font-brand').value, 10) || 12;
+                var fontProduct = parseInt(document.getElementById('app-font-product').value, 10) || 14;
+                var fontStyle = parseInt(document.getElementById('app-font-style').value, 10) || 12;
+                var fontButton = parseInt(document.getElementById('app-font-button').value, 10) || 14;
+                var styleVal = document.querySelector('input[name="app-button-style"]:checked');
+                var widthVal = document.querySelector('input[name="app-button-width"]:checked');
+                var btnStyle = styleVal ? styleVal.value : 'filled';
+                var btnWidth = widthVal ? widthVal.value : 'full';
+                var accent = document.getElementById('app-accent-color').value || '#9174a4';
+                var card = document.getElementById('appearance-preview-card');
+                if (card) card.style.setProperty('--color-accent', accent);
+                document.getElementById('appearance-preview-img').style.height = imgH + 'px';
+                document.getElementById('appearance-preview-brand').style.fontSize = fontBrand + 'px';
+                document.getElementById('appearance-preview-product').style.fontSize = fontProduct + 'px';
+                document.getElementById('appearance-preview-style').style.fontSize = fontStyle + 'px';
+                var btn = document.getElementById('appearance-preview-btn');
+                btn.style.fontSize = fontButton + 'px';
+                btn.className = 'mt-auto ' + (btnStyle === 'filled' ? 'btn-accent' : btnStyle === 'outline' ? 'btn-outline' : 'btn-pill') + (btnWidth === 'full' ? ' w-full' : '');
+                btn.style.backgroundColor = (btnStyle === 'filled' || btnStyle === 'pill') ? accent : 'transparent';
+                btn.style.color = (btnStyle === 'outline') ? accent : '#fff';
+                btn.style.borderWidth = btnStyle === 'outline' ? '2px' : '0';
+                btn.style.borderStyle = 'solid';
+                btn.style.borderColor = accent;
+            }
+
+            var appearanceListenersBound = false;
+            function bindAppearanceListeners() {
+                if (appearanceListenersBound) return;
+                appearanceListenersBound = true;
+                var slider = document.getElementById('app-card-image-height');
+                if (slider) {
+                    slider.addEventListener('input', function() {
+                        document.getElementById('app-card-image-height-value').textContent = this.value + 'px';
+                        updateAppearancePreview();
+                    });
+                }
+                document.getElementById('app-accent-color').addEventListener('input', function() {
+                    document.getElementById('app-accent-hex').textContent = this.value;
+                    updateAppearancePreview();
+                });
+                ['app-font-brand','app-font-product','app-font-style','app-font-button','app-font-step','app-font-body','app-font-price'].forEach(function(id) {
+                    var el = document.getElementById(id);
+                    if (el) el.addEventListener('input', updateAppearancePreview);
+                });
+                document.querySelectorAll('.appearance-card-columns').forEach(function(r) {
+                    r.addEventListener('change', updateAppearancePreview);
+                });
+                document.querySelectorAll('.appearance-button-style').forEach(function(r) {
+                    r.addEventListener('change', updateAppearancePreview);
+                });
+                document.querySelectorAll('.appearance-button-width').forEach(function(r) {
+                    r.addEventListener('change', updateAppearancePreview);
+                });
             }
 
             function collectConfig() {
@@ -390,6 +555,24 @@
                 config.general.calculatorPageTitle = document.getElementById('calculator-title').value.trim();
                 config.general.minimumOrderNote = document.getElementById('minimum-order-note').value.trim();
                 config.password = document.getElementById('general-password').value || config.password || DEFAULT_PASSWORD;
+                var appCol = document.querySelector('input[name="app-card-size"]:checked');
+                config.appearance = config.appearance || {};
+                config.appearance.catalogColumns = appCol ? parseInt(appCol.value, 10) : 4;
+                config.appearance.cardImageHeight = parseInt(document.getElementById('app-card-image-height').value, 10) || 128;
+                config.appearance.fonts = {
+                    brandName: parseInt(document.getElementById('app-font-brand').value, 10) || 12,
+                    productName: parseInt(document.getElementById('app-font-product').value, 10) || 14,
+                    styleNumber: parseInt(document.getElementById('app-font-style').value, 10) || 12,
+                    button: parseInt(document.getElementById('app-font-button').value, 10) || 14,
+                    stepHeading: parseInt(document.getElementById('app-font-step').value, 10) || 24,
+                    bodyText: parseInt(document.getElementById('app-font-body').value, 10) || 14,
+                    price: parseInt(document.getElementById('app-font-price').value, 10) || 16
+                };
+                var appStyle = document.querySelector('input[name="app-button-style"]:checked');
+                var appWidth = document.querySelector('input[name="app-button-width"]:checked');
+                config.appearance.buttonStyle = appStyle ? appStyle.value : 'filled';
+                config.appearance.buttonWidth = appWidth ? appWidth.value : 'full';
+                config.appearance.accentColor = document.getElementById('app-accent-color').value || '#9174a4';
                 return config;
             }
 
@@ -423,7 +606,8 @@
                         extras: { designSetup: { label: 'Design Setup', price: 45, type: 'onetime' }, consultation: { label: 'Design Consultation', price: 45, type: 'onetime' }, samplePrint: { label: 'Sample Print', price: 15, type: 'onetime' }, bagging: { label: 'Individual Bagging', price: 0.5, type: 'peritem' }, folding: { label: 'Folding & Stacking', price: 0.25, type: 'peritem' } },
                         volumeDiscounts: { 25: 10, 50: 15, 100: 20, 250: 25 },
                         minimumQuantity: 12
-                    }
+                    },
+                    appearance: { catalogColumns: 4, cardImageHeight: 128, fonts: { brandName: 12, productName: 14, styleNumber: 12, button: 14, stepHeading: 24, bodyText: 14, price: 16 }, buttonStyle: 'filled', buttonWidth: 'full', accentColor: '#9174a4' }
                 };
                 checkAuth();
             });

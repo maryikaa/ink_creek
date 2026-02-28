@@ -943,6 +943,39 @@ img {
   background-color: var(--color-accent);
 }
 
+.btn-outline {
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+  background: transparent;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-outline:hover {
+  background: var(--color-accent);
+  color: white;
+}
+
+.btn-pill {
+  background: var(--color-accent);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-pill:hover {
+  opacity: 0.9;
+}
+
+/* Catalog card image height (set via JS from admin appearance) */
+.catalog-card-img {
+  height: var(--catalog-img-height, 128px);
+  object-fit: cover;
+  width: 100%;
+}
+
 .btn-secondary{
   display: inline-flex;
   align-items: center;

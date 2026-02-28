@@ -558,6 +558,35 @@
             document.getElementById('step4-effects').innerHTML = effectHtml;
         }
 
+        function applyAppearance(cfg) {
+            if (!cfg || !cfg.appearance) return;
+            var app = cfg.appearance;
+            var gridEl = document.getElementById('product-catalog-grid');
+            if (gridEl) {
+                var cols = app.catalogColumns != null ? app.catalogColumns : 4;
+                var hidden = gridEl.classList.contains('hidden') ? ' hidden' : '';
+                gridEl.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-' + cols + ' gap-4' + hidden;
+            }
+            document.documentElement.style.setProperty('--catalog-img-height', (app.cardImageHeight != null ? app.cardImageHeight : 128) + 'px');
+            var fonts = app.fonts || {};
+            document.documentElement.style.setProperty('--font-brand', (fonts.brandName != null ? fonts.brandName : 12) + 'px');
+            document.documentElement.style.setProperty('--font-product-name', (fonts.productName != null ? fonts.productName : 14) + 'px');
+            document.documentElement.style.setProperty('--font-style-number', (fonts.styleNumber != null ? fonts.styleNumber : 12) + 'px');
+            document.documentElement.style.setProperty('--font-button', (fonts.button != null ? fonts.button : 14) + 'px');
+            document.documentElement.style.setProperty('--font-step-heading', (fonts.stepHeading != null ? fonts.stepHeading : 24) + 'px');
+            document.documentElement.style.setProperty('--font-body-text', (fonts.bodyText != null ? fonts.bodyText : 14) + 'px');
+            document.documentElement.style.setProperty('--font-price', (fonts.price != null ? fonts.price : 16) + 'px');
+            if (app.accentColor) document.documentElement.style.setProperty('--color-accent', app.accentColor);
+        }
+
+        function getCatalogButtonClass() {
+            if (!calculatorConfig || !calculatorConfig.appearance) return 'btn-accent mt-auto w-full';
+            var app = calculatorConfig.appearance;
+            var style = app.buttonStyle === 'outline' ? 'btn-outline' : app.buttonStyle === 'pill' ? 'btn-pill' : 'btn-accent';
+            var width = app.buttonWidth === 'auto' ? '' : ' w-full';
+            return style + ' mt-auto' + width;
+        }
+
         function renderStep5FromConfig(cfg) {
             var p = (cfg && cfg.pricing) || {};
             var turn = p.turnaround || { standard: { label: 'Standard (7-10 days)', price: 0 }, rush: { label: 'Rush (3-5 days)', price: 25 }, superRush: { label: 'Super Rush (1-2 days)', price: 75 } };
@@ -767,12 +796,12 @@
                         return '<span class="inline-block w-4 h-4 rounded-full border border-gray-300" style="background-color:' + hex + '" title="' + (c.name || c.Name || '') + '"></span>';
                     }).join('');
                     card.innerHTML =
-                        '<img src="' + (p.image || '') + '" alt="" class="w-full h-32 object-cover rounded-lg mb-3 bg-gray-100" onerror="this.style.visibility=\'hidden\'" />' +
-                        '<p class="text-xs text-text-secondary mb-1">' + (p.brand || '') + '</p>' +
-                        '<h3 class="font-montserrat font-semibold mb-1 line-clamp-2">' + (p.name || '') + '</h3>' +
-                        '<p class="text-xs text-text-secondary mb-2">Style ' + (p.style || '') + '</p>' +
+                        '<img src="' + (p.image || '') + '" alt="" class="w-full catalog-card-img rounded-lg mb-3 bg-gray-100" onerror="this.style.visibility=\'hidden\'" />' +
+                        '<p class="text-text-secondary mb-1" style="font-size: var(--font-brand, 12px)">' + (p.brand || '') + '</p>' +
+                        '<h3 class="font-montserrat font-semibold mb-1 line-clamp-2" style="font-size: var(--font-product-name, 14px)">' + (p.name || '') + '</h3>' +
+                        '<p class="text-text-secondary mb-2" style="font-size: var(--font-style-number, 12px)">Style ' + (p.style || '') + '</p>' +
                         (colorSwatches ? '<div class="flex flex-wrap gap-1 mb-3">' + colorSwatches + '</div>' : '') +
-                        '<button type="button" class="btn-accent mt-auto w-full select-product-btn">Select</button>';
+                        '<button type="button" class="' + getCatalogButtonClass() + ' select-product-btn">Select</button>';
                     container.appendChild(card);
                 });
                 container.querySelectorAll('.select-product-btn').forEach(function(btn) {
@@ -1241,6 +1270,7 @@
                     calculatorConfig = cfg || {};
                     renderStep4FromConfig(calculatorConfig);
                     renderStep5FromConfig(calculatorConfig);
+                    applyAppearance(calculatorConfig);
                     var g = (calculatorConfig.general) || {};
                     var heroTitle = document.querySelector('.bg-surface.py-12 h1');
                     if (heroTitle && g.calculatorPageTitle) heroTitle.textContent = g.calculatorPageTitle;
@@ -1279,9 +1309,28 @@
                     }
                 })
                 .catch(function() {
-                    calculatorConfig = { pricing: { printLocations: {}, inkColors: {}, specialEffects: {}, turnaround: {}, extras: {}, volumeDiscounts: {}, minimumQuantity: 12 } };
+                    calculatorConfig = {
+                        pricing: {
+                            printLocations: { front: 0, back: 2.5, leftSleeve: 1.5, rightSleeve: 1.5 },
+                            inkColors: { '1': 0, '2': 1.5, '3': 2.75, '4': 3.75, '5': 4.5, '6': 5.25 },
+                            specialEffects: { metallic: { label: 'Metallic Ink', price: 3 }, glow: { label: 'Glow in the Dark', price: 4.5 }, puff: { label: 'Puff Ink', price: 2 } },
+                            turnaround: { standard: { label: 'Standard (7-10 days)', price: 0 }, rush: { label: 'Rush (3-5 days)', price: 25 }, superRush: { label: 'Super Rush (1-2 days)', price: 75 } },
+                            extras: { designSetup: { label: 'Design Setup', price: 45, type: 'onetime' }, consultation: { label: 'Design Consultation', price: 45, type: 'onetime' }, samplePrint: { label: 'Sample Print', price: 15, type: 'onetime' }, bagging: { label: 'Individual Bagging', price: 0.5, type: 'peritem' }, folding: { label: 'Folding & Stacking', price: 0.25, type: 'peritem' } },
+                            volumeDiscounts: { 25: 10, 50: 15, 100: 20, 250: 25 },
+                            minimumQuantity: 12
+                        },
+                        appearance: {
+                            catalogColumns: 4,
+                            cardImageHeight: 128,
+                            fonts: { brandName: 12, productName: 14, styleNumber: 12, button: 14, stepHeading: 24, bodyText: 14, price: 16 },
+                            buttonStyle: 'filled',
+                            buttonWidth: 'full',
+                            accentColor: '#9174a4'
+                        }
+                    };
                     renderStep4FromConfig(calculatorConfig);
                     renderStep5FromConfig(calculatorConfig);
+                    applyAppearance(calculatorConfig);
                     updateNavigationButtons();
                     initProductCatalog();
                     initDesignUpload();
