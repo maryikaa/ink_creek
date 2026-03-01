@@ -796,7 +796,7 @@
         }
 
         function filterAndRender() {
-            if (!allProducts.length) return;
+            if (!allProducts || !allProducts.length) return;
             var raw = (document.getElementById('product-search') && document.getElementById('product-search').value) || '';
             var q = raw.trim().toLowerCase();
             var activeCat = document.querySelector('.product-category-btn.border-secondary');
