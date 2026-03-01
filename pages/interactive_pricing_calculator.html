@@ -122,34 +122,42 @@
                             <!-- Search & Filters -->
                             <div class="mb-6 space-y-4">
                                 <input type="text" id="product-search" class="input-field" placeholder="Search by name or style number..." />
-                                <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 mb-6">
-                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-secondary bg-blue-50 transition-colors text-center" data-category="all">
-                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-                                        <span class="text-xs font-semibold">All</span>
+                                <div class="flex overflow-x-auto gap-3 mb-6 pb-2 scrollbar-hide -mx-2 px-2">
+                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-secondary bg-blue-50 transition-colors text-center" data-category="all">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                                        <span class="text-xs font-semibold mt-1">All</span>
                                     </button>
-                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="tshirts">
-                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 3l-4 5h4v13h8V8h4L14 3H6z"/></svg>
-                                        <span class="text-xs font-semibold">T-Shirts</span>
+                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="tshirts">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 3l-4 5h4v13h8V8h4L14 3H6z"/></svg>
+                                        <span class="text-xs font-semibold mt-1">T-Shirts</span>
                                     </button>
-                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="hoodies">
-                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3C9 3 6 5 5 7L2 10l3 2 1-1v10h12V11l1 1 3-2-3-3c-1-2-4-4-7-4z"/></svg>
-                                        <span class="text-xs font-semibold">Hoodies</span>
+                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="hoodies">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3C9 3 6 5 5 7L2 10l3 2 1-1v10h12V11l1 1 3-2-3-3c-1-2-4-4-7-4z"/></svg>
+                                        <span class="text-xs font-semibold mt-1">Hoodies</span>
                                     </button>
-                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="hats">
-                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3C7 3 3 7 3 11h18c0-4-4-8-9-8z M3 11v2h18v-2"/></svg>
-                                        <span class="text-xs font-semibold">Hats</span>
+                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="hats">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3C7 3 3 7 3 11h18c0-4-4-8-9-8z M3 11v2h18v-2"/></svg>
+                                        <span class="text-xs font-semibold mt-1">Hats</span>
                                     </button>
-                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="polos">
-                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3l2 4h-4l2-4z M8 7L5 8v14h14V8l-3-1"/></svg>
-                                        <span class="text-xs font-semibold">Polos</span>
+                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="polos">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3l2 4h-4l2-4z M8 7L5 8v14h14V8l-3-1"/></svg>
+                                        <span class="text-xs font-semibold mt-1">Polos</span>
                                     </button>
-                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="jackets">
-                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3l3 4H9l3-4z M6 7L2 9v13h8V12h4v10h8V9l-4-2"/></svg>
-                                        <span class="text-xs font-semibold">Jackets</span>
+                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="jackets">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3l3 4H9l3-4z M6 7L2 9v13h8V12h4v10h8V9l-4-2"/></svg>
+                                        <span class="text-xs font-semibold mt-1">Jackets</span>
                                     </button>
-                                    <button type="button" class="product-category-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="bags">
-                                        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 2h12l2 6H4L6 2z M4 8v13a1 1 0 001 1h14a1 1 0 001-1V8"/></svg>
-                                        <span class="text-xs font-semibold">Bags</span>
+                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="bags">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 2h12l2 6H4L6 2z M4 8v13a1 1 0 001 1h14a1 1 0 001-1V8"/></svg>
+                                        <span class="text-xs font-semibold mt-1">Bags</span>
+                                    </button>
+                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="tanktops">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 3l-4 5h4v13h8V8h4L14 3H6z"/></svg>
+                                        <span class="text-xs font-semibold mt-1">Tank Tops</span>
+                                    </button>
+                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="sweatshirts">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3C9 3 6 5 5 7L2 10l3 2 1-1v10h12V11l1 1 3-2-3-3c-1-2-4-4-7-4z"/></svg>
+                                        <span class="text-xs font-semibold mt-1">Sweatshirts</span>
                                     </button>
                                 </div>
                             </div>
@@ -622,6 +630,23 @@
             return style + ' mt-auto' + width;
         }
 
+        function getCurrentConfig() {
+            try {
+                return JSON.parse(localStorage.getItem('calculatorConfig')) || {};
+            } catch (e) { return {}; }
+        }
+
+        function applyMarkupSimple(wholesale) {
+            var config = getCurrentConfig();
+            var markup = (config && config.markup) ? config.markup : { type: 'percentage', value: 40, round: 0.50 };
+            var retail = markup.type === 'percentage'
+                ? wholesale * (1 + (markup.value || 0) / 100)
+                : wholesale + (parseFloat(markup.value) || 0);
+            if (markup.round === 0.50) retail = Math.ceil(retail * 2) / 2;
+            else if (markup.round === 1) retail = Math.ceil(retail);
+            return retail;
+        }
+
         function renderStep5FromConfig(cfg) {
             var p = (cfg && cfg.pricing) || {};
             var turn = p.turnaround || { standard: { label: 'Standard (7-10 days)', price: 0 }, rush: { label: 'Rush (3-5 days)', price: 25 }, superRush: { label: 'Super Rush (1-2 days)', price: 75 } };
@@ -752,117 +777,132 @@
         let allProducts = [];
         let filteredProducts = [];
 
-        function initProductCatalog() {
-            const loadingEl = document.getElementById('product-catalog-loading');
-            const errorEl = document.getElementById('product-catalog-error');
-            const gridEl = document.getElementById('product-catalog-grid');
-            const searchInput = document.getElementById('product-search');
-            const categoryBtns = document.querySelectorAll('.product-category-btn');
+        function matchCategory(catKey, product) {
+            if (catKey === 'all') return true;
+            var cat = product.category || '';
+            var name = (product.name || '').toLowerCase();
+            var style = (product.style || '').toLowerCase();
+            var brand = (product.brand || '').toLowerCase();
+            var combined = cat + ' ' + name + ' ' + style + ' ' + brand;
+            if (catKey === 'tshirts') return /t-?shirt|tee|tshirt/.test(combined);
+            if (catKey === 'hoodies') return /hoodie|hood/.test(combined);
+            if (catKey === 'hats') return /hat|cap|visor/.test(combined);
+            if (catKey === 'polos') return /polo/.test(combined);
+            if (catKey === 'jackets') return /jacket|coat|vest/.test(combined);
+            if (catKey === 'bags') return /bag|tote|backpack|duffel/.test(combined);
+            if (catKey === 'tanktops') return /tank|sleeveless/.test(combined);
+            if (catKey === 'sweatshirts') return /sweatshirt|crew/.test(combined);
+            return false;
+        }
 
+        function filterAndRender() {
+            if (!allProducts.length) return;
+            var raw = (document.getElementById('product-search') && document.getElementById('product-search').value) || '';
+            var q = raw.trim().toLowerCase();
+            var activeCat = document.querySelector('.product-category-btn.border-secondary');
+            var catKey = activeCat ? activeCat.getAttribute('data-category') : 'all';
+            filteredProducts = allProducts.filter(function(p) {
+                var searchMatch = !q ||
+                    (p.name || '').toLowerCase().includes(q) ||
+                    String(p.style || '').toLowerCase().includes(q) ||
+                    (p.brand || '').toLowerCase().includes(q) ||
+                    (p.category || '').toLowerCase().includes(q);
+                var catMatch = catKey === 'all' || matchCategory(catKey, p);
+                return searchMatch && catMatch;
+            });
+            var grid = document.getElementById('product-catalog-grid');
+            if (grid) {
+                grid.classList.remove('hidden');
+                renderProductGrid(grid);
+            }
+        }
+
+        function normalizeProduct(p) {
+            var name = p.title || p.styleName || p.productName || p.name || '';
+            var style = p.styleID || p.partNumber || p.style || '';
+            var brand = p.brandName || p.brand || '';
+            var rawImg = p.styleImage || p.brandImage || p.colorFrontImage || '';
+            var image = rawImg ? (rawImg.indexOf('http') === 0 ? rawImg : 'https://cdn.ssactivewear.com/' + rawImg) : '';
+            var cat = (p.baseCategory || p.categoryName || p.category || '').toLowerCase();
+            var price = parseFloat(p.gatePrice || p.ourPrice || p.salePrice || p.basePrice || 0) || 0;
+            return { name: name, style: style, brand: brand, image: image, colors: [], category: cat, price: price, raw: p };
+        }
+
+        function renderProductGrid(container) {
+            if (!container) return;
+            container.innerHTML = '';
+            filteredProducts.forEach(function(p, index) {
+                var card = document.createElement('div');
+                card.className = 'product-card border-2 border-gray-200 rounded-lg p-4 flex flex-col hover:border-secondary transition-colors';
+                card.setAttribute('data-product-index', index);
+                card.style.cursor = 'pointer';
+                var priceHtml = (p.price > 0)
+                    ? '<p class="text-sm font-bold text-accent mb-3">From $' + applyMarkupSimple(p.price).toFixed(2) + '</p>'
+                    : '<p class="text-xs text-text-secondary mb-3">Price on selection</p>';
+                card.innerHTML =
+                    '<div class="relative">' +
+                    '<img src="' + (p.image || '') + '" alt="' + (p.name || '') + '" class="w-full object-cover rounded-lg mb-3 bg-gray-100" style="height: var(--catalog-img-height, 128px)" onerror="this.style.visibility=\'hidden\'"/>' +
+                    '</div>' +
+                    '<p class="text-xs text-text-secondary mb-1">' + (p.brand || '') + '</p>' +
+                    '<h3 class="font-montserrat font-semibold mb-1 text-sm leading-tight line-clamp-2">' + (p.name || '') + '</h3>' +
+                    '<p class="text-xs text-text-secondary mb-2">Style #' + (p.style || '') + '</p>' +
+                    priceHtml +
+                    '<button type="button" class="select-product-btn btn-accent mt-auto w-full text-sm">Select →</button>';
+                card.addEventListener('click', function(e) {
+                    if (e.target.closest('.select-product-btn')) return;
+                    openProductModal(filteredProducts[index]);
+                });
+                container.appendChild(card);
+            });
+            container.querySelectorAll('.select-product-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var card = btn.closest('.product-card');
+                    var idx = parseInt(card.getAttribute('data-product-index'), 10);
+                    selectProduct(filteredProducts[idx], card);
+                });
+            });
+        }
+
+        function bindCatalogListeners() {
+            var searchEl = document.getElementById('product-search');
+            if (searchEl) {
+                searchEl.addEventListener('input', filterAndRender);
+                searchEl.addEventListener('keyup', filterAndRender);
+            }
+            document.querySelectorAll('.product-category-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.product-category-btn').forEach(function(b) {
+                        b.classList.remove('border-secondary', 'bg-blue-50');
+                        b.classList.add('border-gray-200');
+                    });
+                    this.classList.remove('border-gray-200');
+                    this.classList.add('border-secondary', 'bg-blue-50');
+                    filterAndRender();
+                });
+            });
+        }
+
+        function initProductCatalog() {
+            var loadingEl = document.getElementById('product-catalog-loading');
+            var errorEl = document.getElementById('product-catalog-error');
+            var gridEl = document.getElementById('product-catalog-grid');
             fetch('/api/ss-products')
                 .then(function(res) {
                     if (!res.ok) throw new Error('Network response was not ok');
                     return res.json();
                 })
                 .then(function(data) {
-                    loadingEl.classList.add('hidden');
-                    const list = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.Items) ? data.Items : (data && data.data) ? data.data : [];
+                    if (loadingEl) loadingEl.classList.add('hidden');
+                    var list = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.Items) ? data.Items : (data && data.data) ? data.data : [];
                     allProducts = list.map(normalizeProduct);
-                    filteredProducts = allProducts.slice();
-                    renderProductGrid(gridEl);
-                    gridEl.classList.remove('hidden');
-                    searchInput.addEventListener('input', filterProducts);
-                    searchInput.addEventListener('keyup', filterProducts);
-                    categoryBtns.forEach(function(btn) {
-                        btn.addEventListener('click', function() {
-                            categoryBtns.forEach(function(b) {
-                                b.classList.remove('border-secondary', 'bg-blue-50');
-                            });
-                            btn.classList.add('border-secondary', 'bg-blue-50');
-                            filterProducts();
-                        });
-                    });
+                    filterAndRender();
+                    if (gridEl) gridEl.classList.remove('hidden');
                 })
                 .catch(function() {
-                    loadingEl.classList.add('hidden');
-                    errorEl.classList.remove('hidden');
+                    if (loadingEl) loadingEl.classList.add('hidden');
+                    if (errorEl) errorEl.classList.remove('hidden');
                 });
-
-            function normalizeProduct(p) {
-                const name = p.title || p.styleName || p.productName || p.name || '';
-                const style = p.styleID || p.partNumber || p.style || '';
-                const brand = p.brandName || p.brand || '';
-                // Image: combine CDN base with relative path from API
-                let image = '';
-                const rawImg = p.styleImage || p.brandImage || p.colorFrontImage || '';
-                if (rawImg) {
-                    image = rawImg.startsWith('http')
-                        ? rawImg
-                        : 'https://cdn.ssactivewear.com/' + rawImg;
-                }
-                const cat = (p.baseCategory || p.categoryName || p.category || '').toLowerCase();
-                return { name, style, brand, image, colors: [], category: cat, raw: p };
-            }
-
-            function matchCategory(catKey, product) {
-                if (catKey === 'all') return true;
-                const cat = product.category;
-                const name = (product.name || '').toLowerCase();
-                const style = (product.style || '').toLowerCase();
-                const brand = (product.brand || '').toLowerCase();
-                const combined = cat + ' ' + name + ' ' + style + ' ' + brand;
-                if (catKey === 'tshirts') return /t-?shirt|tee|tshirt/.test(combined);
-                if (catKey === 'hoodies') return /hoodie|hood|sweatshirt/.test(combined);
-                if (catKey === 'hats') return /hat|cap|visor/.test(combined);
-                if (catKey === 'polos') return /polo/.test(combined);
-                if (catKey === 'jackets') return /jacket|coat|vest/.test(combined);
-                if (catKey === 'bags') return /bag|tote|backpack|duffel/.test(combined);
-                return false;
-            }
-
-            function filterProducts() {
-                if (!allProducts || !allProducts.length) return;
-                var q = (document.getElementById('product-search').value || '').trim().toLowerCase();
-                var activeCat = document.querySelector('.product-category-btn.border-secondary');
-                var catKey = activeCat ? activeCat.getAttribute('data-category') : 'all';
-                filteredProducts = allProducts.filter(function(p) {
-                    var matchSearch = !q ||
-                        (p.name || '').toLowerCase().includes(q) ||
-                        (p.style || '').toString().toLowerCase().includes(q) ||
-                        (p.brand || '').toLowerCase().includes(q);
-                    return matchSearch && matchCategory(catKey, p);
-                });
-                renderProductGrid(document.getElementById('product-catalog-grid'));
-            }
-
-            function renderProductGrid(container) {
-                container.innerHTML = '';
-                filteredProducts.forEach(function(p, index) {
-                    const card = document.createElement('div');
-                    card.className = 'product-card border-2 border-gray-200 rounded-lg p-4 flex flex-col hover:border-secondary transition-colors';
-                    card.setAttribute('data-product-index', index);
-                    const colorSwatches = (p.colors || []).slice(0, 8).map(function(c) {
-                        const hex = c.hex || c.hexCode || c.Hex || c.colorCode || '#ccc';
-                        return '<span class="inline-block w-4 h-4 rounded-full border border-gray-300" style="background-color:' + hex + '" title="' + (c.name || c.Name || '') + '"></span>';
-                    }).join('');
-                    card.innerHTML =
-                        '<img src="' + (p.image || '') + '" alt="" class="w-full catalog-card-img rounded-lg mb-3 bg-gray-100" onerror="this.style.visibility=\'hidden\'" />' +
-                        '<p class="text-text-secondary mb-1" style="font-size: var(--font-brand, 12px)">' + (p.brand || '') + '</p>' +
-                        '<h3 class="font-montserrat font-semibold mb-1 line-clamp-2" style="font-size: var(--font-product-name, 14px)">' + (p.name || '') + '</h3>' +
-                        '<p class="text-text-secondary mb-2" style="font-size: var(--font-style-number, 12px)">Style ' + (p.style || '') + '</p>' +
-                        (colorSwatches ? '<div class="flex flex-wrap gap-1 mb-3">' + colorSwatches + '</div>' : '') +
-                        '<button type="button" class="' + getCatalogButtonClass() + ' select-product-btn">Select</button>';
-                    container.appendChild(card);
-                });
-                container.querySelectorAll('.select-product-btn').forEach(function(btn) {
-                    btn.addEventListener('click', function() {
-                        const card = btn.closest('.product-card');
-                        const idx = parseInt(card.getAttribute('data-product-index'), 10);
-                        selectProduct(filteredProducts[idx], card);
-                    });
-                });
-            }
-
         }
 
         function selectProduct(product, cardEl) {
@@ -887,6 +927,96 @@
             updateNavigationButtons();
             updateSelectedProductBanner();
             loadStyleDetail();
+        }
+
+        function closeProductModal() {
+            var modal = document.getElementById('product-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function switchModalImage(src) {
+            var img = document.getElementById('modal-main-img');
+            if (img) img.src = src;
+        }
+
+        async function openProductModal(product) {
+            var modal = document.getElementById('product-modal');
+            var content = document.getElementById('product-modal-content');
+            if (!modal || !content) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            content.innerHTML = '<div class="flex justify-center py-12"><svg class="animate-spin h-10 w-10 text-secondary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg></div>';
+
+            var skus = [];
+            var styleID = product.raw && (product.raw.styleID != null) ? product.raw.styleID : product.style;
+            try {
+                var res = await fetch('/api/ss-style-detail?styleID=' + encodeURIComponent(styleID));
+                var data = await res.json();
+                skus = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.Items) ? data.Items : [];
+            } catch (e) { skus = []; }
+
+            var colorMap = {};
+            skus.forEach(function(sku) {
+                var cname = sku.colorName || sku.ColorName || '';
+                if (cname && !colorMap[cname]) {
+                    var swatch = (sku.colorSwatchImage || sku.ColorSwatchImage) ? 'https://cdn.ssactivewear.com/' + (sku.colorSwatchImage || sku.ColorSwatchImage) : null;
+                    var front = (sku.colorFrontImage || sku.ColorFrontImage) ? 'https://cdn.ssactivewear.com/' + (sku.colorFrontImage || sku.ColorFrontImage) : (product.image || '');
+                    colorMap[cname] = { name: cname, swatch: swatch, front: front, price: parseFloat(sku.ourPrice || sku.gatePrice || 0) || 0 };
+                }
+            });
+            var colors = [];
+            for (var k in colorMap) colors.push(colorMap[k]);
+
+            var sizeOrder = ['OSFA','XS','S','M','L','XL','2XL','3XL','4XL','5XL'];
+            var sizeSet = {};
+            skus.forEach(function(s) { if (s.sizeName || s.SizeName) sizeSet[s.sizeName || s.SizeName] = true; });
+            var sizes = sizeOrder.filter(function(s) { return sizeSet[s]; });
+            if (sizes.length === 0) sizes = Object.keys(sizeSet);
+
+            var desc = (product.raw && product.raw.description) ? product.raw.description : '';
+            var retailPrice = product.price > 0 ? 'From $' + applyMarkupSimple(product.price).toFixed(2) : 'Price on selection';
+
+            var colorSwitcherHtml = colors.slice(0, 12).map(function(c, i) {
+                var swatchHtml = c.swatch ? '<img src="' + c.swatch + '" class="w-full h-full object-cover"/>' : '<div class="w-full h-full bg-gray-300"></div>';
+                return '<button type="button" class="modal-color-swatch w-8 h-8 rounded-lg border-2 border-gray-200 overflow-hidden hover:border-secondary transition-all" data-src="' + (c.front || '').replace(/"/g, '&quot;') + '" title="' + (c.name || '').replace(/"/g, '&quot;') + '">' + swatchHtml + '</button>';
+            }).join('');
+            if (colors.length > 12) colorSwitcherHtml += '<span class="text-xs text-text-secondary self-center">+' + (colors.length - 12) + ' more</span>';
+
+            var mainImg = (product.image || (colors[0] && colors[0].front) || '').replace(/"/g, '&quot;');
+            var allColorsGrid = colors.map(function(c) {
+                var cell = c.swatch ? '<img src="' + c.swatch + '" class="w-full h-full object-cover"/>' : '<div class="w-full h-full bg-gray-300 rounded-lg"></div>';
+                return '<div class="flex flex-col items-center text-center"><div class="w-10 h-10 rounded-lg border border-gray-200 overflow-hidden mb-1">' + cell + '</div><span class="text-xs text-text-secondary leading-tight line-clamp-2">' + (c.name || '').replace(/</g, '&lt;') + '</span></div>';
+            }).join('');
+
+            var sizesHtml = sizes.map(function(s) { return '<span class="px-3 py-1 bg-gray-100 rounded-lg text-xs font-semibold">' + s + '</span>'; }).join('');
+
+            content.innerHTML =
+                '<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">' +
+                '<div><img id="modal-main-img" src="' + mainImg + '" alt="' + (product.name || '').replace(/"/g, '&quot;') + '" class="w-full rounded-xl object-cover" style="height:280px"/>' +
+                '<div class="flex flex-wrap gap-2 mt-3">' + colorSwitcherHtml + '</div></div>' +
+                '<div><p class="text-xs text-text-secondary mb-1">' + (product.brand || '').replace(/</g, '&lt;') + '</p>' +
+                '<h2 class="text-xl font-montserrat font-bold mb-1">' + (product.name || '').replace(/</g, '&lt;') + '</h2>' +
+                '<p class="text-sm text-text-secondary mb-3">Style #' + (product.style || '') + '</p>' +
+                '<p class="text-2xl font-bold text-accent mb-4">' + retailPrice + '</p>' +
+                '<p class="text-sm font-semibold mb-2">' + colors.length + ' Colors Available</p>' +
+                '<p class="text-sm font-semibold mb-2">Available Sizes:</p><div class="flex flex-wrap gap-2 mb-4">' + sizesHtml + '</div>' +
+                '<div class="text-sm text-text-secondary leading-relaxed max-h-32 overflow-y-auto">' + (desc || '').replace(/</g, '&lt;') + '</div></div></div>' +
+                '<div class="border-t pt-4"><h3 class="font-semibold mb-3">All Available Colors (' + colors.length + ')</h3>' +
+                '<div class="grid grid-cols-5 sm:grid-cols-8 gap-2">' + allColorsGrid + '</div></div>';
+
+            document.getElementById('modal-select-btn').onclick = function() {
+                closeProductModal();
+                selectProduct(product, null);
+            };
+            content.querySelectorAll('.modal-color-swatch').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var src = this.getAttribute('data-src');
+                    if (src) switchModalImage(src);
+                });
+            });
         }
 
         var styleDetailColors = [];
@@ -1330,6 +1460,11 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            bindCatalogListeners();
+            var productModalEl = document.getElementById('product-modal');
+            if (productModalEl) productModalEl.addEventListener('click', function(e) {
+                if (e.target === this) closeProductModal();
+            });
             loadCalculatorConfig()
                 .then(function(cfg) {
                     calculatorConfig = cfg || {};
@@ -1406,6 +1541,15 @@
 
         function restoreUIState() {}
     </script>
+    <!-- Product detail modal -->
+    <div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-screen overflow-y-auto p-6 relative">
+            <button type="button" onclick="closeProductModal()" class="absolute top-4 right-4 text-gray-400 hover:text-black text-2xl font-bold">×</button>
+            <div id="product-modal-content"></div>
+            <button type="button" id="modal-select-btn" class="btn-accent w-full mt-6 text-lg">Select This Product →</button>
+        </div>
+    </div>
+
 <script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
 </body>
 </html>
