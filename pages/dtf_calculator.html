@@ -73,7 +73,7 @@
     #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 1000; display: flex; flex-direction: column; gap: 8px; }
     #design-toolbar.hidden { display: none !important; }
   </style>
-  
+  <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/background-removal.js"></script>
 </head>
 <body class="bg-background text-text-primary">
 
@@ -151,8 +151,12 @@
             <button type="button" onclick="scaleSelected(0.1)" style="width:30px;height:30px;border-radius:6px;border:none;background:#334155;color:#fff;font-size:16px;cursor:pointer;" title="Grow">+</button>
             <div style="width:1px;height:20px;background:#475569;margin:0 2px;"></div>
             <div style="position:relative;">
-              <button type="button" onclick="removeBgSelected()" id="btn-remove-bg" >✨ Remove BG</button>
-              
+              <button type="button" onclick="removeBgSelected()" id="btn-remove-bg" onmouseenter="document.getElementById('bg-tolerance-wrap').style.display='block'" onmouseleave="document.getElementById('bg-tolerance-wrap').style.display='none'" style="padding:0 10px;height:30px;border-radius:6px;border:none;background:#3b82f6;color:#fff;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">✨ Remove BG</button>
+              <div id="bg-tolerance-wrap" onmouseenter="this.style.display='block'" onmouseleave="this.style.display='none'" style="display:none;position:absolute;bottom:100%;left:0;margin-bottom:4px;background:#1e293b;border-radius:8px;padding:8px 12px;z-index:25;box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+                <label style="font-size:11px;color:#94a3b8;display:block;margin-bottom:4px;">Tolerance: <span id="tol-val">30</span></label>
+                <input type="range" id="bg-tolerance" min="5" max="80" value="30" style="width:120px;accent-color:#3b82f6" oninput="document.getElementById('tol-val').textContent=this.value"/>
+              </div>
+            </div>
             <div style="width:1px;height:20px;background:#475569;margin:0 2px;"></div>
             <button type="button" onclick="deleteSelected()" style="width:30px;height:30px;border-radius:6px;border:none;background:#ef4444;color:#fff;font-size:14px;cursor:pointer;" title="Delete">🗑</button>
           </div>
@@ -819,93 +823,54 @@ function removeBgSelected() {
   if (!d) return;
   var btn = document.getElementById('btn-remove-bg');
   if (!btn) return;
-  btn.textContent = '⏳ Processing...';
+  btn.textContent = '⏳ Removing...';
   btn.disabled = true;
 
-  var img = new Image();
-  img.onload = function() {
-    var oc = document.createElement('canvas');
-    oc.width = img.naturalWidth;
-    oc.height = img.naturalHeight;
-    var ctx = oc.getContext('2d');
-    ctx.drawImage(img, 0, 0);
-    var id = ctx.getImageData(0, 0, oc.width, oc.height);
-    var data = id.data, w = oc.width, h = oc.height;
-    var tolerance = 35;
-
-    // Flood fill from all 4 edges
-    var visited = new Uint8Array(w * h);
-    var queue = [];
-
-    function enqueue(x, y) {
-      var idx = y * w + x;
-      if (x < 0 || x >= w || y < 0 || y >= h || visited[idx]) return;
-      var pi = idx * 4;
-      // sample bg color from top-left corner
-      var br = data[0], bg = data[1], bb = data[2];
-      var dr = Math.abs(data[pi] - br);
-      var dg = Math.abs(data[pi+1] - bg);
-      var db = Math.abs(data[pi+2] - bb);
-      if (dr + dg + db <= tolerance * 3) {
-        visited[idx] = 1;
-        queue.push(idx);
-      }
-    }
-
-    for (var x = 0; x < w; x++) { enqueue(x, 0); enqueue(x, h-1); }
-    for (var y = 0; y < h; y++) { enqueue(0, y); enqueue(w-1, y); }
-
-    var i = 0;
-    while (i < queue.length) {
-      var cur = queue[i++];
-      var cx = cur % w, cy = Math.floor(cur / w);
-      enqueue(cx+1, cy); enqueue(cx-1, cy);
-      enqueue(cx, cy+1); enqueue(cx, cy-1);
-    }
-
-    // Make visited pixels transparent
-    for (var p = 0; p < w * h; p++) {
-      if (visited[p]) data[p * 4 + 3] = 0;
-    }
-
-    ctx.putImageData(id, 0, 0);
-    var newDataUrl = oc.toDataURL('image/png');
-    d.dataUrl = newDataUrl;
-
-    fabric.Image.fromURL(newDataUrl, function(newImg) {
-      if (!d.node || !fabricCanvas) return;
-      newImg.set({
-        left: d.node.get('left'),
-        top: d.node.get('top'),
-        scaleX: d.node.scaleX,
-        scaleY: d.node.scaleY,
-        selectable: true,
-        evented: true,
-        hasControls: true,
-        hasBorders: true
-      });
-      fabricCanvas.remove(d.node);
-      fabricCanvas.add(newImg);
-      d.node = newImg;
-      fabricCanvas.requestRenderAll();
-      renderTable();
-      btn.textContent = '✅ Done!';
-      btn.style.background = '#16a34a';
+  fetch(d.dataUrl)
+    .then(function(r) { return r.blob(); })
+    .then(function(blob) {
+      return imglyRemoveBackground(blob, { output: { format: 'image/png', quality: 1 } });
+    })
+    .then(function(resultBlob) {
+      var url = URL.createObjectURL(resultBlob);
+      d.dataUrl = url;
+      fabric.Image.fromURL(url, function(newImg) {
+        if (!d.node || !fabricCanvas) return;
+        newImg.set({
+          left: d.node.get('left'),
+          top: d.node.get('top'),
+          scaleX: d.node.scaleX,
+          scaleY: d.node.scaleY,
+          selectable: true,
+          evented: true,
+          hasControls: true,
+          hasBorders: true
+        });
+        fabricCanvas.remove(d.node);
+        fabricCanvas.add(newImg);
+        d.node = newImg;
+        fabricCanvas.requestRenderAll();
+        renderTable();
+        btn.textContent = '✅ Done!';
+        btn.style.background = '#16a34a';
+        setTimeout(function() {
+          btn.textContent = '✨ Remove BG';
+          btn.style.background = '#3b82f6';
+          btn.disabled = false;
+        }, 2000);
+      }, { crossOrigin: 'anonymous' });
+    })
+    .catch(function(err) {
+      console.error(err);
+      btn.textContent = '❌ Error';
+      btn.disabled = false;
       setTimeout(function() {
         btn.textContent = '✨ Remove BG';
-        btn.style.background = '#3b82f6';
-        btn.disabled = false;
       }, 2000);
     });
-  };
-  img.onerror = function() {
-    btn.textContent = '✨ Remove BG';
-    btn.disabled = false;
-  };
-  img.src = d.dataUrl;
 }
 
-function removeDesignById(id) {
+function removeDesignById(function removeDesignById(id) {
   var d = designs.find(function(x) { return x.id === id; });
   if (d && d.node && fabricCanvas) {
     fabricCanvas.remove(d.node);
