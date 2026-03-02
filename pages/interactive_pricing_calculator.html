@@ -992,9 +992,8 @@
             var cImg = (c.image || c.swatch || '').replace(/"/g, '&quot;');
             var bgStyle = cImg ? '' : 'background:' + hex + ';';
             var inner = cImg
-              ? '<img src="' + cImg + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.style.background=\'' + hex + '\'">'
-              : '';
-            return '<div class="color-swatch"'
+              ? '<img src="' + cImg + '" style="width:100%;height:100%;object-fit:cover;pointer-events:none;"'
+
               + ' data-color="' + name + '"'
               + ' data-hex="' + hex + '"'
               + ' data-img="' + cImg + '"'
