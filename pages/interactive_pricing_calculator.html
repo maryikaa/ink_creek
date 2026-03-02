@@ -13,6 +13,7 @@
         .category-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9; }
         .product-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
         .product-card:hover { border-color: #1e40af; box-shadow: 0 4px 20px rgba(30,64,175,0.15); transform: translateY(-2px); }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
     </style>
 <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Finkcreek7691back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
 </head>
@@ -728,9 +729,13 @@
             var loadingEl = document.getElementById('product-catalog-loading');
             var errorEl = document.getElementById('product-catalog-error');
             var gridEl = document.getElementById('products-grid');
-            if (loadingEl) loadingEl.classList.remove('hidden');
+            if (loadingEl) loadingEl.classList.add('hidden');
             if (errorEl) errorEl.classList.add('hidden');
-            if (gridEl) gridEl.style.display = 'none';
+            if (!gridEl) return;
+            gridEl.style.display = 'grid';
+            gridEl.innerHTML = Array(8).fill(0).map(function() {
+                return '<div style="background:#fff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;animation:pulse 1.5s ease-in-out infinite;"><div style="height:200px;background:#f1f5f9;"></div><div style="padding:16px;"><div style="height:10px;background:#f1f5f9;border-radius:4px;margin-bottom:8px;width:40%;"></div><div style="height:14px;background:#f1f5f9;border-radius:4px;margin-bottom:8px;"></div><div style="height:14px;background:#f1f5f9;border-radius:4px;width:60%;margin-bottom:16px;"></div><div style="height:40px;background:#e0e7ff;border-radius:8px;"></div></div></div>';
+            }).join('');
         }
 
         function showErrorState() {
@@ -752,8 +757,7 @@
                     var loadingEl = document.getElementById('product-catalog-loading');
                     var gridEl = document.getElementById('products-grid');
                     if (loadingEl) loadingEl.classList.add('hidden');
-                    var list = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.data) ? data.data : [];
-                    allProducts = list.map(normalizeProduct);
+                    allProducts = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.data) ? data.data : [];
                     buildCategoryTabs(allProducts);
                     renderFilteredProducts();
                     if (gridEl) gridEl.style.display = 'grid';
@@ -770,24 +774,20 @@
         }
 
         function buildCategoryTabs(products) {
-            var cats = { all: true };
+            var catCounts = {};
             products.forEach(function(p) {
-                var cat = (p.category || '').toLowerCase().replace(/\s+/g, '') || (p.raw && (p.raw.baseCategory || p.raw.categoryName || '').toLowerCase().replace(/\s+/g, ''));
-                if (cat) cats[cat] = true;
+                var cat = p.baseCategory || 'Other';
+                catCounts[cat] = (catCounts[cat] || 0) + 1;
             });
-            var labels = { all: 'All Products', 't-shirt': 'T-Shirts', tshirts: 'T-Shirts', hoodie: 'Hoodies', hoodies: 'Hoodies', sweatshirt: 'Crewnecks', crewneck: 'Crewnecks', tote: 'Tote Bags', hat: 'Hats & Caps', hats: 'Hats & Caps', jacket: 'Jackets', jackets: 'Jackets', polos: 'Polos', bags: 'Bags', tanktops: 'Tank Tops', sweatshirts: 'Sweatshirts' };
             var container = document.getElementById('category-tabs');
             if (!container) return;
-            container.innerHTML = '';
-            Object.keys(cats).forEach(function(cat) {
-                var btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'cat-tab' + (cat === 'all' ? ' active' : '');
-                btn.setAttribute('data-category', cat);
-                btn.textContent = labels[cat] || (cat.charAt(0).toUpperCase() + cat.slice(1));
-                btn.onclick = function() { filterCategory(cat); };
-                container.appendChild(btn);
-            });
+            var sorted = Object.entries(catCounts).sort(function(a, b) { return b[1] - a[1]; });
+            var allEsc = (products.length + '').replace(/</g, '&lt;');
+            container.innerHTML = '<button type="button" class="cat-tab active" data-category="all" onclick="filterCategory(\'all\')">All (' + products.length + ')</button>' + sorted.map(function(entry) {
+                var cat = (entry[0] || '').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+                var count = entry[1];
+                return '<button type="button" class="cat-tab" data-category="' + cat + '" onclick="filterCategory(\'' + cat.replace(/'/g, '\\\'') + '\')">' + cat + ' (' + count + ')</button>';
+            }).join('');
         }
 
         function filterCategory(cat) {
@@ -801,24 +801,21 @@
         function renderFilteredProducts() {
             var filtered = allProducts.slice();
             if (activeCategory !== 'all') {
-                var ac = activeCategory.toLowerCase();
                 filtered = filtered.filter(function(p) {
-                    var title = (p.name || '').toLowerCase();
-                    var cat = (p.category || '').toLowerCase();
-                    return cat.indexOf(ac) !== -1 || title.indexOf(ac) !== -1;
+                    return (p.baseCategory || '') === activeCategory;
                 });
             }
             if (searchQuery.trim()) {
                 var q = searchQuery.toLowerCase();
                 filtered = filtered.filter(function(p) {
-                    var title = (p.name || '').toLowerCase();
-                    var desc = ((p.raw && p.raw.description) || '').toLowerCase();
-                    return title.indexOf(q) !== -1 || desc.indexOf(q) !== -1;
+                    return (p.title || '').toLowerCase().indexOf(q) !== -1 ||
+                        (p.brandName || '').toLowerCase().indexOf(q) !== -1 ||
+                        (p.baseCategory || '').toLowerCase().indexOf(q) !== -1;
                 });
             }
             renderProducts(filtered);
             var countEl = document.getElementById('product-count');
-            if (countEl) countEl.textContent = filtered.length + ' product' + (filtered.length !== 1 ? 's' : '');
+            if (countEl) countEl.textContent = filtered.length + ' products';
         }
 
         function handleSearch(val) {
@@ -846,12 +843,22 @@
                 return;
             }
             var html = products.map(function(p) {
-                var basePrice = p.price || 0;
-                var markedUpPrice = basePrice * (1 + markup / 100);
-                var title = (p.name || 'Product').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+                var basePrice = parseFloat(p.price || 0);
+                var clientPrice = basePrice > 0 ? (basePrice * (1 + markup / 100)).toFixed(2) : null;
+                var colorCount = (p.colors || []).length;
+                var title = (p.title || 'Product').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+                var brand = (p.brandName || '').replace(/</g, '&lt;').replace(/"/g, '&quot;');
                 var imgUrl = (p.image || '').replace(/"/g, '&quot;');
-                var pid = (p.raw && p.raw.styleID != null ? p.raw.styleID : p.style || '').toString().replace(/"/g, '&quot;');
-                return '<div class="product-card" onclick="selectProduct(\'' + pid + '\')"><div style="background:#f8fafc;border-radius:8px 8px 0 0;height:200px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;padding:20px;">' + (imgUrl ? '<img src="' + imgUrl + '" alt="' + title + '" style="max-height:180px;max-width:90%;object-fit:contain;" onerror="this.style.display=\'none\'"/>' : '<div style="color:#d1d5db;font-size:48px;">👕</div>') + '</div><div style="padding:16px;"><h3 style="font-size:18px;font-weight:700;color:#1e293b;text-align:center;margin-bottom:4px;line-height:1.3;">' + title + '</h3><p style="font-size:14px;color:#6b7280;text-align:center;margin-bottom:2px;">Base price: $' + basePrice.toFixed(2) + '</p><p style="font-size:15px;font-weight:700;color:#1e40af;text-align:center;margin-bottom:14px;">Your price: $' + markedUpPrice.toFixed(2) + '</p><button type="button" onclick="event.stopPropagation();selectProduct(\'' + pid + '\')" style="width:100%;padding:12px;background:#1e40af;color:#fff;border:none;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background=\'#1e3a5f\'" onmouseout="this.style.background=\'#1e40af\'">Select</button></div></div>';
+                var sid = String(p.styleID != null ? p.styleID : p.id || '');
+                var imgBlock = p.image
+                    ? '<img src="' + imgUrl + '" alt="' + title + '" style="max-height:180px;max-width:90%;object-fit:contain;" onerror="this.src=\'\';this.parentElement.innerHTML=\'<div style=color:#d1d5db;font-size:48px>👕</div>\'"/>'
+                    : '<div style="color:#d1d5db;font-size:48px">👕</div>';
+                var brandBadge = '<div style="position:absolute;top:8px;left:8px;background:rgba(255,255,255,0.92);backdrop-filter:blur(4px);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#374151;">' + brand + '</div>';
+                var colorBadge = colorCount > 1 ? '<div style="position:absolute;bottom:8px;right:8px;background:rgba(255,255,255,0.92);border-radius:20px;padding:3px 8px;font-size:11px;color:#6b7280;font-weight:600;">' + colorCount + ' colors</div>' : '';
+                var priceBlock = clientPrice
+                    ? '<p style="font-size:18px;font-weight:800;color:#1e40af;text-align:center;margin-bottom:12px;">from $' + clientPrice + '</p>'
+                    : '<p style="font-size:13px;color:#9ca3af;text-align:center;margin-bottom:12px;">Request quote</p>';
+                return '<div class="product-card" onclick="selectProduct(' + sid + ')"><div style="background:#f8fafc;height:200px;display:flex;align-items:center;justify-content:center;border-radius:10px 10px 0 0;overflow:hidden;position:relative;">' + imgBlock + brandBadge + colorBadge + '</div><div style="padding:14px 16px;"><p style="font-size:11px;font-weight:700;color:#1e40af;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px;">' + brand + '</p><h3 style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:10px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">' + title + '</h3>' + priceBlock + '<button type="button" onclick="event.stopPropagation();selectProduct(' + sid + ')" style="width:100%;padding:11px;background:#1e40af;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background=\'#1e3a5f\'" onmouseout="this.style.background=\'#1e40af\'">Select</button></div></div>';
             }).join('');
             grid.innerHTML = html;
         }
@@ -905,49 +912,25 @@
         }
 
         function selectProduct(productId) {
-            var product = allProducts.filter(function(p) { return String((p.raw && p.raw.styleID) || p.style) === String(productId); })[0];
+            var product = allProducts.filter(function(p) { return String(p.styleID != null ? p.styleID : p.id) === String(productId); })[0];
             if (!product) return;
             modalProduct = product;
             selectedColor = null;
             sizeQtys = {};
             var markup = getMarkupPercent();
-            var basePrice = product.price || 0;
-            var yourPrice = basePrice * (1 + markup / 100);
-            document.getElementById('modal-product-title').textContent = product.name || 'Select Options';
-            document.getElementById('modal-product-name').textContent = product.name || '';
-            document.getElementById('modal-base-price').textContent = 'Base: $' + basePrice.toFixed(2);
-            document.getElementById('modal-your-price').textContent = 'Your price: $' + yourPrice.toFixed(2);
+            var basePrice = parseFloat(product.price || 0);
+            var baseEl = document.getElementById('modal-base-price');
+            var yourEl = document.getElementById('modal-your-price');
+            if (baseEl) baseEl.style.display = 'none';
+            if (yourEl) yourEl.textContent = basePrice > 0 ? 'from $' + (basePrice * (1 + markup / 100)).toFixed(2) + ' CAD' : 'Request quote';
+            document.getElementById('modal-product-title').textContent = product.title || 'Select Options';
+            document.getElementById('modal-product-name').textContent = product.title || '';
             var img = document.getElementById('modal-product-img');
             img.src = product.image || '';
             img.style.display = product.image ? 'block' : 'none';
             document.getElementById('selected-color-name').textContent = '— select below';
-            var styleID = (product.raw && product.raw.styleID != null) ? product.raw.styleID : product.style;
-            fetch('/api/ss-style-detail?styleID=' + encodeURIComponent(styleID))
-                .then(function(res) { return res.json(); })
-                .then(function(skus) {
-                    var list = Array.isArray(skus) ? skus : (skus && skus.products) ? skus.products : [];
-                    var colorMap = {};
-                    list.forEach(function(sku) {
-                        var cname = sku.colorName || sku.ColorName || '';
-                        if (cname && !colorMap[cname]) {
-                            var swatch = (sku.colorSwatchImage || sku.ColorSwatchImage) ? 'https://cdn.ssactivewear.com/' + (sku.colorSwatchImage || sku.ColorSwatchImage) : null;
-                            colorMap[cname] = { name: cname, swatch: swatch, hex: '#ccc' };
-                        }
-                    });
-                    var colors = [];
-                    for (var k in colorMap) colors.push(colorMap[k]);
-                    var sizeOrder = ['OSFA','XS','S','M','L','XL','2XL','3XL','4XL','5XL'];
-                    var sizeSet = {};
-                    list.forEach(function(s) { if (s.sizeName || s.SizeName) sizeSet[s.sizeName || s.SizeName] = true; });
-                    var sizes = sizeOrder.filter(function(s) { return sizeSet[s]; });
-                    if (sizes.length === 0) sizes = Object.keys(sizeSet);
-                    buildColorSwatches(colors);
-                    buildSizeGrid(sizes);
-                })
-                .catch(function() {
-                    buildColorSwatches([]);
-                    buildSizeGrid(['S','M','L','XL']);
-                });
+            buildColorSwatches(product);
+            buildSizeGrid(product.sizes || ['S','M','L','XL']);
             var modal = document.getElementById('product-modal');
             if (modal) { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         }
@@ -960,20 +943,28 @@
         function selectColorFromEl(el) {
             var name = el.getAttribute('data-color') || '';
             var hex = el.getAttribute('data-hex') || '#ccc';
-            selectColor(name, hex);
+            var img = el.getAttribute('data-img') || '';
+            selectColor(name, hex, img);
         }
 
-        function buildColorSwatches(colors) {
+        function buildColorSwatches(product) {
             var container = document.getElementById('color-swatches');
             if (!container) return;
-            if (!colors || colors.length === 0) {
-                container.innerHTML = '<p style="color:#9ca3af;font-size:13px;">One color available</p>';
+            var colors = product && product.colors ? product.colors : [];
+            if (!colors.length) {
+                container.innerHTML = '<p style="color:#9ca3af;font-size:13px;">Contact us for color options</p>';
                 return;
             }
             container.innerHTML = colors.map(function(c) {
                 var name = (c.name || '').replace(/"/g, '&quot;');
                 var hex = (c.hex || '#ccc').replace(/"/g, '');
-                return '<div class="color-swatch" data-color="' + name + '" data-hex="' + hex + '" onclick="selectColorFromEl(this)" title="' + name + '" style="width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid #e5e7eb;background:' + hex + ';transition:all 0.15s;"></div>';
+                var cImg = (c.image || '').replace(/"/g, '&quot;');
+                var style = 'width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid #e5e7eb;overflow:hidden;flex-shrink:0;transition:all 0.15s;';
+                if (!c.image) style += 'background:' + hex + ';';
+                var inner = c.image
+                    ? '<img src="' + cImg + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.style.background=\'' + hex + '\'"/>'
+                    : '';
+                return '<div class="color-swatch" data-color="' + name + '" data-hex="' + hex + '" data-img="' + cImg + '" onclick="selectColorFromEl(this)" title="' + name + '" style="' + style + '">' + inner + '</div>';
             }).join('');
         }
 
@@ -987,15 +978,20 @@
             }).join('');
         }
 
-        function selectColor(name, hex) {
-            selectedColor = { name: name, hex: hex || '#ccc' };
-            document.getElementById('selected-color-name').textContent = name;
+        function selectColor(name, hex, img) {
+            selectedColor = { name: name, hex: hex || '#ccc', image: img || '' };
+            var label = document.getElementById('selected-color-name');
+            if (label) label.textContent = name;
             document.querySelectorAll('.color-swatch').forEach(function(s) {
                 var isSelected = s.getAttribute('data-color') === name;
                 s.style.border = isSelected ? '3px solid #1e40af' : '2px solid #e5e7eb';
                 s.style.transform = isSelected ? 'scale(1.15)' : 'scale(1)';
                 s.style.boxShadow = isSelected ? '0 0 0 2px #fff, 0 0 0 4px #1e40af' : 'none';
             });
+            if (img && modalProduct) {
+                var modalImg = document.getElementById('modal-product-img');
+                if (modalImg) { modalImg.src = img; modalImg.style.display = 'block'; }
+            }
             updateModalCartSummary();
         }
 
@@ -1026,11 +1022,11 @@
             var basePrice = parseFloat(modalProduct && (modalProduct.price != null ? modalProduct.price : 0)) || 0;
             var markup = getMarkupPercent();
             var unitPrice = basePrice * (1 + markup / 100);
-            var pid = (modalProduct.raw && modalProduct.raw.styleID != null) ? modalProduct.raw.styleID : modalProduct.style;
+            var pid = modalProduct.styleID != null ? modalProduct.styleID : modalProduct.id;
             Object.keys(sizeQtys).forEach(function(size) {
                 var qty = sizeQtys[size] || 0;
                 if (qty === 0) return;
-                addToCart({ productId: pid, productName: modalProduct.name || '', image: modalProduct.image || '', color: selectedColor.name, colorHex: selectedColor.hex || '#ccc', size: size, qty: qty, unitPrice: unitPrice, basePrice: basePrice });
+                addToCart({ productId: pid, productName: modalProduct.title || '', image: modalProduct.image || '', color: selectedColor.name, colorHex: selectedColor.hex || '#ccc', size: size, qty: qty, unitPrice: unitPrice, basePrice: basePrice });
             });
             closeProductModal();
             if (typeof showToast === 'function') showToast('✓ Added ' + totalQty + ' item' + (totalQty > 1 ? 's' : '') + ' to cart', 'success');
