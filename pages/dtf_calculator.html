@@ -528,9 +528,9 @@ function showToolbar(node) {
     var contRect = cont ? cont.getBoundingClientRect() : wrapRect;
     var left = node.get('left') || 0;
     var top = node.get('top') || 0;
-    var w = (node.getWidth() || 0) * (node.scaleX || 1);
-    var scaleX = contRect.width / fabricCanvas.getWidth ? fabricCanvas.getWidth() : fabricCanvas.width;
-    var scaleY = contRect.height / fabricCanvas.getHeight ? fabricCanvas.getHeight() : fabricCanvas.height;
+    var w = (node.getScaledWidth ? node.getScaledWidth() : node.width * (node.scaleX || 1)) || 0;
+    var scaleX = contRect.width / fabricCanvas.width;
+    var scaleY = contRect.height / fabricCanvas.height;
     toolbar.style.left = (contRect.left + (left + w / 2) * scaleX - toolbar.offsetWidth / 2) + 'px';
     toolbar.style.top = (contRect.top + top * scaleY - 48) + 'px';
   }
