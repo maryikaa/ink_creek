@@ -457,7 +457,7 @@ function resizeCanvas() {
   var W = cont ? cont.clientWidth : 700;
   var H = Math.round(sheetHeightInches * INCH_TO_PX);
   if (!fabricCanvas) return;
-  var oldW = fabricCanvas.getWidth();
+  var oldW = fabricCanvas.getWidth ? fabricCanvas.getWidth() : fabricCanvas.width;
   fabricCanvas.setDimensions({ width: W, height: H });
   if (cont) cont.style.height = H + 'px';
   var wrapper = document.querySelector('.canvas-wrapper');
@@ -486,8 +486,8 @@ function redrawGrid() {
   objs.forEach(function(o) {
     if (o[GRID_MARKER]) fabricCanvas.remove(o);
   });
-  var W = fabricCanvas.getWidth();
-  var H = fabricCanvas.getHeight();
+  var W = fabricCanvas.getWidth ? fabricCanvas.getWidth() : fabricCanvas.width;
+  var H = fabricCanvas.getHeight ? fabricCanvas.getHeight() : fabricCanvas.height;
   var sheetPx = MAX_WIDTH_INCHES * INCH_TO_PX;
   var rect = new fabric.Rect({ left: 0, top: 0, width: sheetPx, height: H, fill: '#ffffff', stroke: '#93c5fd', strokeWidth: 1.5, selectable: false, evented: false });
   rect[GRID_MARKER] = true;
@@ -528,9 +528,9 @@ function showToolbar(node) {
     var contRect = cont ? cont.getBoundingClientRect() : wrapRect;
     var left = node.get('left') || 0;
     var top = node.get('top') || 0;
-    var w = (node.getWidth() || 0) * (node.getScaleX() || 1);
-    var scaleX = contRect.width / fabricCanvas.getWidth();
-    var scaleY = contRect.height / fabricCanvas.getHeight();
+    var w = (node.getWidth() || 0) * (node.scaleX || 1);
+    var scaleX = contRect.width / fabricCanvas.getWidth ? fabricCanvas.getWidth() : fabricCanvas.width;
+    var scaleY = contRect.height / fabricCanvas.getHeight ? fabricCanvas.getHeight() : fabricCanvas.height;
     toolbar.style.left = (contRect.left + (left + w / 2) * scaleX - toolbar.offsetWidth / 2) + 'px';
     toolbar.style.top = (contRect.top + top * scaleY - 48) + 'px';
   }
@@ -609,8 +609,8 @@ window.addEventListener('DOMContentLoaded', function() {
     var W = cont.clientWidth;
     var newIPX = W / MAX_WIDTH_INCHES;
     var ratio = newIPX / INCH_TO_PX;
-    var curW = fabricCanvas.getWidth();
-    fabricCanvas.setDimensions({ width: W, height: fabricCanvas.getHeight() });
+    var curW = fabricCanvas.getWidth ? fabricCanvas.getWidth() : fabricCanvas.width;
+    fabricCanvas.setDimensions({ width: W, height: fabricCanvas.getHeight ? fabricCanvas.getHeight() : fabricCanvas.height });
     INCH_TO_PX = newIPX;
     fabricCanvas.getObjects().forEach(function(obj) {
       if (obj[GRID_MARKER]) return;
@@ -761,8 +761,8 @@ function updateDim(id, axis, val, unit) {
     d.hInches = Math.max(0.5, Math.round(inches * 10) / 10);
   }
   if (d.node && fabricCanvas) {
-    var baseW = d.node.getWidth() || 1;
-    var baseH = d.node.getHeight() || 1;
+    var baseW = d.node.getScaledWidth() || 1;
+    var baseH = d.node.getScaledHeight() || 1;
     d.node.setScaleX((d.wInches * INCH_TO_PX) / baseW);
     d.node.setScaleY((d.hInches * INCH_TO_PX) / baseH);
     fabricCanvas.requestRenderAll();
@@ -799,8 +799,8 @@ function scaleSelected(delta) {
   var newH = d.hInches * factor;
   d.wInches = Math.round(newW * 10) / 10;
   d.hInches = Math.round(newH * 10) / 10;
-  var baseW = d.node.getWidth() || 1;
-  var baseH = d.node.getHeight() || 1;
+  var baseW = d.node.getScaledWidth() || 1;
+  var baseH = d.node.getScaledHeight() || 1;
   d.node.setScaleX((d.wInches * INCH_TO_PX) / baseW);
   d.node.setScaleY((d.hInches * INCH_TO_PX) / baseH);
   fabricCanvas.requestRenderAll();
@@ -856,8 +856,8 @@ function removeBgSelected() {
       newFabricImg.set({
         left: d.node.get('left'),
         top: d.node.get('top'),
-        scaleX: d.node.getScaleX(),
-        scaleY: d.node.getScaleY(),
+        scaleX: d.node.scaleX,
+        scaleY: d.node.scaleY,
         data: d.node.get('data'),
         selectable: true,
         evented: true,
@@ -1013,8 +1013,8 @@ function updateSummaryPreview() {
     if (!d.node) return;
     var left = (d.node.get('left') || 0) * scale;
     var top = (d.node.get('top') || 0) * scale;
-    var wPx = (d.node.getWidth() || 0) * (d.node.getScaleX() || 1) * scale;
-    var hPx = (d.node.getHeight() || 0) * (d.node.getScaleY() || 1) * scale;
+    var wPx = (d.node.getScaledWidth() || 0) * (d.node.scaleX || 1) * scale;
+    var hPx = (d.node.getScaledHeight() || 0) * (d.node.scaleY || 1) * scale;
     var img = new Image();
     img.onload = function() {
       ctx.drawImage(img, left, top, wPx, hPx);
