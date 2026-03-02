@@ -976,35 +976,44 @@
         }
 
         function buildColorSwatches(product) {
-            var container = document.getElementById('color-swatches');
-            if (!container) return;
-            var colors = product && product.colors ? product.colors : [];
-            if (!colors.length) {
-                container.innerHTML = '<p style="color:#9ca3af;font-size:13px;">Contact us for color options</p>';
-                return;
-            }
-            container.innerHTML = colors.map(function(c) {
-                var name = (c.name || '').replace(/"/g, '&quot;');
-                var hex = (c.hex || '#ccc').replace(/"/g, '');
-                var cImg = (c.image || '').replace(/"/g, '&quot;');
-                var style = 'width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid #e5e7eb;overflow:hidden;flex-shrink:0;transition:all 0.15s;';
-                if (!c.image) style += 'background:' + hex + ';';
-                var inner = c.image
-                    ? '<img src="' + cImg + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.style.background=\'' + hex + '\'"/>'
-                    : '';
-                return '<div class="color-swatch" data-color="' + name + '" data-hex="' + hex + '" data-img="' + cImg + '" onclick="selectColorFromEl(this)" title="' + name + '" style="' + style + '">' + inner + '</div>';
-            }).join('');
-        }
+  var container = document.getElementById('color-swatches');
+  if (!container) return;
+  var colors = (product && product.colors) ? product.colors : [];
+  if (!colors.length) {
+    container.innerHTML = '<p style="color:#9ca3af;font-size:13px">Contact us for color options</p>';
+    return;
+  }
+  container.innerHTML = colors.map(function(c) {
+    var name = (c.name || '').replace(/"/g, '&quot;');
+    var hex = (c.hex || '#cccccc').replace(/"/g, '');
+    var cImg = (c.image || c.swatch || '').replace(/"/g, '&quot;');
+    var style = 'width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid #e5e7eb;overflow:hidden;flex-shrink:0;transition:all 0.15s;';
+    var inner = cImg
+      ? '<img src="' + cImg + '" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display=\'none\';this.parentElement.style.background=\'' + hex + '\'">'
+      : '';
+    if (!cImg) style += 'background:' + hex + ';';
+    return '<div class="color-swatch" data-color="' + name + '" data-hex="' + hex + '" data-img="' + cImg + '" onclick="selectColorFromEl(this)" title="' + name + '" style="' + style + '">' + inner + '</div>';
+  }).join('');
+}
 
-        function buildSizeGrid(sizes) {
-            var container = document.getElementById('size-qty-grid');
-            if (!container) return;
-            sizeQtys = {};
-            container.innerHTML = (sizes || ['XS','S','M','L','XL','2XL','3XL']).map(function(s) {
-                var sizeName = (typeof s === 'object' ? (s.size || s.name) : s) || '';
-                return '<div style="text-align:center;"><div style="font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px;">' + sizeName + '</div><div style="display:flex;align-items:center;border:1px solid #d1d5db;border-radius:8px;overflow:hidden;"><button type="button" onclick="changeSizeQty(\'' + sizeName + '\', -1)" style="width:28px;height:32px;border:none;background:#f9fafb;color:#374151;font-size:16px;cursor:pointer;flex-shrink:0;">−</button><span id="qty-' + sizeName + '" style="flex:1;text-align:center;font-size:14px;font-weight:600;color:#111827;min-width:24px;">0</span><button type="button" onclick="changeSizeQty(\'' + sizeName + '\', 1)" style="width:28px;height:32px;border:none;background:#f9fafb;color:#374151;font-size:16px;cursor:pointer;flex-shrink:0;">+</button></div></div>';
-            }).join('');
-        }
+
+function buildSizeGrid(sizes) {
+  var grid = document.getElementById('size-qty-grid');
+  if (!grid) return;
+  sizeQtys = {};
+  var arr = (sizes && sizes.length) ? sizes : ['S','M','L','XL'];
+  grid.innerHTML = arr.map(function(s) {
+    sizeQtys[s] = 0;
+    return '<div style="text-align:center">'
+      + '<div style="font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px">' + s + '</div>'
+      + '<div style="display:flex;align-items:center;gap:4px;border:1px solid #e5e7eb;border-radius:10px;padding:4px 8px;background:#fff">'
+      + '<button type="button" onclick="changeSizeQty(\'' + s + '\',-1)" style="background:none;border:none;font-size:18px;cursor:pointer;color:#374151;line-height:1;padding:0 4px">−</button>'
+      + '<span id="qty-' + s + '" style="min-width:20px;text-align:center;font-weight:600">0</span>'
+      + '<button type="button" onclick="changeSizeQty(\'' + s + '\',1)" style="background:none;border:none;font-size:18px;cursor:pointer;color:#374151;line-height:1;padding:0 4px">+</button>'
+      + '</div></div>';
+  }).join('');
+}
+
 
         function selectColor(name, hex, img) {
             selectedColor = { name: name, hex: hex || '#ccc', image: img || '' };
