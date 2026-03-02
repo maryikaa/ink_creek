@@ -9,133 +9,119 @@ exports.handler = async function (event) {
 
   const headers = {
     'Authorization': auth,
-    'Accept': 'application/json',        // ← ДОБАВЛЕНО
+    'Accept': 'application/json',
     'Content-Type': 'application/json',
   };
 
   try {
-    const stylesRes = await fetch(
-      baseUrl + '/products/?mediatype=json', // ← ИЗМЕНЕНО
+    // S&S returns SKU-level data — group by styleID
+    const res = await fetch(
+      baseUrl + '/products/?mediatype=json',
       { headers }
     );
 
-    // Диагностика
-    console.log('SS status:', stylesRes.status);
-    const text = await stylesRes.text();
-    console.log('SS preview:', text.slice(0, 300));
+    console.log('SS status:', res.status);
 
-    let styles;
-    try {
-      styles = JSON.parse(text);
-    } catch (e) {
+    if (!res.ok) {
       return {
-        statusCode: 500,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-        body: JSON.stringify({
-          error: 'SS API returned non-JSON',
-          preview: text.slice(0, 300),
-          httpStatus: stylesRes.status,
-        }),
+        statusCode: res.status,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({ error: 'SS API error', status: res.status }),
       };
     }
 
-    if (!Array.isArray(styles)) {
+    const skus = await res.json();
+
+    if (!Array.isArray(skus)) {
       return {
         statusCode: 500,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-        body: JSON.stringify({
-          error: 'Invalid API response',
-          raw: styles,
-        }),
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({ error: 'Unexpected response', raw: skus }),
       };
     }
 
-    const limited = styles.slice(0, 50);
+    console.log('Total SKUs:', skus.length);
 
-    const products = await Promise.all(
-      limited.map(async (style) => {
-        try {
-          const varRes = await fetch(
-            baseUrl + '/products/' + style.styleID + '/?mediatype=json', // ← ИЗМЕНЕНО
-            { headers }
-          );
-          const variants = await varRes.json();
+    // Group SKUs by styleID
+    const styleMap = {};
 
-          const colorMap = {};
-          let minPrice = Infinity;
-          const sizeSet = new Set();
+    skus.forEach((sku) => {
+      const sid = sku.styleID;
+      if (!sid) return;
 
-          if (Array.isArray(variants)) {
-            variants.forEach((v) => {
-              const cn = v.colorName || 'Default';
-              const cc = v.colorCode || '#cccccc';
-              const img = v.colorFrontImage || v.styleImage || '';
+      if (!styleMap[sid]) {
+        styleMap[sid] = {
+          id: sid,
+          styleID: sid,
+          brandName: sku.brandName || '',
+          styleName: sku.styleName || '',
+          title: sku.title || sku.styleName || '',
+          baseCategory: sku.baseCategory || sku.baseCategoryName || '',
+          image: sku.colorFrontImage
+            ? 'https://cdn.ssactivewear.com/' + sku.colorFrontImage
+            : sku.styleImage
+            ? 'https://cdn.ssactivewear.com/' + sku.styleImage
+            : '',
+          brandImage: sku.brandImage
+            ? 'https://cdn.ssactivewear.com/' + sku.brandImage
+            : '',
+          price: Infinity,
+          colorMap: {},
+          sizeSet: new Set(),
+        };
+      }
 
-              if (!colorMap[cn]) {
-                colorMap[cn] = {
-                  name: cn,
-                  hex: cc.startsWith('#') ? cc : '#' + cc,
-                  image: img
-                    ? 'https://www.ssactivewear.com/' + img
-                    : '',
-                };
-              }
+      const s = styleMap[sid];
 
-              const price = parseFloat(v.piecePrice || v.ourPrice || 0);
-              if (price > 0 && price < minPrice) {
-                minPrice = price;
-              }
+      // Price — use lowest piecePrice
+      const price = parseFloat(sku.piecePrice || sku.customerPrice || 0);
+      if (price > 0 && price < s.price) s.price = price;
 
-              if (v.sizeName) sizeSet.add(v.sizeName);
-            });
-          }
+      // Colors
+      const cn = sku.colorName || 'Default';
+      if (!s.colorMap[cn]) {
+        const cc = sku.color1 || sku.colorCode || '#cccccc';
+        const img = sku.colorFrontImage
+          ? 'https://cdn.ssactivewear.com/' + sku.colorFrontImage
+          : '';
+        const swatch = sku.colorSwatchImage
+          ? 'https://cdn.ssactivewear.com/' + sku.colorSwatchImage
+          : '';
+        s.colorMap[cn] = {
+          name: cn,
+          hex: cc.startsWith('#') ? cc : '#' + cc,
+          image: img,
+          swatch: swatch,
+        };
+      }
 
-          const colors = Object.values(colorMap);
-          const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'];
-          let sizes = sizeOrder.filter(
-            (s) => sizeSet.has(s) || sizeSet.size === 0
-          );
-          if (sizes.length === 0) sizes = Array.from(sizeSet);
-          const finalSizes =
-            sizes.length > 0 ? sizes : ['S', 'M', 'L', 'XL'];
+      // Sizes
+      if (sku.sizeName) s.sizeSet.add(sku.sizeName);
+    });
 
-          return {
-            id: style.styleID,
-            styleID: style.styleID,
-            brandName: style.brandName,
-            styleName: style.styleName,
-            title: style.title,
-            baseCategory: style.baseCategory,
-            image:
-              'https://www.ssactivewear.com/' + (style.styleImage || ''),
-            brandImage:
-              'https://www.ssactivewear.com/' + (style.brandImage || ''),
-            price: minPrice === Infinity ? 0 : minPrice,
-            colors: colors,
-            sizes: finalSizes.length ? finalSizes : ['S', 'M', 'L', 'XL'],
-          };
-        } catch (e) {
-          return {
-            id: style.styleID,
-            styleID: style.styleID,
-            brandName: style.brandName || '',
-            title: style.title || '',
-            baseCategory: style.baseCategory || '',
-            image:
-              'https://www.ssactivewear.com/' + (style.styleImage || ''),
-            price: 0,
-            colors: [],
-            sizes: ['S', 'M', 'L', 'XL'],
-          };
-        }
-      })
-    );
+    const sizeOrder = ['OSFA','XS','S','M','L','XL','2XL','3XL','4XL','5XL'];
+
+    // Convert to array, limit to 200 styles
+    const products = Object.values(styleMap)
+      .slice(0, 200)
+      .map((s) => {
+        const sizes = sizeOrder.filter((sz) => s.sizeSet.has(sz));
+        return {
+          id: s.id,
+          styleID: s.styleID,
+          brandName: s.brandName,
+          styleName: s.styleName,
+          title: s.title,
+          baseCategory: s.baseCategory,
+          image: s.image,
+          brandImage: s.brandImage,
+          price: s.price === Infinity ? 0 : s.price,
+          colors: Object.values(s.colorMap),
+          sizes: sizes.length ? sizes : Array.from(s.sizeSet).slice(0, 7),
+        };
+      });
+
+    console.log('Grouped styles:', products.length);
 
     return {
       statusCode: 200,
@@ -145,13 +131,12 @@ exports.handler = async function (event) {
       },
       body: JSON.stringify(products),
     };
+
   } catch (err) {
+    console.error('Handler error:', err.message);
     return {
       statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify({ error: err.message }),
     };
   }
