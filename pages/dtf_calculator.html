@@ -819,54 +819,90 @@ function removeBgSelected() {
   if (!d) return;
   var btn = document.getElementById('btn-remove-bg');
   if (!btn) return;
-  btn.textContent = '⏳ Removing...';
+  btn.textContent = '⏳ Processing...';
   btn.disabled = true;
 
-  fetch(d.dataUrl)
-    .then(function(r) { return r.blob(); })
-    .then(function(blob) {
-      return import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/+esm')
-        .then(function(mod) {
-          return mod.removeBackground(blob, { output: { format: 'image/png', quality: 1 } });
-        });
-    })
-    .then(function(resultBlob) {
-      var url = URL.createObjectURL(resultBlob);
-      d.dataUrl = url;
-      fabric.Image.fromURL(url, function(newImg) {
-        if (!d.node || !fabricCanvas) return;
-        newImg.set({
-          left: d.node.get('left'),
-          top: d.node.get('top'),
-          scaleX: d.node.scaleX,
-          scaleY: d.node.scaleY,
-          selectable: true,
-          evented: true,
-          hasControls: true,
-          hasBorders: true
-        });
-        fabricCanvas.remove(d.node);
-        fabricCanvas.add(newImg);
-        d.node = newImg;
-        fabricCanvas.requestRenderAll();
-        renderTable();
-        btn.textContent = '✅ Done!';
-        btn.style.background = '#16a34a';
-        setTimeout(function() {
-          btn.textContent = '✨ Remove BG';
-          btn.style.background = '#3b82f6';
-          btn.disabled = false;
-        }, 2000);
-      }, { crossOrigin: 'anonymous' });
-    })
-    .catch(function(err) {
-      console.error(err);
-      btn.textContent = '❌ Error';
-      btn.disabled = false;
+  var img = new Image();
+  img.onload = function() {
+    var oc = document.createElement('canvas');
+    oc.width = img.naturalWidth;
+    oc.height = img.naturalHeight;
+    var ctx = oc.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    var id = ctx.getImageData(0, 0, oc.width, oc.height);
+    var data = id.data, w = oc.width, h = oc.height;
+    var tolerance = 35;
+
+    // Flood fill from all 4 edges
+    var visited = new Uint8Array(w * h);
+    var queue = [];
+
+    function enqueue(x, y) {
+      var idx = y * w + x;
+      if (x < 0 || x >= w || y < 0 || y >= h || visited[idx]) return;
+      var pi = idx * 4;
+      // sample bg color from top-left corner
+      var br = data[0], bg = data[1], bb = data[2];
+      var dr = Math.abs(data[pi] - br);
+      var dg = Math.abs(data[pi+1] - bg);
+      var db = Math.abs(data[pi+2] - bb);
+      if (dr + dg + db <= tolerance * 3) {
+        visited[idx] = 1;
+        queue.push(idx);
+      }
+    }
+
+    for (var x = 0; x < w; x++) { enqueue(x, 0); enqueue(x, h-1); }
+    for (var y = 0; y < h; y++) { enqueue(0, y); enqueue(w-1, y); }
+
+    var i = 0;
+    while (i < queue.length) {
+      var cur = queue[i++];
+      var cx = cur % w, cy = Math.floor(cur / w);
+      enqueue(cx+1, cy); enqueue(cx-1, cy);
+      enqueue(cx, cy+1); enqueue(cx, cy-1);
+    }
+
+    // Make visited pixels transparent
+    for (var p = 0; p < w * h; p++) {
+      if (visited[p]) data[p * 4 + 3] = 0;
+    }
+
+    ctx.putImageData(id, 0, 0);
+    var newDataUrl = oc.toDataURL('image/png');
+    d.dataUrl = newDataUrl;
+
+    fabric.Image.fromURL(newDataUrl, function(newImg) {
+      if (!d.node || !fabricCanvas) return;
+      newImg.set({
+        left: d.node.get('left'),
+        top: d.node.get('top'),
+        scaleX: d.node.scaleX,
+        scaleY: d.node.scaleY,
+        selectable: true,
+        evented: true,
+        hasControls: true,
+        hasBorders: true
+      });
+      fabricCanvas.remove(d.node);
+      fabricCanvas.add(newImg);
+      d.node = newImg;
+      fabricCanvas.requestRenderAll();
+      renderTable();
+      btn.textContent = '✅ Done!';
+      btn.style.background = '#16a34a';
       setTimeout(function() {
         btn.textContent = '✨ Remove BG';
+        btn.style.background = '#3b82f6';
+        btn.disabled = false;
       }, 2000);
     });
+  };
+  img.onerror = function() {
+    btn.textContent = '✨ Remove BG';
+    btn.disabled = false;
+  };
+  img.src = d.dataUrl;
 }
 
 function removeDesignById(id) {
