@@ -1,24 +1,24 @@
 exports.handler = async function(event) {
-  const SS_USER = process.env.SS_USER || '424896';
-  const SS_PASS = process.env.SS_PASS ||
-    '989d630c-9919-4c9c-a9ff-ed1a23677eac';
-  const credentials =
-    Buffer.from(`${SS_USER}:${SS_PASS}`).toString('base64');
+  const SS_USER = process.env.SS_ACCOUNT_NUMBER
+  const SS_PASS = process.env.SS_API_KEY
+  const credentials = Buffer.from(
+    `${SS_USER}:${SS_PASS}`
+  ).toString('base64')
 
-  const styleID = event.queryStringParameters?.styleID;
+  const styleID = event.queryStringParameters?.styleID
   if (!styleID) {
     return {
       statusCode: 400,
       body: JSON.stringify({ error: 'styleID required' })
-    };
+    }
   }
 
   try {
     const res = await fetch(
       `https://api-ca.ssactivewear.com/V2/products/?style=${styleID}`,
       { headers: { Authorization: `Basic ${credentials}` } }
-    );
-    const data = await res.json();
+    )
+    const data = await res.json()
     return {
       statusCode: 200,
       headers: {
@@ -26,11 +26,11 @@ exports.handler = async function(event) {
         'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify(data)
-    };
+    }
   } catch (err) {
     return {
       statusCode: 500,
       body: JSON.stringify({ error: err.message })
-    };
+    }
   }
-};
+}
