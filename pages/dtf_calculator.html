@@ -1,1028 +1,838 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DTF Prints Calculator - Ink Creek Studio</title>
-    <meta name="description" content="Upload your design, choose your DTF sheet size and quantity, and get instant pricing for high-quality direct-to-film transfers." />
-    <link rel="stylesheet" href="../css/main.css" />
-    <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Finkcreek7691back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
-    <script type="module">
-      import { removeBackground } from 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/browser/index.mjs';
-      window.removeBackgroundFn = removeBackground;
-    </script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DTF Print Order — Ink Creek Studio</title>
+  <link rel="stylesheet" href="../css/main.css"/>
+  <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+  <style>
+    .dtf-page { max-width: 1300px; margin: 0 auto; padding: 32px 20px; }
+    .dtf-header { text-align: center; margin-bottom: 32px; }
+    .dtf-header .tagline { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; color: #6b7280; text-transform: uppercase; margin-bottom: 16px; }
+    .dtf-header h1 { font-size: 28px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+    .dtf-header p { font-size: 14px; color: #6b7280; }
+    .dtf-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: start; }
+    @media (max-width: 900px) { .dtf-grid { grid-template-columns: 1fr; } }
+    .dtf-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+    .dtf-card h2 { font-size: 17px; font-weight: 700; color: #1e293b; margin-bottom: 16px; }
+    .unit-toggle { display: inline-flex; border: 1px solid #d1d5db; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    .unit-btn { padding: 6px 16px; font-size: 13px; font-weight: 500; border: none; background: #fff; color: #6b7280; cursor: pointer; transition: all 0.15s; }
+    .unit-btn.active { background: #1e3a5f; color: #fff; }
+    .width-warning { display: none; font-size: 12px; color: #ef4444; margin-top: 4px; font-weight: 500; }
+    .width-warning.show { display: block; }
+    .canvas-wrapper { position: relative; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    .canvas-ruler-top { height: 22px; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; padding: 0 8px; font-size: 11px; color: #94a3b8; position: relative; justify-content: space-between; }
+    #konva-container { width: 100%; height: 420px; cursor: default; border-radius: 8px; overflow: hidden; }
+    .canvas-bottom { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .btn-upload-more { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; font-size: 13px; color: #374151; cursor: pointer; font-weight: 500; transition: all 0.15s; }
+    .btn-upload-more:hover { border-color: #1e40af; color: #1e40af; background: #eff6ff; }
+    .canvas-hint { font-size: 13px; color: #6b7280; line-height: 1.5; }
+    .design-list { width: 100%; border-collapse: collapse; }
+    .design-list tr { border-bottom: 1px solid #f1f5f9; }
+    .design-list tr:last-child { border-bottom: none; }
+    .design-list td { padding: 10px 6px; vertical-align: middle; }
+    .design-thumb { width: 40px; height: 40px; object-fit: contain; border-radius: 6px; border: 1px solid #e5e7eb; background: #f8fafc; }
+    .design-name { font-size: 14px; font-weight: 500; color: #1e293b; }
+    .design-badge { background: #f1f5f9; color: #374151; border-radius: 6px; padding: 2px 8px; font-size: 12px; font-weight: 600; }
+    .dim-input { width: 52px; padding: 5px 6px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; text-align: center; color: #374151; }
+    .dim-input:focus { outline: none; border-color: #1e40af; }
+    .unit-select { padding: 5px 4px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 12px; color: #374151; background: #fff; }
+    .btn-add-copy { padding: 5px 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 16px; color: #374151; background: #fff; cursor: pointer; }
+    .btn-add-copy:hover { background: #f3f4f6; }
+    .btn-delete-row { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 18px; padding: 4px; }
+    .btn-delete-row:hover { color: #ef4444; }
+    .btn-icon { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 15px; padding: 4px; }
+    .film-options { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 4px; }
+    .film-option { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #374151; cursor: pointer; }
+    .film-option input[type="radio"] { accent-color: #1e40af; width: 16px; height: 16px; }
+    .sidebar-sticky { position: sticky; top: 24px; }
+    .order-summary-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
+    .os-header { padding: 18px 20px 0; font-size: 18px; font-weight: 700; color: #1e293b; }
+    .os-preview { margin: 14px 20px; border: 1px solid #d1d5db; border-radius: 8px; overflow: hidden; position: relative; background: #fff; }
+    .os-preview-ruler-right { position: absolute; right: 0; top: 0; bottom: 0; width: 28px; background: #f1f5f9; border-left: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center; }
+    .os-preview-ruler-right span { writing-mode: vertical-rl; font-size: 11px; color: #94a3b8; transform: rotate(180deg); }
+    .os-preview-ruler-bottom { text-align: center; font-size: 11px; color: #94a3b8; padding: 4px 0 8px; }
+    .os-details { padding: 0 20px 12px; }
+    .os-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; border-bottom: 1px solid #f8fafc; }
+    .os-row:last-child { border-bottom: none; }
+    .os-label { color: #6b7280; }
+    .os-value { color: #111827; font-weight: 500; }
+    .os-pricing { padding: 12px 20px; border-top: 1px solid #f1f5f9; }
+    .os-price-row { display: flex; justify-content: space-between; font-size: 14px; color: #374151; padding: 4px 0; }
+    .os-price-total { display: flex; justify-content: space-between; align-items: center; padding: 12px 0 0; border-top: 1px solid #e5e7eb; margin-top: 6px; }
+    .tot-label { font-size: 16px; font-weight: 700; color: #111827; }
+    .tot-amount { font-size: 24px; font-weight: 800; color: #111827; }
+    .btn-checkout { display: block; width: calc(100% - 40px); margin: 14px 20px 10px; padding: 15px; background: #1e3a5f; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; text-align: center; cursor: pointer; transition: background 0.2s; }
+    .btn-checkout:hover { background: #1e40af; }
+    .pay-btns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 0 20px 20px; }
+    .pay-btn { padding: 10px 0; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; gap: 4px; }
+    .pay-btn.apple { background: #000; color: #fff; }
+    .pay-btn.gpay-dark { background: #000; color: #fff; }
+    .pay-btn.gpay-light { background: #fff; color: #374151; border: 2px solid #e5e7eb; }
+    #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 1000; display: flex; flex-direction: column; gap: 8px; }
+  </style>
 </head>
 <body class="bg-background text-text-primary">
-    <!-- Navigation Header -->
-    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
-        <nav class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-16 w-auto" />
-                </div>
 
-                <!-- Desktop Navigation -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="homepage_artisan_screen_printing_studio.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Home</a>
-                        <a href="portfolio_gallery_work_showcase.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Portfolio</a>
-                        <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Services</a>
-                        <a href="interactive_pricing_calculator.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Calculator</a>
-                        <a href="dtf_calculator.html" class="text-primary font-semibold px-3 py-2 rounded-md text-sm">DTF Prints</a>
-                        <a href="contact_studio_location.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Contact</a>
-                    </div>
-                </div>
-
-                <!-- CTA Button -->
-                <div class="hidden md:block">
-                    <a href="interactive_pricing_calculator.html" class="btn-accent">Get Quote</a>
-                </div>
-
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
-                    <button type="button" class="text-text-secondary hover:text-primary p-2" onclick="toggleMobileMenu()">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Mobile Navigation Menu -->
-            <div id="mobile-menu" class="md:hidden hidden border-t border-gray-100">
-                <div class="py-6 space-y-4 px-4 sm:px-6 lg:px-8 bg-white">
-                    <a href="homepage_artisan_screen_printing_studio.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Home</a>
-                    <a href="portfolio_gallery_work_showcase.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Portfolio</a>
-                    <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Services</a>
-                    <a href="interactive_pricing_calculator.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Calculator</a>
-                    <a href="dtf_calculator.html" class="text-primary font-semibold block px-3 py-2 rounded-md text-base">DTF Prints</a>
-                    <a href="contact_studio_location.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Contact</a>
-                    <a href="interactive_pricing_calculator.html" class="btn-accent block text-center mt-4">Get Quote</a>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="relative py-20 bg-transparent text-white overflow-hidden">
-        <div class="absolute inset-0">
-            <img src="../assets/images/head_image.jpg" alt="DTF screen printing setup" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1920&auto=format&fit=crop'; this.onerror=null;" />
+<header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+  <nav class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+        <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-16 w-auto" />
+      </div>
+      <div class="hidden md:block">
+        <div class="ml-10 flex items-baseline space-x-8">
+          <a href="homepage_artisan_screen_printing_studio.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Home</a>
+          <a href="portfolio_gallery_work_showcase.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Portfolio</a>
+          <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Services</a>
+          <a href="interactive_pricing_calculator.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Calculator</a>
+          <a href="dtf_calculator.html" class="text-primary font-semibold px-3 py-2 rounded-md text-sm">DTF Prints</a>
+          <a href="contact_studio_location.html" class="text-text-secondary hover:text-primary px-3 py-2 rounded-md text-sm transition-colors">Contact</a>
         </div>
-        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl md:text-5xl font-montserrat font-bold mb-6 text-shadow">
-                DTF Prints Calculator
-            </h1>
-            <p class="text-lg md:text-xl mb-8 text-shadow">
-                Upload your design, choose your size &amp; quantity — get instant pricing for direct-to-film transfers.
-            </p>
-            <a href="#dtf-calculator" class="btn-accent">
-                Start Calculating
-            </a>
+      </div>
+      <div class="hidden md:block">
+        <a href="interactive_pricing_calculator.html" class="btn-accent">Get Quote</a>
+      </div>
+      <div class="md:hidden">
+        <button type="button" class="text-text-secondary hover:text-primary p-2" onclick="toggleMobileMenu()">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="md:hidden hidden border-t border-gray-100">
+      <div class="py-6 space-y-4 px-4 sm:px-6 lg:px-8 bg-white">
+        <a href="homepage_artisan_screen_printing_studio.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Home</a>
+        <a href="portfolio_gallery_work_showcase.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Portfolio</a>
+        <a href="services_capabilities_hub.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Services</a>
+        <a href="interactive_pricing_calculator.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Calculator</a>
+        <a href="dtf_calculator.html" class="text-primary font-semibold block px-3 py-2 rounded-md text-base">DTF Prints</a>
+        <a href="contact_studio_location.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base">Contact</a>
+        <a href="interactive_pricing_calculator.html" class="btn-accent block text-center mt-4">Get Quote</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="dtf-page">
+  <div class="dtf-header">
+    <img src="../assets/images/logo_file-1757704299844.png" alt="InkCreek" style="height:48px;margin-bottom:8px" onerror="this.style.display='none'"/>
+    <p class="tagline">Vancouver Print Shop</p>
+    <h1>DTF Print Order</h1>
+    <p>Upload Your Designs &amp; <strong>Get Instant Quote</strong></p>
+  </div>
+
+  <div class="dtf-grid">
+    <div>
+      <div class="dtf-card">
+        <h2>1. Upload Your Designs &amp; Arrange Gang Sheet</h2>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap;">
+          <div class="unit-toggle">
+            <button type="button" class="unit-btn active" id="btn-inches" onclick="setUnit('inches')">inches</button>
+            <button type="button" class="unit-btn" id="btn-cm" onclick="setUnit('cm')">cm</button>
+          </div>
+          <span style="font-size:13px;color:#6b7280;">Max width: <strong id="max-width-display">22"</strong></span>
         </div>
-    </section>
-
-    <!-- DTF Calculator -->
-    <section id="dtf-calculator" class="py-12">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Steps Column -->
-                <div class="lg:col-span-2">
-                    <!-- Progress -->
-                    <div class="mb-8">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-sm font-montserrat font-semibold text-text-secondary">
-                                Step <span id="dtf-current-step">1</span> of 3
-                            </span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div id="dtf-progress-bar" class="bg-secondary h-2 rounded-full transition-all duration-300" style="width:33%"></div>
-                        </div>
-                    </div>
-
-                    <!-- Step 1: Upload & Edit -->
-                    <div id="dtf-step-1" class="dtf-step">
-                        <div class="card">
-                            <h2 class="text-2xl font-montserrat font-bold mb-4">Upload &amp; Edit Your Design</h2>
-                            <p class="text-sm text-text-secondary mb-6">
-                                Best results: PNG with transparent background, 300 DPI minimum.
-                            </p>
-
-                            <!-- Upload Zone -->
-                            <div class="mb-6">
-                                <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Design File</label>
-                                <div id="dtf-upload-dropzone" class="mt-1 flex flex-col items-center justify-center px-4 py-8 border-2 border-dashed border-gray-300 rounded-lg bg-white text-center cursor-pointer hover:border-secondary transition-colors">
-                                    <svg class="w-10 h-10 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M12 12v9m0-9l-3 3m3-3l3 3"/>
-                                    </svg>
-                                    <p class="mt-3 text-sm font-montserrat font-semibold text-text-primary">
-                                        Drag &amp; drop your design here or click to browse
-                                    </p>
-                                    <p class="mt-1 text-xs text-text-secondary">
-                                        Accepted formats: PNG, JPG, PDF, AI, EPS, SVG • Max size: 50MB
-                                    </p>
-                                    <p class="mt-1 text-xs text-text-secondary">
-                                        Best results: PNG with transparent background, 300 DPI minimum
-                                    </p>
-                                    <input id="dtf-upload-input" type="file" class="hidden" accept=".png,.jpg,.jpeg,.pdf,.ai,.eps,.svg" />
-                                </div>
-                                <p id="dtf-upload-error" class="mt-2 text-sm text-red-600 hidden"></p>
-                            </div>
-
-                            <!-- Preview & Editor -->
-                            <div id="dtf-editor-wrapper" class="mt-6 hidden">
-                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                    <div>
-                                        <h3 class="font-montserrat font-semibold mb-3 text-sm">Preview</h3>
-                                        <div class="bg-surface border border-gray-200 rounded-lg p-4 flex items-center justify-center">
-                                            <canvas id="dtf-design-canvas" width="400" height="400" class="max-w-full"></canvas>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h3 class="font-montserrat font-semibold mb-3 text-sm">Basic Image Editing</h3>
-                                        <div class="space-y-4 text-sm">
-                                            <div>
-                                                <div class="flex items-center justify-between mb-1">
-                                                    <span class="font-montserrat font-semibold">Print width</span>
-                                                    <span class="text-xs text-text-secondary"><span id="dtf-scale-value">10</span>" (1"–22")</span>
-                                                </div>
-                                                <input id="dtf-scale-slider" type="range" min="1" max="22" value="10" class="w-full" />
-                                            </div>
-                                            <div>
-                                                <span class="block font-montserrat font-semibold mb-2">Orientation</span>
-                                                <div class="flex flex-wrap gap-2 text-xs">
-                                                    <button id="dtf-rotate-left" type="button" class="btn-secondary px-3 py-1">-90°</button>
-                                                    <button id="dtf-rotate-right" type="button" class="btn-secondary px-3 py-1">+90°</button>
-                                                    <button id="dtf-flip-horizontal" type="button" class="btn-secondary px-3 py-1">Flip Horizontal</button>
-                                                    <button id="dtf-flip-vertical" type="button" class="btn-secondary px-3 py-1">Flip Vertical</button>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <span class="block font-montserrat font-semibold mb-2">Background</span>
-                                                <button id="dtf-remove-bg" type="button" class="btn-secondary text-xs px-3 py-1">
-                                                    Remove Background
-                                                </button>
-                                                <button id="dtf-restore-bg" type="button" class="btn-secondary text-xs px-3 py-1 hidden">
-                                                    ↩ Restore Original
-                                                </button>
-                                                <p id="dtf-remove-bg-status" class="mt-1 text-xs text-text-secondary"></p>
-                                            </div>
-                                            <div>
-                                                <label class="block font-montserrat font-semibold text-sm mb-1">Copies on sheet</label>
-                                                <input id="dtf-copies" type="number" min="1" value="1" class="input-field w-24" />
-                                                <p class="mt-1 text-xs text-text-secondary">
-                                                    How many times this design repeats on the gang sheet.
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <button id="dtf-reset" type="button" class="text-xs text-secondary hover:text-blue-700 underline">
-                                                    Reset design &amp; upload a new file
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 2: Sheet Size & Quantity -->
-                    <div id="dtf-step-2" class="dtf-step hidden">
-                        <div class="card">
-                            <h2 class="text-2xl font-montserrat font-bold mb-6">Choose Sheet Size &amp; Quantity</h2>
-
-                            <!-- Sheet Size -->
-                            <div class="mb-6">
-                                <h3 class="font-montserrat font-semibold mb-3 text-sm">DTF Sheet Size</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                    <label class="dtf-sheet-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors flex flex-col" data-key="11x17" data-width="11" data-height="17">
-                                        <div class="flex items-center justify-between mb-2">
-                                            <div>
-                                                <p class="font-montserrat font-semibold">11" × 17"</p>
-                                                <p class="text-xs text-text-secondary">Small Sheet</p>
-                                            </div>
-                                        </div>
-                                        <div class="mt-2 h-12 bg-surface rounded flex items-center justify-center text-xs text-text-secondary">
-                                            Compact layout for smaller designs.
-                                        </div>
-                                    </label>
-                                    <label class="dtf-sheet-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors flex flex-col" data-key="13x19" data-width="13" data-height="19">
-                                        <div class="flex items-center justify-between mb-2">
-                                            <div>
-                                                <p class="font-montserrat font-semibold">13" × 19"</p>
-                                                <p class="text-xs text-text-secondary">Standard Sheet</p>
-                                            </div>
-                                        </div>
-                                        <div class="mt-2 h-12 bg-surface rounded flex items-center justify-center text-xs text-text-secondary">
-                                            Great for front and back prints.
-                                        </div>
-                                    </label>
-                                    <label class="dtf-sheet-option border-2 border-secondary bg-blue-50 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors flex flex-col" data-key="22x24" data-width="22" data-height="24">
-                                        <div class="flex items-center justify-between mb-2">
-                                            <div>
-                                                <p class="font-montserrat font-semibold">22" × 24"</p>
-                                                <p class="text-xs text-text-secondary">Gang Sheet</p>
-                                            </div>
-                                            <span class="text-[10px] font-semibold text-accent bg-blue-100 px-2 py-1 rounded-full">Most Popular</span>
-                                        </div>
-                                        <div class="mt-2 h-12 bg-surface rounded flex items-center justify-center text-xs text-text-secondary">
-                                            Maximize space with multiple designs.
-                                        </div>
-                                    </label>
-                                    <label class="dtf-sheet-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors flex flex-col" data-key="22x36" data-width="22" data-height="36">
-                                        <div class="flex items-center justify-between mb-2">
-                                            <div>
-                                                <p class="font-montserrat font-semibold">22" × 36"</p>
-                                                <p class="text-xs text-text-secondary">Large Gang Sheet</p>
-                                            </div>
-                                        </div>
-                                        <div class="mt-2 h-12 bg-surface rounded flex items-center justify-center text-xs text-text-secondary">
-                                            Best for high-volume gang layouts.
-                                        </div>
-                                    </label>
-                                </div>
-
-                                <!-- Custom Size -->
-                                <div class="mt-6">
-                                    <label class="dtf-sheet-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors block" data-key="custom">
-                                        <div class="flex items-center justify-between mb-3">
-                                            <p class="font-montserrat font-semibold">Custom Size</p>
-                                            <p class="text-xs text-text-secondary">Up to 22" wide</p>
-                                        </div>
-                                        <div class="grid grid-cols-2 gap-3 text-xs">
-                                            <div>
-                                                <label class="block font-montserrat font-semibold mb-1">Width (in)</label>
-                                                <input id="dtf-custom-width" type="number" min="4" max="22" class="input-field" placeholder="e.g. 18" />
-                                            </div>
-                                            <div>
-                                                <label class="block font-montserrat font-semibold mb-1">Height (in)</label>
-                                                <input id="dtf-custom-height" type="number" min="4" max="60" class="input-field" placeholder="e.g. 30" />
-                                            </div>
-                                        </div>
-                                        <p class="mt-2 text-xs text-text-secondary">
-                                            Custom pricing is based on total square inches (0.045 $/sq in).
-                                        </p>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Quantity -->
-                            <div class="mb-6">
-                                <h3 class="font-montserrat font-semibold mb-3 text-sm">Quantity</h3>
-                                <div class="flex flex-wrap gap-2 mb-2 text-xs">
-                                    <button type="button" class="dtf-qty-chip btn-secondary px-3 py-1" data-qty="1">1</button>
-                                    <button type="button" class="dtf-qty-chip btn-secondary px-3 py-1" data-qty="5">5</button>
-                                    <button type="button" class="dtf-qty-chip btn-secondary px-3 py-1" data-qty="10">10</button>
-                                    <button type="button" class="dtf-qty-chip btn-secondary px-3 py-1" data-qty="25">25</button>
-                                    <button type="button" class="dtf-qty-chip btn-secondary px-3 py-1" data-qty="50">50</button>
-                                    <button type="button" class="dtf-qty-chip btn-secondary px-3 py-1" data-qty="100">100</button>
-                                    <button type="button" class="dtf-qty-chip btn-secondary px-3 py-1" data-qty="250">250</button>
-                                </div>
-                                <div class="flex items-center space-x-2 text-xs">
-                                    <input id="dtf-qty-input" type="number" min="1" value="1" class="input-field w-24" />
-                                    <span id="dtf-volume-badge" class="text-success font-semibold hidden">
-                                        Volume discount applied
-                                    </span>
-                                </div>
-                                <p class="mt-1 text-xs text-text-secondary">
-                                    50+ sheets: -10% &nbsp;•&nbsp; 100+ sheets: -15%
-                                </p>
-                            </div>
-
-                            <!-- Transfer Type -->
-                            <div>
-                                <h3 class="font-montserrat font-semibold mb-3 text-sm">Transfer Type</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                                    <label class="dtf-transfer-option border-2 border-secondary bg-blue-50 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" data-transfer="standard">
-                                        <div class="font-montserrat font-semibold mb-1">Standard DTF</div>
-                                        <p class="text-xs text-text-secondary">Durable, full-color everyday use.</p>
-                                        <p class="mt-2 text-xs text-success font-semibold">Included</p>
-                                    </label>
-                                    <label class="dtf-transfer-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" data-transfer="glow">
-                                        <div class="font-montserrat font-semibold mb-1">Glow in the Dark</div>
-                                        <p class="text-xs text-text-secondary">Perfect for night events.</p>
-                                        <p class="mt-2 text-xs text-accent font-semibold">+ $2.00 / sheet</p>
-                                    </label>
-                                    <label class="dtf-transfer-option border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-secondary transition-colors" data-transfer="reflective">
-                                        <div class="font-montserrat font-semibold mb-1">Reflective</div>
-                                        <p class="text-xs text-text-secondary">High-visibility safety &amp; sportswear.</p>
-                                        <p class="mt-2 text-xs text-accent font-semibold">+ $3.00 / sheet</p>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 3: Pricing Summary -->
-                    <div id="dtf-step-3" class="dtf-step hidden">
-                        <div class="card">
-                            <h2 class="text-2xl font-montserrat font-bold mb-6">Pricing Summary</h2>
-                            <p class="text-sm text-text-secondary mb-6">
-                                Review your configuration and see your estimated DTF pricing in real time.
-                            </p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-                                <div class="space-y-2">
-                                    <div class="flex justify-between">
-                                        <span class="text-text-secondary">Sheet size</span>
-                                        <span id="dtf-summary-sheet" class="font-montserrat font-semibold">22" × 24"</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span class="text-text-secondary">Quantity</span>
-                                        <span id="dtf-summary-qty" class="font-montserrat font-semibold">1</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span class="text-text-secondary">Transfer type</span>
-                                        <span id="dtf-summary-transfer" class="font-montserrat font-semibold">Standard DTF</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span class="text-text-secondary">Copies per sheet</span>
-                                        <span id="dtf-summary-copies" class="font-montserrat font-semibold">1</span>
-                                    </div>
-                                </div>
-                                <div class="bg-surface border border-gray-200 rounded-lg p-4 space-y-2">
-                                    <div class="flex justify-between">
-                                        <span>Price per sheet</span>
-                                        <span id="dtf-price-per-sheet" class="font-montserrat font-semibold">$0.00</span>
-                                    </div>
-                                    <div class="flex justify-between border-t border-gray-200 pt-2 mt-1">
-                                        <span>Subtotal</span>
-                                        <span id="dtf-subtotal" class="font-montserrat font-semibold">$0.00</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>Volume discount</span>
-                                        <span id="dtf-volume-discount" class="font-montserrat font-semibold text-success">-$0.00</span>
-                                    </div>
-                                    <div class="flex justify-between items-center border-t border-gray-200 pt-2 mt-1">
-                                        <div>
-                                            <span class="block">Rush (1–3 days)</span>
-                                            <span class="block text-xs text-text-secondary">+30% on discounted subtotal</span>
-                                        </div>
-                                        <label class="inline-flex items-center cursor-pointer text-xs">
-                                            <input id="dtf-rush-toggle" type="checkbox" class="w-4 h-4" />
-                                            <span class="ml-2 text-text-secondary">Add rush</span>
-                                        </label>
-                                    </div>
-                                    <div class="flex justify-between items-center border-t border-gray-200 pt-3 mt-1">
-                                        <span class="font-montserrat font-bold text-base">TOTAL</span>
-                                        <span id="dtf-total" class="text-2xl font-montserrat font-bold text-accent">$0.00</span>
-                                    </div>
-                                    <p class="text-xs text-text-secondary">
-                                        Final pricing may vary slightly based on design complexity and special requests. We&apos;ll confirm everything with you before printing.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Navigation buttons -->
-                    <div class="flex justify-between mt-8">
-                        <button id="dtf-prev-btn" type="button" class="btn-secondary opacity-50 cursor-not-allowed" disabled>
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                            </svg>
-                            Previous
-                        </button>
-                        <button id="dtf-next-btn" type="button" class="btn-primary opacity-50 cursor-not-allowed" disabled>
-                            Next
-                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Info Sidebar -->
-                <div class="lg:col-span-1">
-                    <div class="sticky top-24 space-y-6">
-                        <div class="card">
-                            <h3 class="text-xl font-montserrat font-bold mb-3">Why DTF Transfers?</h3>
-                            <ul class="text-sm text-text-secondary space-y-2">
-                                <li>• Crisp, full-color prints with fine detail</li>
-                                <li>• Works on cotton, blends, and performance fabrics</li>
-                                <li>• Ideal for small runs and gang sheets</li>
-                                <li>• Easy heat press application</li>
-                            </ul>
-                        </div>
-                        <div class="card">
-                            <h4 class="font-montserrat font-semibold mb-2">Need Help With Your Artwork?</h4>
-                            <p class="text-sm text-text-secondary mb-3">
-                                Our team can help you set up gang sheets, optimize your file, and ensure the best possible print quality.
-                            </p>
-                            <a href="contact_studio_location.html" class="btn-accent w-full text-center">
-                                Talk to Our Team
-                            </a>
-                        </div>
-                    </div>
-                </div>
+        <div class="canvas-wrapper" id="canvas-container-wrap" style="position:relative;">
+          <div class="canvas-ruler-top" id="ruler-top">
+            <span id="ruler-left">0"</span>
+            <span id="ruler-right">22"</span>
+          </div>
+          <div id="konva-container"></div>
+          <div id="design-toolbar" style="position:absolute;z-index:20;display:none;background:#1e293b;border-radius:10px;padding:6px 8px;gap:6px;align-items:center;box-shadow:0 4px 16px rgba(0,0,0,0.2);display:flex;">
+            <button type="button" onclick="scaleSelected(-0.1)" style="width:30px;height:30px;border-radius:6px;border:none;background:#334155;color:#fff;font-size:16px;cursor:pointer;" title="Shrink">−</button>
+            <button type="button" onclick="scaleSelected(0.1)" style="width:30px;height:30px;border-radius:6px;border:none;background:#334155;color:#fff;font-size:16px;cursor:pointer;" title="Grow">+</button>
+            <div style="width:1px;height:20px;background:#475569;margin:0 2px;"></div>
+            <div style="position:relative;">
+              <button type="button" onclick="removeBgSelected()" id="btn-remove-bg" onmouseenter="document.getElementById('bg-tolerance-wrap').style.display='block'" onmouseleave="document.getElementById('bg-tolerance-wrap').style.display='none'" style="padding:0 10px;height:30px;border-radius:6px;border:none;background:#3b82f6;color:#fff;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">✨ Remove BG</button>
+              <div id="bg-tolerance-wrap" onmouseenter="this.style.display='block'" onmouseleave="this.style.display='none'" style="display:none;position:absolute;bottom:100%;left:0;margin-bottom:4px;background:#1e293b;border-radius:8px;padding:8px 12px;z-index:25;box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+                <label style="font-size:11px;color:#94a3b8;display:block;margin-bottom:4px;">Tolerance: <span id="tol-val">30</span></label>
+                <input type="range" id="bg-tolerance" min="5" max="80" value="30" style="width:120px;accent-color:#3b82f6" oninput="document.getElementById('tol-val').textContent=this.value"/>
+              </div>
             </div>
+            <div style="width:1px;height:20px;background:#475569;margin:0 2px;"></div>
+            <button type="button" onclick="deleteSelected()" style="width:30px;height:30px;border-radius:6px;border:none;background:#ef4444;color:#fff;font-size:14px;cursor:pointer;" title="Delete">🗑</button>
+          </div>
         </div>
-    </section>
-
-    <!-- Order Form -->
-    <section class="py-12 bg-surface">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="card">
-                <h2 class="text-2xl font-montserrat font-bold mb-4">Send Your Order Request</h2>
-                <p class="text-sm text-text-secondary mb-6">
-                    We&apos;ll review your design and confirm your order within 2 hours.
-                </p>
-                <form id="dtf-order-form" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-montserrat font-semibold text-text-primary mb-1">First Name *</label>
-                            <input type="text" name="firstName" class="input-field" required />
-                        </div>
-                        <div>
-                            <label class="block text-sm font-montserrat font-semibold text-text-primary mb-1">Last Name *</label>
-                            <input type="text" name="lastName" class="input-field" required />
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-montserrat font-semibold text-text-primary mb-1">Email *</label>
-                            <input type="email" name="email" class="input-field" required />
-                        </div>
-                        <div>
-                            <label class="block text-sm font-montserrat font-semibold text-text-primary mb-1">Phone *</label>
-                            <input type="tel" name="phone" class="input-field" required />
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-montserrat font-semibold text-text-primary mb-1">Special Instructions</label>
-                        <textarea name="instructions" rows="4" class="input-field" placeholder="Tell us about garment type, colors, placement, deadlines, or anything else we should know."></textarea>
-                    </div>
-                    <div class="flex items-center">
-                        <input id="dtf-ready-checkbox" type="checkbox" class="w-4 h-4 text-secondary mr-2" required />
-                        <label for="dtf-ready-checkbox" class="text-sm text-text-primary">
-                            I confirm my file is print-ready (300 DPI, transparent background).
-                        </label>
-                    </div>
-                    <button type="submit" class="btn-accent w-full">
-                        Send Order Request
-                    </button>
-                    <p id="dtf-order-success" class="mt-3 text-sm text-success hidden">
-                        Thank you! We&apos;ll review your design and confirm your order within 2 hours.
-                    </p>
-                </form>
-            </div>
+        <div class="canvas-bottom">
+          <button type="button" class="btn-upload-more" onclick="document.getElementById('file-input').click()">≡ Upload More Designs</button>
+          <div style="display:flex;gap:6px;">
+            <button type="button" style="padding:6px 10px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;color:#6b7280;background:#f9fafb;cursor:pointer;">≡ HandWidth</button>
+            <button type="button" style="padding:6px 10px;border:1px solid #e5e7eb;border-radius:6px;font-size:12px;color:#6b7280;background:#f9fafb;cursor:pointer;">⊟ Rlo</button>
+          </div>
         </div>
-    </section>
+        <p class="canvas-hint">Arrange your designs to fill the gang sheet fully. We'll print them on a single transfer film for you to cut and apply. <strong>Maximum print width: 22 inches.</strong></p>
+        <input type="file" id="file-input" style="display:none" multiple accept=".png,.jpg,.jpeg,.pdf" onchange="handleFiles(this.files)"/>
+      </div>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-100 py-16">
-        <div class="container">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Company Info -->
-                <div class="md:col-span-2">
-                    <div class="flex items-center mb-6">
-                        <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-8 w-auto" />
-                    </div>
-                    <p class="text-gray-600 mb-6 max-w-md">Burnaby&apos;s premier custom screen printing studio. Bringing your vision to life with quality, creativity, and local expertise.</p>
-                    <div class="flex space-x-4">
-                        <a href="https://www.instagram.com/ink.creek/" aria-label="Ink Creek on Instagram" class="text-gray-400 hover:text-accent transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                 class="w-7 h-7">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M4 8a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path>
-                                <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
-                                <path d="M16.5 7.5v.01"></path>
-                            </svg>
-                        </a>
-                        <a href="https://facebook.com/inkcreekstudio" aria-label="Ink Creek on Facebook" class="text-gray-400 hover:text-accent transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                 class="w-7 h-7">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+      <div class="dtf-card">
+        <h2>2. Print Options</h2>
+        <table class="design-list">
+          <tbody id="design-tbody"></tbody>
+        </table>
+        <div id="empty-hint" style="text-align:center;padding:24px;color:#9ca3af;font-size:14px;">Upload designs above to see them here</div>
+      </div>
 
-                <!-- Quick Links -->
-                <div class="footer-section">
-                    <h3 class="font-semibold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="homepage_artisan_screen_printing_studio.html" class="footer-link">Home</a></li>
-                        <li><a href="portfolio_gallery_work_showcase.html" class="footer-link">Portfolio</a></li>
-                        <li><a href="services_capabilities_hub.html" class="footer-link">Services</a></li>
-                        <li><a href="interactive_pricing_calculator.html" class="footer-link">Calculator</a></li>
-                        <li><a href="dtf_calculator.html" class="footer-link">DTF Prints</a></li>
-                        <li><a href="contact_studio_location.html" class="footer-link">Contact</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Info -->
-                <div class="footer-section">
-                    <h3 class="font-semibold mb-4">Contact</h3>
-                    <ul class="space-y-2 text-gray-600">
-                        <li>3051 Underhill Ave,</li>
-                        <li>Burnaby, BC V5A 3C2</li>
-                        <li>(236) 591-70-60</li>
-                        <li>inkcreekprint@gmail.com</li>
-                        <li><a href="mailto:inkcreekprint@gmail.com" class="nav-link">Email Us</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-100 mt-12 pt-8 text-center text-gray-500">
-                <p>&copy; 2026 Ink Creek Studio. All Rights Reserved.</p>
-                <a href="admin.html" class="text-xs text-gray-300 hover:text-gray-500">Admin</a>
-            </div>
+      <div class="dtf-card">
+        <h2>3. Print Settings</h2>
+        <p style="font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">Film Type</p>
+        <div class="film-options" style="margin-bottom:20px">
+          <label class="film-option"><input type="radio" name="film" value="standard" checked onchange="updatePricing()"/> Standard</label>
+          <label class="film-option"><input type="radio" name="film" value="premium" onchange="updatePricing()"/> Premium Stretch</label>
+          <label class="film-option"><input type="radio" name="film" value="glow" onchange="updatePricing()"/> ✦ Glow Effect</label>
         </div>
-    </footer>
+        <p style="font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">Cutting</p>
+        <div class="film-options" style="margin-bottom:20px">
+          <label class="film-option"><input type="radio" name="cutting" value="none" checked onchange="updateCutting(this.value)"/> None</label>
+          <label class="film-option"><input type="radio" name="cutting" value="precut" onchange="updateCutting(this.value)"/> Pre-Cut Sheets</label>
+          <label class="film-option"><input type="radio" name="cutting" value="individual" onchange="updateCutting(this.value)"/> Individual Cut</label>
+        </div>
+        <div style="display:flex;align-items:center;gap:32px;flex-wrap:wrap;">
+          <div>
+            <p style="font-size:14px;font-weight:600;color:#374151;margin-bottom:6px;">Quantity</p>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <button type="button" onclick="changeQty(-1)" style="width:32px;height:32px;border:1px solid #d1d5db;border-radius:6px;font-size:18px;cursor:pointer;background:#fff;">−</button>
+              <span id="qty-display" style="font-size:16px;font-weight:700;min-width:32px;text-align:center;">1</span>
+              <button type="button" onclick="changeQty(1)" style="width:32px;height:32px;border:1px solid #d1d5db;border-radius:6px;font-size:18px;cursor:pointer;background:#fff;">+</button>
+              <span style="font-size:13px;color:#6b7280;">Sheet(s)</span>
+            </div>
+          </div>
+          <div>
+            <p style="font-size:14px;font-weight:600;color:#374151;margin-bottom:6px;">Rush Order</p>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+              <input type="checkbox" id="rush-toggle" style="width:18px;height:18px;accent-color:#1e40af" onchange="updatePricing()"/>
+              <span style="font-size:13px;color:#374151;">+20% · Ships in 1–2 days</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <script>
-        // Mobile nav
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            if (mobileMenu) mobileMenu.classList.toggle('hidden');
-        }
+    <div class="sidebar-sticky">
+      <div class="order-summary-card">
+        <div class="os-header">Order Summary</div>
+        <div class="os-preview">
+          <canvas id="summary-canvas" style="display:block;width:100%;height:160px;"></canvas>
+          <div class="os-preview-ruler-right"><span id="sidebar-height-label">100 cm</span></div>
+          <div class="os-preview-ruler-bottom" id="sidebar-width-label">22"</div>
+        </div>
+        <div class="os-details">
+          <div class="os-row"><span class="os-label">Film Size</span><span class="os-value" id="os-size">22" × 100 cm</span></div>
+          <div class="os-row"><span class="os-label">Quantity</span><span class="os-value" id="os-qty">1 Sheet</span></div>
+          <div class="os-row" id="os-rush-row" style="display:none"><span class="os-label">Rush Order</span><span class="os-value">Yes</span></div>
+          <div class="os-row" id="os-cut-row" style="display:none"><span class="os-label">Cutting</span><span class="os-value" id="os-cut">Pre-Cut Sheets</span></div>
+        </div>
+        <div class="os-pricing">
+          <div class="os-price-row"><span>Subtotal</span><span id="p-subtotal">$0.00</span></div>
+          <div class="os-price-row" id="p-rush-row" style="display:none"><span>Rush Fee (+20%)</span><span id="p-rush">$0.00</span></div>
+          <div class="os-price-row" id="p-film-row" style="display:none"><span id="p-film-label">Film Upgrade</span><span id="p-film">$0.00</span></div>
+          <div class="os-price-row" id="p-cut-row" style="display:none"><span>Pre-Cut Fee (+10%)</span><span id="p-cut">$0.00</span></div>
+          <div class="os-price-row"><span>Tax (GST 5%)</span><span id="p-gst">$0.00</span></div>
+          <div class="os-price-total"><span class="tot-label">Total</span><span class="tot-amount" id="p-total">$0.00 CAD</span></div>
+        </div>
+        <button type="button" class="btn-checkout" id="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout &gt;</button>
+        <div class="pay-btns">
+          <button type="button" class="pay-btn apple">🍎 Pay</button>
+          <button type="button" class="pay-btn gpay-dark">G Pay</button>
+          <button type="button" class="pay-btn gpay-light"><span style="color:#4285f4;font-weight:700;">G</span> Pay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        // DTF calculator state
-        const DTF_TOTAL_STEPS = 3;
-        let dtfCurrentStep = 1;
+<div id="toast-container"></div>
 
-        const dtfState = {
-            design: {
-                hasDesign: false,
-                widthIn: 10,
-                rotation: 0,
-                flipH: false,
-                flipV: false,
-                copies: 1
-            },
-            sheet: {
-                key: '22x24',
-                width: 22,
-                height: 24,
-                customWidth: null,
-                customHeight: null
-            },
-            quantity: 1,
-            transfer: 'standard',
-            rush: false
-        };
+<footer class="bg-white border-t border-gray-100 py-16">
+  <div class="container">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="md:col-span-2">
+        <div class="flex items-center mb-6">
+          <img src="../assets/images/logo_file-1757704299844.png" alt="Ink Creek Screen Printing" class="h-8 w-auto" />
+        </div>
+        <p class="text-gray-600 mb-6 max-w-md">Burnaby's premier custom screen printing studio. Bringing your vision to life with quality, creativity, and local expertise.</p>
+        <div class="flex space-x-4">
+          <a href="https://www.instagram.com/ink.creek/" aria-label="Ink Creek on Instagram" class="text-gray-400 hover:text-accent transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-7 h-7"><path d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-8a4 4 0 0 1-4-4z"></path><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0-6 0"></path></svg></a>
+          <a href="https://facebook.com/inkcreekstudio" aria-label="Ink Creek on Facebook" class="text-gray-400 hover:text-accent transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-7 h-7"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3 class="font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="homepage_artisan_screen_printing_studio.html" class="footer-link">Home</a></li>
+          <li><a href="portfolio_gallery_work_showcase.html" class="footer-link">Portfolio</a></li>
+          <li><a href="services_capabilities_hub.html" class="footer-link">Services</a></li>
+          <li><a href="interactive_pricing_calculator.html" class="footer-link">Calculator</a></li>
+          <li><a href="dtf_calculator.html" class="footer-link">DTF Prints</a></li>
+          <li><a href="contact_studio_location.html" class="footer-link">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3 class="font-semibold mb-4">Contact</h3>
+        <ul class="space-y-2 text-gray-600">
+          <li>3051 Underhill Ave,</li>
+          <li>Burnaby, BC V5A 3C2</li>
+          <li>(236) 591-70-60</li>
+          <li><a href="mailto:inkcreekprint@gmail.com" class="nav-link">inkcreekprint@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-100 mt-12 pt-8 text-center text-gray-500">
+      <p>&copy; 2026 Ink Creek Studio. All Rights Reserved.</p>
+      <a href="admin.html" class="text-xs text-gray-300 hover:text-gray-500">Admin</a>
+    </div>
+  </div>
+</footer>
 
-        let dtfImage = null;
-        let dtfAspect = 1;
-        let dtfImageOriginal = null;
+<script>
+const MAX_WIDTH_INCHES = 22;
+const MAX_WIDTH_CM = 55.88;
+var INCH_TO_PX = 12.7;
 
-        const SHEET_RATES = {
-            '11x17': 3.5,
-            '13x19': 4.5,
-            '22x24': 7.0,
-            '22x36': 10.0
-        };
+function getDtfPricing() {
+  var saved = localStorage.getItem('dtfPricing');
+  if (saved) {
+    var p = JSON.parse(saved);
+    var sqFtToCm2 = 929.03;
+    return {
+      basePer100cm2: (p.pricePerSqFt / sqFtToCm2) * 100,
+      minimum: p.minimum,
+      rush: p.rushPct / 100,
+      premium: p.premiumPct / 100,
+      glow: p.glowPct / 100,
+      preCut: p.precutPct / 100,
+      gst: 0.05
+    };
+  }
+  return {
+    basePer100cm2: 0.038 * 100,
+    minimum: 15,
+    rush: 0.20,
+    premium: 0.15,
+    glow: 0.25,
+    preCut: 0.10,
+    gst: 0.05
+  };
+}
 
-        function setStep(step) {
-            dtfCurrentStep = step;
-            document.getElementById('dtf-current-step').textContent = step;
-            document.getElementById('dtf-progress-bar').style.width = (step / DTF_TOTAL_STEPS * 100) + '%';
-            ['dtf-step-1', 'dtf-step-2', 'dtf-step-3'].forEach((id, idx) => {
-                const el = document.getElementById(id);
-                if (el) el.classList.toggle('hidden', idx + 1 !== step);
-            });
-            updateNavButtons();
-        }
+var designs = [];
+var stage, layer, transformer, bgLayer;
+var currentUnit = 'inches';
+var selectedDesignId = null;
+let sheetWidthInches = 22;
+let sheetHeightCm = 100;
+let qty = 1;
+let filmType = 'standard';
+let cuttingType = 'none';
 
-        function updateNavButtons() {
-            const prev = document.getElementById('dtf-prev-btn');
-            const next = document.getElementById('dtf-next-btn');
-            if (prev) {
-                prev.disabled = dtfCurrentStep === 1;
-                prev.classList.toggle('opacity-50', dtfCurrentStep === 1);
-                prev.classList.toggle('cursor-not-allowed', dtfCurrentStep === 1);
-            }
-            if (next) {
-                const canGo =
-                    (dtfCurrentStep === 1 && dtfState.design.hasDesign) ||
-                    (dtfCurrentStep === 2 && dtfState.quantity > 0) ||
-                    dtfCurrentStep === 3;
-                if (dtfCurrentStep === 3) {
-                    next.disabled = true;
-                    next.classList.add('opacity-50','cursor-not-allowed','hidden');
-                } else {
-                    next.classList.remove('hidden');
-                    next.disabled = !canGo;
-                    next.classList.toggle('opacity-50', !canGo);
-                    next.classList.toggle('cursor-not-allowed', !canGo);
-                }
-            }
-        }
+function inchesToCm(v) { return Math.round(v * 2.54 * 10) / 10; }
+function cmToInches(v) { return Math.round(v / 2.54 * 10) / 10; }
 
-        function initStepNavigation() {
-            document.getElementById('dtf-prev-btn').addEventListener('click', () => {
-                if (dtfCurrentStep > 1) setStep(dtfCurrentStep - 1);
-            });
-            document.getElementById('dtf-next-btn').addEventListener('click', () => {
-                if (dtfCurrentStep === 1 && !dtfState.design.hasDesign) return;
-                if (dtfCurrentStep === 2 && dtfState.quantity <= 0) return;
-                if (dtfCurrentStep < DTF_TOTAL_STEPS) setStep(dtfCurrentStep + 1);
-            });
-        }
+function setUnit(unit) {
+  currentUnit = unit;
+  document.getElementById('btn-inches').classList.toggle('active', unit === 'inches');
+  document.getElementById('btn-cm').classList.toggle('active', unit === 'cm');
+  document.getElementById('max-width-display').textContent = unit === 'inches' ? '22"' : '55.9 cm';
+  document.getElementById('ruler-left').textContent = unit === 'inches' ? '0"' : '0 cm';
+  document.getElementById('ruler-right').textContent = unit === 'inches' ? '22"' : '55.9 cm';
+  document.getElementById('sidebar-width-label').textContent = unit === 'inches' ? '22"' : '55.9 cm';
+  updateSizeDisplay();
+  renderTable();
+}
 
-        // Upload & editor
-        function initUpload() {
-            const dropzone = document.getElementById('dtf-upload-dropzone');
-            const input = document.getElementById('dtf-upload-input');
-            const errorEl = document.getElementById('dtf-upload-error');
-            const editor = document.getElementById('dtf-editor-wrapper');
+function getSheetWidthDisplay() {
+  return currentUnit === 'inches' ? (sheetWidthInches + '"') : (inchesToCm(sheetWidthInches) + ' cm');
+}
 
-            const MAX_BYTES = 50 * 1024 * 1024;
-            const allowedExt = ['png','jpg','jpeg','pdf','ai','eps','svg'];
+function updateSizeDisplay() {
+  document.getElementById('os-size').textContent = getSheetWidthDisplay() + ' × ' + sheetHeightCm + ' cm';
+}
 
-            function setError(msg) {
-                if (!errorEl) return;
-                if (msg) {
-                    errorEl.textContent = msg;
-                    errorEl.classList.remove('hidden');
-                } else {
-                    errorEl.textContent = '';
-                    errorEl.classList.add('hidden');
-                }
-            }
+function redrawGrid() {
+  if (!bgLayer || !stage) return;
+  bgLayer.destroyChildren();
+  var W = stage.width();
+  var H = stage.height();
+  bgLayer.add(new Konva.Rect({ x: 0, y: 0, width: W, height: H, fill: '#ffffff', stroke: '#93c5fd', strokeWidth: 1 }));
+  for (var x = 0; x <= W; x += INCH_TO_PX) {
+    bgLayer.add(new Konva.Line({ points: [x, 0, x, H], stroke: '#e8f4fd', strokeWidth: (x % (INCH_TO_PX * 2) === 0 ? 1 : 0.5) }));
+  }
+  for (var y = 0; y <= H; y += INCH_TO_PX) {
+    bgLayer.add(new Konva.Line({ points: [0, y, W, y], stroke: '#e8f4fd', strokeWidth: 0.5 }));
+  }
+  bgLayer.draw();
+}
 
-            function handleFile(file) {
-                if (!file) return;
-                dtfImageOriginal = null;
-                const restoreBtn = document.getElementById('dtf-restore-bg');
-                if (restoreBtn) restoreBtn.classList.add('hidden');
-                const removeBgStatus = document.getElementById('dtf-remove-bg-status');
-                if (removeBgStatus) removeBgStatus.textContent = '';
-                setError('');
-                const ext = file.name.split('.').pop().toLowerCase();
-                if (!allowedExt.includes(ext)) {
-                    setError('Unsupported file type. Please upload PNG, JPG, PDF, AI, EPS, or SVG.');
-                    return;
-                }
-                if (file.size > MAX_BYTES) {
-                    setError('File is too large. Maximum size is 50MB.');
-                    return;
-                }
+function positionDesignToolbar(node) {
+  var toolbar = document.getElementById('design-toolbar');
+  var wrap = document.getElementById('canvas-container-wrap');
+  if (!toolbar || !wrap || !stage) return;
+  var stageRect = stage.container().getBoundingClientRect();
+  var wrapRect = wrap.getBoundingClientRect();
+  var nodeRect = node.getClientRect();
+  toolbar.style.display = 'flex';
+  toolbar.style.left = (stageRect.left - wrapRect.left + nodeRect.x + nodeRect.width / 2 - toolbar.offsetWidth / 2) + 'px';
+  toolbar.style.top = (stageRect.top - wrapRect.top + nodeRect.y - 44) + 'px';
+}
 
-                if (!file.type.startsWith('image/')) {
-                    setError('Preview is only available for PNG/JPG/SVG. We&apos;ll still use this file for your order.');
-                    dtfState.design.hasDesign = true;
-                    if (editor) editor.classList.remove('hidden');
-                    updateNavButtons();
-                    updateSummaryAndPricing();
-                    return;
-                }
+window.addEventListener('DOMContentLoaded', function() {
+  var container = document.getElementById('konva-container');
+  var W = container ? container.clientWidth : 700;
+  var H = 420;
+  INCH_TO_PX = W / MAX_WIDTH_INCHES;
 
-                const reader = new FileReader();
-                reader.onload = ev => {
-                    const img = new Image();
-                    img.onload = () => {
-                        dtfImage = img;
-                        dtfAspect = img.width / img.height || 1;
-                        dtfState.design.hasDesign = true;
-                        dtfState.design.widthIn = 10;
-                        dtfState.design.rotation = 0;
-                        dtfState.design.flipH = false;
-                        dtfState.design.flipV = false;
-                        dtfState.design.copies = 1;
-                        document.getElementById('dtf-scale-slider').value = 10;
-                        document.getElementById('dtf-scale-value').textContent = '10';
-                        document.getElementById('dtf-copies').value = 1;
-                        document.getElementById('dtf-remove-bg-status').textContent = '';
-                        if (editor) editor.classList.remove('hidden');
-                        drawPreview();
-                        updateNavButtons();
-                        updateSummaryAndPricing();
-                    };
-                    img.src = ev.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+  stage = new Konva.Stage({ container: 'konva-container', width: W, height: H });
 
-            dropzone.addEventListener('click', () => input.click());
-            input.addEventListener('change', e => handleFile(e.target.files[0]));
+  bgLayer = new Konva.Layer({ listening: false });
+  stage.add(bgLayer);
+  redrawGrid();
 
-            ['dragenter','dragover'].forEach(evt => {
-                dropzone.addEventListener(evt, e => {
-                    e.preventDefault(); e.stopPropagation();
-                    dropzone.classList.add('border-secondary','bg-blue-50');
-                });
-            });
-            ['dragleave','drop'].forEach(evt => {
-                dropzone.addEventListener(evt, e => {
-                    e.preventDefault(); e.stopPropagation();
-                    dropzone.classList.remove('border-secondary','bg-blue-50');
-                });
-            });
-            dropzone.addEventListener('drop', e => {
-                const files = e.dataTransfer?.files;
-                if (files && files.length) handleFile(files[0]);
-            });
-        }
+  layer = new Konva.Layer();
+  stage.add(layer);
+  var trLayer = new Konva.Layer();
+  stage.add(trLayer);
+  transformer = new Konva.Transformer({
+    rotationSnaps: [0,45,90,135,180,225,270,315],
+    boundBoxFunc: function(_, nb) { return { x: nb.x, y: nb.y, width: Math.max(10, nb.width), height: Math.max(10, nb.height) }; }
+  });
+  trLayer.add(transformer);
 
-        function drawPreview() {
-            const canvas = document.getElementById('dtf-design-canvas');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            if (!dtfImage) return;
-            const maxW = 360;
-            const wIn = dtfState.design.widthIn || 10;
-            const wPx = Math.max(40, (wIn / 22) * maxW);
-            const hPx = wPx / dtfAspect;
-            canvas.width = maxW;
-            canvas.height = maxW;
-            ctx.save();
-            ctx.translate(canvas.width/2, canvas.height/2);
-            ctx.rotate(dtfState.design.rotation * Math.PI / 180);
-            ctx.scale(dtfState.design.flipH ? -1 : 1, dtfState.design.flipV ? -1 : 1);
-            ctx.drawImage(dtfImage, -wPx/2, -hPx/2, wPx, hPx);
-            ctx.restore();
-        }
+  stage.on('click tap', function(e) {
+    if (e.target === stage) {
+      transformer.nodes([]);
+      trLayer.draw();
+      document.getElementById('design-toolbar').style.display = 'none';
+      selectedDesignId = null;
+    } else if (e.target.name() === 'design') {
+      selectedDesignId = e.target.id();
+      positionDesignToolbar(e.target);
+    }
+  });
 
-        function initEditorControls() {
-            document.getElementById('dtf-scale-slider').addEventListener('input', e => {
-                const val = parseFloat(e.target.value) || 10;
-                dtfState.design.widthIn = val;
-                document.getElementById('dtf-scale-value').textContent = val.toFixed(1).replace(/\.0$/,'');
-                drawPreview();
-                updateSummaryAndPricing();
-            });
-            document.getElementById('dtf-rotate-left').addEventListener('click', () => {
-                dtfState.design.rotation = (dtfState.design.rotation - 90) % 360;
-                drawPreview();
-            });
-            document.getElementById('dtf-rotate-right').addEventListener('click', () => {
-                dtfState.design.rotation = (dtfState.design.rotation + 90) % 360;
-                drawPreview();
-            });
-            document.getElementById('dtf-flip-horizontal').addEventListener('click', () => {
-                dtfState.design.flipH = !dtfState.design.flipH;
-                drawPreview();
-            });
-            document.getElementById('dtf-flip-vertical').addEventListener('click', () => {
-                dtfState.design.flipV = !dtfState.design.flipV;
-                drawPreview();
-            });
-            document.getElementById('dtf-copies').addEventListener('change', e => {
-                let v = parseInt(e.target.value, 10) || 1;
-                if (v < 1) v = 1;
-                e.target.value = v;
-                dtfState.design.copies = v;
-                updateSummaryAndPricing();
-            });
-            document.getElementById('dtf-reset').addEventListener('click', () => {
-                dtfImage = null;
-                dtfState.design.hasDesign = false;
-                document.getElementById('dtf-upload-input').value = '';
-                document.getElementById('dtf-editor-wrapper').classList.add('hidden');
-                document.getElementById('dtf-upload-error').classList.add('hidden');
-                const canvas = document.getElementById('dtf-design-canvas');
-                canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
-                setStep(1);
-                updateSummaryAndPricing();
-            });
-        }
+  window.addEventListener('resize', function() {
+    var cont = document.getElementById('konva-container');
+    if (!cont || !stage) return;
+    var W = cont.clientWidth;
+    stage.width(W);
+    var newIPX = W / MAX_WIDTH_INCHES;
+    var ratio = newIPX / INCH_TO_PX;
+    designs.forEach(function(d) {
+      if (!d.node) return;
+      d.node.x(d.node.x() * ratio);
+      d.node.y(d.node.y() * ratio);
+      d.node.width(d.wInches * newIPX);
+      d.node.height(d.hInches * newIPX);
+    });
+    INCH_TO_PX = newIPX;
+    redrawGrid();
+    stage.batchDraw();
+    if (selectedDesignId) {
+      var d = designs.find(function(x) { return x.id === selectedDesignId; });
+      if (d && d.node) positionDesignToolbar(d.node);
+    }
+  });
 
-        function initSheetAndQuantityControls() {
-            document.querySelectorAll('.dtf-sheet-option').forEach(opt => {
-                opt.addEventListener('click', () => {
-                    document.querySelectorAll('.dtf-sheet-option').forEach(o => {
-                        o.classList.remove('border-secondary','bg-blue-50');
-                        o.classList.add('border-gray-200');
-                    });
-                    opt.classList.remove('border-gray-200');
-                    opt.classList.add('border-secondary','bg-blue-50');
-                    const key = opt.dataset.key;
-                    dtfState.sheet.key = key;
-                    if (key === 'custom') {
-                        const cw = parseFloat(document.getElementById('dtf-custom-width').value) || 0;
-                        const ch = parseFloat(document.getElementById('dtf-custom-height').value) || 0;
-                        dtfState.sheet.customWidth = cw;
-                        dtfState.sheet.customHeight = ch;
-                        dtfState.sheet.width = cw || 22;
-                        dtfState.sheet.height = ch || 24;
-                    } else {
-                        dtfState.sheet.width = parseFloat(opt.dataset.width) || 22;
-                        dtfState.sheet.height = parseFloat(opt.dataset.height) || 24;
-                        dtfState.sheet.customWidth = null;
-                        dtfState.sheet.customHeight = null;
-                    }
-                    updateSummaryAndPricing();
-                });
-            });
+  window.addEventListener('keydown', function(e) {
+    if ((e.key === 'Delete' || e.key === 'Backspace') && e.target.tagName !== 'INPUT') {
+      var nodes = transformer.nodes();
+      if (nodes.length) removeDesignById(nodes[0].id());
+    }
+  });
 
-            document.getElementById('dtf-custom-width').addEventListener('change', e => {
-                let v = parseFloat(e.target.value) || 0;
-                if (v < 4) v = 4;
-                if (v > 22) v = 22;
-                e.target.value = v;
-                if (dtfState.sheet.key === 'custom') {
-                    dtfState.sheet.customWidth = v;
-                    dtfState.sheet.width = v;
-                    updateSummaryAndPricing();
-                }
-            });
-            document.getElementById('dtf-custom-height').addEventListener('change', e => {
-                let v = parseFloat(e.target.value) || 0;
-                if (v < 4) v = 4;
-                if (v > 60) v = 60;
-                e.target.value = v;
-                if (dtfState.sheet.key === 'custom') {
-                    dtfState.sheet.customHeight = v;
-                    dtfState.sheet.height = v;
-                    updateSummaryAndPricing();
-                }
-            });
+  updatePricing();
+  renderTable();
+});
 
-            const qtyInput = document.getElementById('dtf-qty-input');
-            const volumeBadge = document.getElementById('dtf-volume-badge');
+function handleFiles(files) {
+  if (!files || !files.length) return;
+  Array.from(files).forEach(function(file) {
+    if (!file.type.match(/image\/(png|jpeg)|application\/pdf/)) { showToast('Only PNG, JPG, PDF allowed', 'error'); return; }
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var dataUrl = e.target.result;
+      var isPdf = (file.type || '').indexOf('pdf') !== -1;
+      if (isPdf) {
+        var design = { id: crypto.randomUUID(), name: file.name.replace(/\.[^.]+$/, '') || 'Design', dataUrl: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="#e5e7eb" width="100" height="100"/><text x="50" y="55" text-anchor="middle" fill="#6b7280" font-size="12">PDF</text></svg>'), wInches: 10, hInches: 10, node: null };
+        designs.push(design);
+        addDesignToCanvas(design);
+        renderTable();
+        updatePricing();
+        showToast('Added: ' + design.name + ' (PDF)', 'success');
+        return;
+      }
+      var img = new Image();
+      img.onload = function() {
+        var dpi = img.naturalWidth >= 2400 ? 300 : 96;
+        var wInches = img.naturalWidth / dpi;
+        var hInches = img.naturalHeight / dpi;
+        var clampedW = Math.min(wInches, MAX_WIDTH_INCHES);
+        var design = { id: crypto.randomUUID(), name: file.name.replace(/\.[^.]+$/, '') || 'Design', dataUrl: dataUrl, wInches: Math.round(clampedW * 10) / 10, hInches: Math.round(hInches * 10) / 10, node: null };
+        designs.push(design);
+        addDesignToCanvas(design);
+        renderTable();
+        updatePricing();
+        showToast('Added: ' + design.name, 'success');
+      };
+      img.onerror = function() { showToast('Could not load image', 'error'); };
+      img.src = dataUrl;
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
-            document.querySelectorAll('.dtf-qty-chip').forEach(chip => {
-                chip.addEventListener('click', () => {
-                    const qty = parseInt(chip.dataset.qty, 10) || 1;
-                    document.querySelectorAll('.dtf-qty-chip').forEach(c => c.classList.remove('bg-blue-50','border-secondary'));
-                    chip.classList.add('bg-blue-50','border-secondary');
-                    dtfState.quantity = qty;
-                    qtyInput.value = qty;
-                    volumeBadge.classList.toggle('hidden', qty < 50);
-                    updateNavButtons();
-                    updateSummaryAndPricing();
-                });
-            });
+function addDesignToCanvas(design) {
+  var img = new Image();
+  img.onload = function() {
+    var x = 8;
+    var sheetW = stage ? stage.width() : 700;
+    designs.forEach(function(d) {
+      if (d.node) x = Math.max(x, d.node.x() + d.wInches * INCH_TO_PX + 4);
+    });
+    var maxX = sheetW - design.wInches * INCH_TO_PX;
+    x = Math.min(x, Math.max(0, maxX));
 
-            qtyInput.addEventListener('change', e => {
-                let v = parseInt(e.target.value, 10) || 1;
-                if (v < 1) v = 1;
-                e.target.value = v;
-                dtfState.quantity = v;
-                document.querySelectorAll('.dtf-qty-chip').forEach(c => c.classList.remove('bg-blue-50','border-secondary'));
-                volumeBadge.classList.toggle('hidden', v < 50);
-                updateNavButtons();
-                updateSummaryAndPricing();
-            });
+    var node = new Konva.Image({
+      x: x, y: 8,
+      image: img,
+      width: design.wInches * INCH_TO_PX,
+      height: design.hInches * INCH_TO_PX,
+      draggable: true,
+      name: 'design'
+    });
+    node.id(design.id);
 
-            document.querySelectorAll('.dtf-transfer-option').forEach(opt => {
-                opt.addEventListener('click', () => {
-                    document.querySelectorAll('.dtf-transfer-option').forEach(o => {
-                        o.classList.remove('border-secondary','bg-blue-50');
-                        o.classList.add('border-gray-200');
-                    });
-                    opt.classList.remove('border-gray-200');
-                    opt.classList.add('border-secondary','bg-blue-50');
-                    dtfState.transfer = opt.dataset.transfer || 'standard';
-                    updateSummaryAndPricing();
-                });
-            });
+    node.on('dragmove', function() {
+      var maxDragX = (stage ? stage.width() : 700) - design.wInches * INCH_TO_PX;
+      if (this.x() > maxDragX) this.x(maxDragX);
+      if (this.x() < 0) this.x(0);
+      if (this.y() < 0) this.y(0);
+      if (selectedDesignId === design.id) positionDesignToolbar(node);
+    });
+    node.on('dragend', function() { updateSummaryPreview(); });
+    node.on('click tap', function(e) {
+      e.cancelBubble = true;
+      selectedDesignId = design.id;
+      transformer.nodes([node]);
+      stage.getLayers()[2].batchDraw();
+      positionDesignToolbar(node);
+    });
+    node.on('transformend', function() {
+      var sx = node.scaleX(), sy = node.scaleY();
+      node.scaleX(1); node.scaleY(1);
+      design.wInches = Math.min(Math.round(node.width() * sx / INCH_TO_PX * 10) / 10, MAX_WIDTH_INCHES);
+      design.hInches = Math.round(node.height() * sy / INCH_TO_PX * 10) / 10;
+      node.width(design.wInches * INCH_TO_PX);
+      node.height(design.hInches * INCH_TO_PX);
+      renderTable();
+      updatePricing();
+      updateSummaryPreview();
+      if (selectedDesignId === design.id) positionDesignToolbar(node);
+    });
 
-            document.getElementById('dtf-rush-toggle').addEventListener('change', e => {
-                dtfState.rush = e.target.checked;
-                updateSummaryAndPricing();
-            });
-        }
+    design.node = node;
+    layer.add(node);
+    layer.draw();
+    updateSummaryPreview();
+  };
+  img.src = design.dataUrl;
+}
 
-        // Background removal integration
-        const removeBgBtn = document.getElementById('dtf-remove-bg');
-        const removeBgStatus = document.getElementById('dtf-remove-bg-status');
-        const restoreBgBtn = document.getElementById('dtf-restore-bg');
+function renderTable() {
+  var tbody = document.getElementById('design-tbody');
+  var hint = document.getElementById('empty-hint');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  if (designs.length === 0) { hint.style.display = 'block'; return; }
+  hint.style.display = 'none';
 
-        if (removeBgBtn && removeBgStatus && restoreBgBtn) {
-            removeBgBtn.addEventListener('click', async () => {
-                if (!dtfImage) return;
+  designs.forEach(function(d) {
+    var wDisplay = currentUnit === 'inches' ? (d.wInches + '"') : (inchesToCm(d.wInches) + ' cm');
+    var hDisplay = currentUnit === 'inches' ? (d.hInches + '"') : (inchesToCm(d.hInches) + ' cm');
+    var wVal = currentUnit === 'inches' ? d.wInches : inchesToCm(d.wInches);
+    var hVal = currentUnit === 'inches' ? d.hInches : inchesToCm(d.hInches);
+    var maxW = currentUnit === 'inches' ? MAX_WIDTH_INCHES : MAX_WIDTH_CM;
+    var badgeNum = Math.max(1, Math.ceil((MAX_WIDTH_INCHES * sheetHeightCm * 0.1) / (d.wInches * 2.54 * d.hInches * 2.54)));
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><img src="' + d.dataUrl + '" alt="" class="design-thumb"/></td><td><span class="design-name">' + (d.name || '') + '</span></td><td><span class="design-badge">' + badgeNum + '</span></td><td><button type="button" class="btn-icon" onclick="selectDesign(\'' + d.id + '\')">↖</button></td><td><button type="button" class="btn-icon">🔗</button></td><td><input type="number" class="dim-input" value="' + wVal + '" min="0.5" max="' + maxW + '" step="0.1" onchange="updateDim(\'' + d.id + '\',\'w\',this.value)"/></td><td><span style="font-size:12px;color:#6b7280">' + (currentUnit === 'inches' ? 'in' : 'cm') + '</span></td><td><input type="number" class="dim-input" value="' + hVal + '" min="0.5" max="500" step="0.1" onchange="updateDim(\'' + d.id + '\',\'h\',this.value)"/></td><td><span style="font-size:12px;color:#6b7280">' + (currentUnit === 'inches' ? 'in' : 'cm') + '</span></td><td><button type="button" class="btn-add-copy" onclick="duplicateDesign(\'' + d.id + '\')">+</button></td><td><button type="button" class="btn-delete-row" onclick="removeDesignById(\'' + d.id + '\')">🗑</button></td>';
+    tbody.appendChild(tr);
+  });
+}
 
-                if (!dtfImageOriginal) {
-                    dtfImageOriginal = dtfImage;
-                }
+function updateDim(id, axis, val, unit) {
+  unit = unit || currentUnit;
+  var d = designs.find(function(x) { return x.id === id; });
+  if (!d) return;
+  var num = parseFloat(val);
+  if (isNaN(num)) return;
+  var inches = unit === 'inches' ? num : num / 2.54;
+  if (axis === 'w') {
+    d.wInches = Math.min(Math.max(0.5, Math.round(inches * 10) / 10), MAX_WIDTH_INCHES);
+    if (inches > MAX_WIDTH_INCHES) showToast('Max print width is 22 inches', 'error');
+  } else {
+    d.hInches = Math.max(0.5, Math.round(inches * 10) / 10);
+  }
+  if (d.node) {
+    d.node.width(d.wInches * INCH_TO_PX);
+    d.node.height(d.hInches * INCH_TO_PX);
+    layer.draw();
+  }
+  renderTable();
+  updatePricing();
+  updateSummaryPreview();
+}
 
-                removeBgBtn.disabled = true;
-                removeBgBtn.textContent = 'Removing...';
-                removeBgStatus.textContent = '⏳ Processing... this may take 10-20 seconds';
-                removeBgStatus.style.color = '#666';
+function selectDesign(id) {
+  var d = designs.find(function(x) { return x.id === id; });
+  if (!d || !d.node) return;
+  transformer.nodes([d.node]);
+  stage.getLayers()[2].batchDraw();
+}
 
-                try {
-                    const tempCanvas = document.createElement('canvas');
-                    tempCanvas.width = dtfImage.naturalWidth || dtfImage.width;
-                    tempCanvas.height = dtfImage.naturalHeight || dtfImage.height;
-                    const tempCtx = tempCanvas.getContext('2d');
-                    tempCtx.drawImage(dtfImage, 0, 0);
+function duplicateDesign(id) {
+  var d = designs.find(function(x) { return x.id === id; });
+  if (!d) return;
+  var copy = { id: crypto.randomUUID(), name: d.name, dataUrl: d.dataUrl, wInches: d.wInches, hInches: d.hInches, node: null };
+  designs.push(copy);
+  addDesignToCanvas(copy);
+  renderTable();
+  updatePricing();
+}
 
-                    const blob = await new Promise(resolve =>
-                        tempCanvas.toBlob(resolve, 'image/png')
-                    );
+function scaleSelected(delta) {
+  var d = designs.find(function(x) { return x.id === selectedDesignId; });
+  if (!d || !d.node) return;
+  var factor = 1 + delta;
+  var newW = Math.min(d.wInches * factor, MAX_WIDTH_INCHES);
+  var newH = d.hInches * factor;
+  d.wInches = Math.round(newW * 10) / 10;
+  d.hInches = Math.round(newH * 10) / 10;
+  d.node.width(d.wInches * INCH_TO_PX);
+  d.node.height(d.hInches * INCH_TO_PX);
+  layer.batchDraw();
+  renderTable();
+  updatePricing();
+  updateSummaryPreview();
+  positionDesignToolbar(d.node);
+}
 
-                    const resultBlob = await window.removeBackgroundFn(blob, {
-                        model: 'small',
-                        output: { format: 'image/png', quality: 1 }
-                    });
+function deleteSelected() {
+  if (!selectedDesignId) return;
+  removeDesignById(selectedDesignId);
+  document.getElementById('design-toolbar').style.display = 'none';
+  selectedDesignId = null;
+}
 
-                    const url = URL.createObjectURL(resultBlob);
-                    const newImg = new Image();
-                    newImg.onload = () => {
-                        dtfImage = newImg;
-                        dtfAspect = newImg.width / newImg.height || dtfAspect;
-                        drawPreview();
-                        removeBgStatus.textContent = '✓ Background removed!';
-                        removeBgStatus.style.color = 'green';
-                        removeBgBtn.textContent = 'Remove Background';
-                        removeBgBtn.disabled = false;
-                        restoreBgBtn.classList.remove('hidden');
-                    };
-                    newImg.src = url;
-                } catch (err) {
-                    console.error(err);
-                    removeBgStatus.textContent = '✗ Error. Try a PNG with a clear subject.';
-                    removeBgStatus.style.color = 'red';
-                    removeBgBtn.textContent = 'Remove Background';
-                    removeBgBtn.disabled = false;
-                }
-            });
+function removeBgSelected() {
+  var d = designs.find(function(x) { return x.id === selectedDesignId; });
+  if (!d) return;
+  var btn = document.getElementById('btn-remove-bg');
+  if (!btn) return;
+  btn.textContent = '⏳ Processing...';
+  btn.disabled = true;
+  var tolerance = parseInt(document.getElementById('bg-tolerance').value, 10) || 30;
+  var img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = function() {
+    var offCanvas = document.createElement('canvas');
+    offCanvas.width = img.naturalWidth;
+    offCanvas.height = img.naturalHeight;
+    var ctx = offCanvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    var imageData = ctx.getImageData(0, 0, offCanvas.width, offCanvas.height);
+    var data = imageData.data;
+    var corners = [[0, 0], [offCanvas.width - 1, 0], [0, offCanvas.height - 1], [offCanvas.width - 1, offCanvas.height - 1]];
+    var r = 0, g = 0, b = 0;
+    corners.forEach(function(pt) {
+      var idx = (pt[1] * offCanvas.width + pt[0]) * 4;
+      r += data[idx]; g += data[idx + 1]; b += data[idx + 2];
+    });
+    r = Math.round(r / 4); g = Math.round(g / 4); b = Math.round(b / 4);
+    function colorMatch(idx) {
+      return Math.abs(data[idx] - r) <= tolerance && Math.abs(data[idx + 1] - g) <= tolerance && Math.abs(data[idx + 2] - b) <= tolerance;
+    }
+    for (var i = 0; i < data.length; i += 4) {
+      if (colorMatch(i)) data[i + 3] = 0;
+    }
+    ctx.putImageData(imageData, 0, 0);
+    var newDataUrl = offCanvas.toDataURL('image/png');
+    d.dataUrl = newDataUrl;
+    var newImg = new Image();
+    newImg.onload = function() {
+      d.node.image(newImg);
+      layer.batchDraw();
+      renderTable();
+      btn.textContent = '✅ BG Removed';
+      btn.style.background = '#16a34a';
+      setTimeout(function() {
+        btn.textContent = '✨ Remove BG';
+        btn.style.background = '#3b82f6';
+        btn.disabled = false;
+      }, 2000);
+    };
+    newImg.src = newDataUrl;
+  };
+  img.onerror = function() { btn.textContent = '✨ Remove BG'; btn.disabled = false; };
+  img.src = d.dataUrl;
+}
 
-            restoreBgBtn.addEventListener('click', () => {
-                if (!dtfImageOriginal) return;
-                dtfImage = dtfImageOriginal;
-                dtfAspect = dtfImage.width / dtfImage.height || dtfAspect;
-                drawPreview();
-                removeBgStatus.textContent = '';
-                restoreBgBtn.classList.add('hidden');
-            });
-        }
+function removeDesignById(id) {
+  var d = designs.find(function(x) { return x.id === id; });
+  if (d && d.node) { d.node.destroy(); transformer.nodes([]); layer.draw(); }
+  if (selectedDesignId === id) {
+    document.getElementById('design-toolbar').style.display = 'none';
+    selectedDesignId = null;
+  }
+  designs = designs.filter(function(x) { return x.id !== id; });
+  renderTable();
+  updatePricing();
+  updateSummaryPreview();
+}
 
-        function updateSummaryAndPricing() {
-            const sheetKey = dtfState.sheet.key;
-            const sheetWidth = dtfState.sheet.width;
-            const sheetHeight = dtfState.sheet.height;
-            const qty = dtfState.quantity;
-            const copies = dtfState.design.copies;
+function changeQty(delta) {
+  qty = Math.max(1, qty + delta);
+  document.getElementById('qty-display').textContent = qty;
+  document.getElementById('os-qty').textContent = qty + ' Sheet' + (qty > 1 ? 's' : '');
+  updatePricing();
+}
 
-            const sheetLabelMap = {
-                '11x17': '11" × 17"',
-                '13x19': '13" × 19"',
-                '22x24': '22" × 24"',
-                '22x36': '22" × 36"'
-            };
-            const sheetLabel = sheetKey === 'custom'
-                ? `${sheetWidth.toFixed(1).replace(/\.0$/,'')}" × ${sheetHeight.toFixed(1).replace(/\.0$/,'')}" (Custom)`
-                : (sheetLabelMap[sheetKey] || '22" × 24"');
+function updateCutting(val) {
+  cuttingType = val;
+  var row = document.getElementById('os-cut-row');
+  var label = document.getElementById('os-cut');
+  if (row && label) {
+    if (val !== 'none') { row.style.display = 'flex'; label.textContent = val === 'precut' ? 'Pre-Cut Sheets' : 'Individual Cut'; }
+    else row.style.display = 'none';
+  }
+  updatePricing();
+}
 
-            document.getElementById('dtf-summary-sheet').textContent = sheetLabel;
-            document.getElementById('dtf-summary-qty').textContent = qty;
-            document.getElementById('dtf-summary-copies').textContent = copies;
+function updatePricing() {
+  var PRICING = getDtfPricing();
+  filmType = (document.querySelector('input[name="film"]:checked') && document.querySelector('input[name="film"]:checked').value) || 'standard';
+  var rush = document.getElementById('rush-toggle') && document.getElementById('rush-toggle').checked;
 
-            let transferLabel = 'Standard DTF';
-            if (dtfState.transfer === 'glow') transferLabel = 'Glow in the Dark';
-            if (dtfState.transfer === 'reflective') transferLabel = 'Reflective';
-            document.getElementById('dtf-summary-transfer').textContent = transferLabel;
+  var usedArea = designs.reduce(function(sum, d) {
+    var wCm = d.wInches * 2.54;
+    var hCm = d.hInches * 2.54;
+    return sum + (wCm * hCm);
+  }, 0);
 
-            // pricing
-            let basePerSheet = SHEET_RATES[sheetKey];
-            if (!basePerSheet) {
-                const area = (sheetWidth || 0) * (sheetHeight || 0);
-                basePerSheet = Math.max(5, area * 0.045);
-            }
-            let addon = 0;
-            if (dtfState.transfer === 'glow') addon = 2;
-            if (dtfState.transfer === 'reflective') addon = 3;
-            const pricePerSheet = basePerSheet + addon;
-            let subtotal = pricePerSheet * qty;
+  var base = Math.max((usedArea / 100) * PRICING.basePer100cm2, PRICING.minimum) * qty;
+  var rushFee = rush ? base * PRICING.rush : 0;
+  var filmFee = filmType === 'premium' ? base * PRICING.premium : (filmType === 'glow' ? base * PRICING.glow : 0);
+  var cutFee = cuttingType !== 'none' ? base * PRICING.preCut : 0;
+  var subtotal = base + rushFee + filmFee + cutFee;
+  var gst = subtotal * PRICING.gst;
+  var total = subtotal + gst;
 
-            let discRate = 0;
-            if (qty >= 100) discRate = 0.15;
-            else if (qty >= 50) discRate = 0.10;
-            const volume = subtotal * discRate;
-            const discounted = subtotal - volume;
+  function fmt(n) { return '$' + n.toFixed(2); }
 
-            const rushFee = dtfState.rush ? discounted * 0.30 : 0;
-            const total = discounted + rushFee;
+  document.getElementById('p-subtotal').textContent = fmt(base);
+  document.getElementById('p-gst').textContent = fmt(gst);
+  document.getElementById('p-total').textContent = fmt(total) + ' CAD';
 
-            const fmt = v => '$' + (v || 0).toFixed(2);
-            document.getElementById('dtf-price-per-sheet').textContent = fmt(pricePerSheet);
-            document.getElementById('dtf-subtotal').textContent = fmt(subtotal);
-            document.getElementById('dtf-volume-discount').textContent = '-' + fmt(volume).replace('$','');
-            document.getElementById('dtf-total').textContent = fmt(total);
-        }
+  var prRow = document.getElementById('p-rush-row');
+  var osRush = document.getElementById('os-rush-row');
+  if (rush) { prRow.style.display = 'flex'; osRush.style.display = 'flex'; document.getElementById('p-rush').textContent = fmt(rushFee); }
+  else { prRow.style.display = 'none'; osRush.style.display = 'none'; }
 
-        function initOrderForm() {
-            const form = document.getElementById('dtf-order-form');
-            const success = document.getElementById('dtf-order-success');
-            form.addEventListener('submit', e => {
-                e.preventDefault();
-                success.classList.remove('hidden');
-                setTimeout(() => success.classList.add('hidden'), 6000);
-                form.reset();
-                document.getElementById('dtf-ready-checkbox').checked = false;
-            });
-        }
+  var pfRow = document.getElementById('p-film-row');
+  if (filmType !== 'standard') {
+    pfRow.style.display = 'flex';
+    document.getElementById('p-film-label').textContent = filmType === 'premium' ? 'Premium Stretch (+' + Math.round(PRICING.premium * 100) + '%)' : 'Glow Effect (+' + Math.round(PRICING.glow * 100) + '%)';
+    document.getElementById('p-film').textContent = fmt(filmFee);
+  } else pfRow.style.display = 'none';
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initStepNavigation();
-            initUpload();
-            initEditorControls();
-            initSheetAndQuantityControls();
-            initOrderForm();
-            setStep(1);
-            updateSummaryAndPricing();
-        });
-    </script>
-<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+  var pcRow = document.getElementById('p-cut-row');
+  if (cuttingType !== 'none') { pcRow.style.display = 'flex'; document.getElementById('p-cut').textContent = fmt(cutFee); }
+  else pcRow.style.display = 'none';
+
+  updateSizeDisplay();
+}
+
+function updateSummaryPreview() {
+  var canvas = document.getElementById('summary-canvas');
+  if (!canvas) return;
+  var W = canvas.offsetWidth || 260;
+  var H = 140;
+  canvas.width = W;
+  canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var availW = W - 28;
+  var scale = availW / (MAX_WIDTH_INCHES * INCH_TO_PX);
+
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, availW, H);
+  ctx.strokeStyle = '#dbeafe';
+  ctx.lineWidth = 0.5;
+  for (var x = 0; x <= MAX_WIDTH_INCHES * INCH_TO_PX; x += INCH_TO_PX) {
+    ctx.beginPath();
+    ctx.moveTo(x * scale, 0);
+    ctx.lineTo(x * scale, H);
+    ctx.stroke();
+  }
+  var drawn = 0;
+  var total = designs.filter(function(d) { return d.node; }).length;
+  designs.forEach(function(d) {
+    if (!d.node) return;
+    var img = new Image();
+    img.onload = function() {
+      ctx.drawImage(img, d.node.x() * scale, d.node.y() * scale, d.wInches * INCH_TO_PX * scale, d.hInches * INCH_TO_PX * scale);
+      drawn++;
+      if (drawn >= total) {
+        ctx.strokeStyle = '#93c5fd';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(0, 0, availW, H);
+      }
+    };
+    img.src = d.dataUrl;
+  });
+  if (total === 0) {
+    ctx.strokeStyle = '#93c5fd';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(0, 0, availW, H);
+  }
+}
+
+function proceedToCheckout() {
+  if (designs.length === 0) { showToast('Please upload at least one design', 'error'); return; }
+  fetch('/api/create-checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      designs: designs.map(function(d) { return { name: d.name, wCm: d.wInches * 2.54, hCm: d.hInches * 2.54, qty: 1 }; }),
+      sheetW: sheetWidthInches * 2.54,
+      sheetH: sheetHeightCm,
+      qty: qty,
+      filmType: filmType,
+      cuttingType: cuttingType,
+      rushOrder: document.getElementById('rush-toggle') && document.getElementById('rush-toggle').checked,
+      customerEmail: '',
+      customerName: ''
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.url) window.location.href = data.url;
+    else showToast(data.error || 'Error', 'error');
+  })
+  .catch(function() { showToast('Connection error', 'error'); });
+}
+
+function showToast(msg, type) {
+  var c = { success: { bg: '#f0fdf4', border: '#bbf7d0', color: '#166534' }, error: { bg: '#fef2f2', border: '#fecaca', color: '#dc2626' }, info: { bg: '#eff6ff', border: '#bfdbfe', color: '#1e40af' } }[type || 'info'];
+  var el = document.createElement('div');
+  el.style.cssText = 'padding:12px 16px;border-radius:10px;font-size:13px;font-weight:500;box-shadow:0 4px 16px rgba(0,0,0,0.1);background:' + c.bg + ';border:1px solid ' + c.border + ';color:' + c.color + ';max-width:300px;';
+  el.textContent = msg;
+  var container = document.getElementById('toast-container');
+  if (container) container.appendChild(el);
+  setTimeout(function() { if (el.parentNode) el.remove(); }, 3500);
+}
+
+function toggleMobileMenu() {
+  var menu = document.getElementById('mobile-menu');
+  if (menu) menu.classList.toggle('hidden');
+}
+</script>
 </body>
 </html>
-

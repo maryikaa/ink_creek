@@ -58,6 +58,75 @@
                     <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg" data-tab="turnaround">Turnaround</button>
                     <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg" data-tab="general">General</button>
                     <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg" data-tab="appearance">Appearance</button>
+                    <button type="button" class="admin-tab btn-secondary px-4 py-2 rounded-lg" data-tab="dtf">DTF Pricing</button>
+                </div>
+
+                <!-- Tab: DTF Calculator Pricing -->
+                <div id="tab-dtf" class="admin-tab-content card hidden">
+                    <h3 class="text-xl font-montserrat font-bold mb-4">🖨 DTF Calculator Pricing</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Price per Square Foot (CAD)</label>
+                            <div style="position:relative;">
+                                <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#6b7280;font-weight:600;">$</span>
+                                <input type="number" id="dtf-price-sqft" class="input-field w-full" style="padding-left:28px;" value="3.50" min="0.50" max="50" step="0.25" onchange="saveDtfPricing()" />
+                            </div>
+                            <p class="text-sm text-text-secondary mt-1">Current: <strong id="dtf-sqft-preview">$3.50/sq ft</strong> = <span id="dtf-cm2-preview">$0.038/cm²</span></p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Minimum Order (CAD)</label>
+                            <div style="position:relative;">
+                                <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#6b7280;font-weight:600;">$</span>
+                                <input type="number" id="dtf-minimum" class="input-field w-full" style="padding-left:28px;" value="15" min="5" max="200" step="1" onchange="saveDtfPricing()" />
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Rush Order Markup (%)</label>
+                            <div style="position:relative;">
+                                <input type="number" id="dtf-rush-pct" class="input-field w-full" style="padding-right:28px;" value="20" min="5" max="100" step="5" onchange="saveDtfPricing()" />
+                                <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#6b7280;font-weight:600;">%</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Premium Stretch Markup (%)</label>
+                            <div style="position:relative;">
+                                <input type="number" id="dtf-premium-pct" class="input-field w-full" style="padding-right:28px;" value="15" min="5" max="100" step="5" onchange="saveDtfPricing()" />
+                                <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#6b7280;font-weight:600;">%</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Glow Effect Markup (%)</label>
+                            <div style="position:relative;">
+                                <input type="number" id="dtf-glow-pct" class="input-field w-full" style="padding-right:28px;" value="25" min="5" max="100" step="5" onchange="saveDtfPricing()" />
+                                <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#6b7280;font-weight:600;">%</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Pre-Cut Service Markup (%)</label>
+                            <div style="position:relative;">
+                                <input type="number" id="dtf-precut-pct" class="input-field w-full" style="padding-right:28px;" value="10" min="5" max="100" step="5" onchange="saveDtfPricing()" />
+                                <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#6b7280;font-weight:600;">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top:20px;">
+                        <p class="text-sm font-semibold text-gray-700 mb-2">Price Preview</p>
+                        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                            <thead>
+                                <tr style="background:#f8fafc;">
+                                    <th style="padding:8px 12px;text-align:left;color:#6b7280;font-weight:600;border-bottom:1px solid #e5e7eb;">Sheet Size</th>
+                                    <th style="padding:8px 12px;text-align:right;color:#6b7280;font-weight:600;border-bottom:1px solid #e5e7eb;">Base Price</th>
+                                    <th style="padding:8px 12px;text-align:right;color:#6b7280;font-weight:600;border-bottom:1px solid #e5e7eb;">With Rush</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dtf-price-preview-rows"></tbody>
+                        </table>
+                    </div>
+                    <div style="margin-top:16px;display:flex;gap:8px;">
+                        <button type="button" onclick="saveDtfPricing()" class="btn-accent px-4 py-2 rounded-lg text-sm font-semibold">💾 Save Pricing</button>
+                        <button type="button" onclick="resetDtfPricing()" class="btn-secondary px-4 py-2 rounded-lg text-sm">↺ Reset Defaults</button>
+                    </div>
+                    <div id="dtf-save-msg" style="display:none;margin-top:8px;font-size:13px;color:#16a34a;font-weight:500;">✓ Pricing saved successfully</div>
                 </div>
 
                 <!-- Tab: Print Prices -->
@@ -693,6 +762,69 @@
                 checkAuth();
             });
         })();
+    </script>
+    <script>
+        var DTF_DEFAULTS = { pricePerSqFt: 3.50, minimum: 15, rushPct: 20, premiumPct: 15, glowPct: 25, precutPct: 10 };
+
+        function loadDtfPricing() {
+            var saved = localStorage.getItem('dtfPricing');
+            var pricing = saved ? JSON.parse(saved) : DTF_DEFAULTS;
+            var el = function(id) { return document.getElementById(id); };
+            if (el('dtf-price-sqft')) el('dtf-price-sqft').value = pricing.pricePerSqFt;
+            if (el('dtf-minimum')) el('dtf-minimum').value = pricing.minimum;
+            if (el('dtf-rush-pct')) el('dtf-rush-pct').value = pricing.rushPct;
+            if (el('dtf-premium-pct')) el('dtf-premium-pct').value = pricing.premiumPct;
+            if (el('dtf-glow-pct')) el('dtf-glow-pct').value = pricing.glowPct;
+            if (el('dtf-precut-pct')) el('dtf-precut-pct').value = pricing.precutPct;
+            updateDtfPricePreview(pricing);
+            if (el('dtf-sqft-preview')) el('dtf-sqft-preview').textContent = '$' + pricing.pricePerSqFt + '/sq ft';
+            if (el('dtf-cm2-preview')) el('dtf-cm2-preview').textContent = '$' + (pricing.pricePerSqFt / 929.03).toFixed(4) + '/cm²';
+        }
+
+        function saveDtfPricing() {
+            var el = function(id) { return document.getElementById(id); };
+            var pricing = {
+                pricePerSqFt: parseFloat(el('dtf-price-sqft').value) || 3.50,
+                minimum: parseFloat(el('dtf-minimum').value) || 15,
+                rushPct: parseFloat(el('dtf-rush-pct').value) || 20,
+                premiumPct: parseFloat(el('dtf-premium-pct').value) || 15,
+                glowPct: parseFloat(el('dtf-glow-pct').value) || 25,
+                precutPct: parseFloat(el('dtf-precut-pct').value) || 10
+            };
+            localStorage.setItem('dtfPricing', JSON.stringify(pricing));
+            el('dtf-sqft-preview').textContent = '$' + pricing.pricePerSqFt + '/sq ft';
+            el('dtf-cm2-preview').textContent = '$' + (pricing.pricePerSqFt / 929.03).toFixed(4) + '/cm²';
+            updateDtfPricePreview(pricing);
+            var msg = el('dtf-save-msg');
+            msg.style.display = 'block';
+            setTimeout(function() { msg.style.display = 'none'; }, 2000);
+        }
+
+        function resetDtfPricing() {
+            localStorage.setItem('dtfPricing', JSON.stringify(DTF_DEFAULTS));
+            loadDtfPricing();
+        }
+
+        function updateDtfPricePreview(pricing) {
+            var sqFtToCm2 = 929.03;
+            var perSqFt = pricing.pricePerSqFt;
+            var sizes = [
+                { label: '22" × 12"', sqFt: 22 * 12 / 144 },
+                { label: '22" × 24"', sqFt: 22 * 24 / 144 },
+                { label: '22" × 36"', sqFt: 22 * 36 / 144 },
+                { label: '22" × 60"', sqFt: 22 * 60 / 144 },
+                { label: '22" × 100"', sqFt: 22 * 100 / 144 }
+            ];
+            var tbody = document.getElementById('dtf-price-preview-rows');
+            if (!tbody) return;
+            tbody.innerHTML = sizes.map(function(s) {
+                var base = Math.max(s.sqFt * perSqFt, pricing.minimum);
+                var withRush = base * (1 + pricing.rushPct / 100);
+                return '<tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:8px 12px;color:#374151;">' + s.label + '</td><td style="padding:8px 12px;text-align:right;font-weight:600;color:#111827;">$' + base.toFixed(2) + '</td><td style="padding:8px 12px;text-align:right;color:#f59e0b;font-weight:500;">$' + withRush.toFixed(2) + '</td></tr>';
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDtfPricing);
     </script>
 </body>
 </html>
