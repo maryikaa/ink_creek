@@ -31,6 +31,10 @@ exports.handler = async function (event) {
     }
 
     const skus = await res.json();
+    if (Array.isArray(skus) && skus.length) {
+      console.log('FIRST SKU KEYS:', Object.keys(skus[0]));
+      console.log('FIRST SKU SAMPLE:', JSON.stringify(skus[0]));
+    }
 
     if (!Array.isArray(skus)) {
       return {
@@ -56,7 +60,13 @@ exports.handler = async function (event) {
           brandName: sku.brandName || '',
           styleName: sku.styleName || '',
           title: sku.title || sku.styleName || '',
-          baseCategory: sku.baseCategory || sku.baseCategoryName || '',
+          baseCategory:
+            sku.baseCategory ||
+            sku.baseCategoryName ||
+            sku.categoryName ||
+            sku.garmentType ||
+            sku.type ||
+            '',
           image: sku.colorFrontImage
             ? 'https://cdn.ssactivewear.com/' + sku.colorFrontImage
             : sku.styleImage
