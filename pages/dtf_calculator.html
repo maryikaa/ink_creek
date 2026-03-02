@@ -21,9 +21,9 @@
     .unit-btn.active { background: #1e3a5f; color: #fff; }
     .width-warning { display: none; font-size: 12px; color: #ef4444; margin-top: 4px; font-weight: 500; }
     .width-warning.show { display: block; }
-    .canvas-wrapper { position: relative; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    .canvas-wrapper { position: relative; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; overflow: visible !important; margin-bottom: 12px; min-height: 300px; transition: height 0.3s ease; }
     .canvas-ruler-top { height: 22px; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; padding: 0 8px; font-size: 11px; color: #94a3b8; position: relative; justify-content: space-between; }
-    #konva-container { width: 100%; height: 420px; cursor: default; border-radius: 8px; overflow: hidden; }
+    #konva-container { width: 100%; min-height: 280px; cursor: default; border-radius: 8px; overflow: hidden; transition: height 0.3s ease; }
     .canvas-bottom { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .btn-upload-more { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; font-size: 13px; color: #374151; cursor: pointer; font-weight: 500; transition: all 0.15s; }
     .btn-upload-more:hover { border-color: #1e40af; color: #1e40af; background: #eff6ff; }
@@ -71,6 +71,7 @@
     .pay-btn.gpay-dark { background: #000; color: #fff; }
     .pay-btn.gpay-light { background: #fff; color: #374151; border: 2px solid #e5e7eb; }
     #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 1000; display: flex; flex-direction: column; gap: 8px; }
+    #design-toolbar.hidden { display: none !important; }
   </style>
 </head>
 <body class="bg-background text-text-primary">
@@ -133,13 +134,18 @@
           </div>
           <span style="font-size:13px;color:#6b7280;">Max width: <strong id="max-width-display">22"</strong></span>
         </div>
-        <div class="canvas-wrapper" id="canvas-container-wrap" style="position:relative;">
+        <div class="canvas-wrapper" id="canvas-container-wrap" style="position:relative;padding-left:32px;overflow:visible;">
+          <div id="height-ruler" style="position:absolute;left:0;top:22px;width:24px;background:#f1f5f9;border-right:1px solid #e2e8f0;font-size:10px;color:#94a3b8;display:flex;flex-direction:column;justify-content:space-between;padding:4px 2px;text-align:center;">
+            <span>0"</span>
+            <span id="mid-height-label">11"</span>
+            <span id="max-height-label">22"</span>
+          </div>
           <div class="canvas-ruler-top" id="ruler-top">
             <span id="ruler-left">0"</span>
             <span id="ruler-right">22"</span>
           </div>
           <div id="konva-container"></div>
-          <div id="design-toolbar" style="position:absolute;z-index:20;display:none;background:#1e293b;border-radius:10px;padding:6px 8px;gap:6px;align-items:center;box-shadow:0 4px 16px rgba(0,0,0,0.2);display:flex;">
+          <div id="design-toolbar" class="hidden" style="position:absolute;z-index:20;background:#1e293b;border-radius:10px;padding:6px 8px;gap:6px;align-items:center;box-shadow:0 4px 16px rgba(0,0,0,0.2);display:flex;">
             <button type="button" onclick="scaleSelected(-0.1)" style="width:30px;height:30px;border-radius:6px;border:none;background:#334155;color:#fff;font-size:16px;cursor:pointer;" title="Shrink">−</button>
             <button type="button" onclick="scaleSelected(0.1)" style="width:30px;height:30px;border-radius:6px;border:none;background:#334155;color:#fff;font-size:16px;cursor:pointer;" title="Grow">+</button>
             <div style="width:1px;height:20px;background:#475569;margin:0 2px;"></div>
@@ -175,18 +181,6 @@
 
       <div class="dtf-card">
         <h2>3. Print Settings</h2>
-        <p style="font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">Film Type</p>
-        <div class="film-options" style="margin-bottom:20px">
-          <label class="film-option"><input type="radio" name="film" value="standard" checked onchange="updatePricing()"/> Standard</label>
-          <label class="film-option"><input type="radio" name="film" value="premium" onchange="updatePricing()"/> Premium Stretch</label>
-          <label class="film-option"><input type="radio" name="film" value="glow" onchange="updatePricing()"/> ✦ Glow Effect</label>
-        </div>
-        <p style="font-size:14px;font-weight:600;color:#374151;margin-bottom:8px;">Cutting</p>
-        <div class="film-options" style="margin-bottom:20px">
-          <label class="film-option"><input type="radio" name="cutting" value="none" checked onchange="updateCutting(this.value)"/> None</label>
-          <label class="film-option"><input type="radio" name="cutting" value="precut" onchange="updateCutting(this.value)"/> Pre-Cut Sheets</label>
-          <label class="film-option"><input type="radio" name="cutting" value="individual" onchange="updateCutting(this.value)"/> Individual Cut</label>
-        </div>
         <div style="display:flex;align-items:center;gap:32px;flex-wrap:wrap;">
           <div>
             <p style="font-size:14px;font-weight:600;color:#374151;margin-bottom:6px;">Quantity</p>
@@ -201,7 +195,7 @@
             <p style="font-size:14px;font-weight:600;color:#374151;margin-bottom:6px;">Rush Order</p>
             <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
               <input type="checkbox" id="rush-toggle" style="width:18px;height:18px;accent-color:#1e40af" onchange="updatePricing()"/>
-              <span style="font-size:13px;color:#374151;">+20% · Ships in 1–2 days</span>
+              <span style="font-size:13px;color:#374151;">+50% · Ships in 1–2 days</span>
             </label>
           </div>
         </div>
@@ -217,16 +211,15 @@
           <div class="os-preview-ruler-bottom" id="sidebar-width-label">22"</div>
         </div>
         <div class="os-details">
-          <div class="os-row"><span class="os-label">Film Size</span><span class="os-value" id="os-size">22" × 100 cm</span></div>
+          <div class="os-row"><span class="os-label">Design area</span><span class="os-value" id="dtf-bounding-size">-- × --</span></div>
+          <div class="os-row"><span class="os-label">Billable area</span><span class="os-value" id="dtf-sqft-display">-- sq ft</span></div>
+          <div class="os-row"><span class="os-label">Price per sq ft</span><span class="os-value" id="dtf-price-per-sqft">$4.50</span></div>
           <div class="os-row"><span class="os-label">Quantity</span><span class="os-value" id="os-qty">1 Sheet</span></div>
-          <div class="os-row" id="os-rush-row" style="display:none"><span class="os-label">Rush Order</span><span class="os-value">Yes</span></div>
-          <div class="os-row" id="os-cut-row" style="display:none"><span class="os-label">Cutting</span><span class="os-value" id="os-cut">Pre-Cut Sheets</span></div>
+          <div class="os-row hidden" id="dtf-rush-line"><span class="os-label">Rush order (+50%)</span><span class="os-value" id="dtf-rush-amount">$0.00</span></div>
+          <div class="os-row"><span class="os-label">Per sheet</span><span class="os-value" id="dtf-per-sheet">$0.00</span></div>
         </div>
         <div class="os-pricing">
           <div class="os-price-row"><span>Subtotal</span><span id="p-subtotal">$0.00</span></div>
-          <div class="os-price-row" id="p-rush-row" style="display:none"><span>Rush Fee (+20%)</span><span id="p-rush">$0.00</span></div>
-          <div class="os-price-row" id="p-film-row" style="display:none"><span id="p-film-label">Film Upgrade</span><span id="p-film">$0.00</span></div>
-          <div class="os-price-row" id="p-cut-row" style="display:none"><span>Pre-Cut Fee (+10%)</span><span id="p-cut">$0.00</span></div>
           <div class="os-price-row"><span>Tax (GST 5%)</span><span id="p-gst">$0.00</span></div>
           <div class="os-price-total"><span class="tot-label">Total</span><span class="tot-amount" id="p-total">$0.00 CAD</span></div>
         </div>
@@ -286,6 +279,8 @@
 
 <script>
 const MAX_WIDTH_INCHES = 22;
+const MAX_HEIGHT_INCHES = 44;
+const MIN_HEIGHT_INCHES = 22;
 const MAX_WIDTH_CM = 55.88;
 var INCH_TO_PX = 12.7;
 
@@ -294,17 +289,20 @@ function getDtfPricing() {
   if (saved) {
     var p = JSON.parse(saved);
     var sqFtToCm2 = 929.03;
+    var pricePerSqFt = parseFloat(p.pricePerSqFt) || 0.55;
     return {
-      basePer100cm2: (p.pricePerSqFt / sqFtToCm2) * 100,
-      minimum: p.minimum,
-      rush: p.rushPct / 100,
-      premium: p.premiumPct / 100,
-      glow: p.glowPct / 100,
-      preCut: p.precutPct / 100,
+      pricePerSqFt: pricePerSqFt,
+      basePer100cm2: (pricePerSqFt / sqFtToCm2) * 100,
+      minimum: parseFloat(p.minimum) || 15,
+      rush: (parseFloat(p.rushPct) || 20) / 100,
+      premium: (parseFloat(p.premiumPct) || 15) / 100,
+      glow: (parseFloat(p.glowPct) || 25) / 100,
+      preCut: (parseFloat(p.precutPct) || 10) / 100,
       gst: 0.05
     };
   }
   return {
+    pricePerSqFt: 0.55,
     basePer100cm2: 0.038 * 100,
     minimum: 15,
     rush: 0.20,
@@ -320,10 +318,8 @@ var stage, layer, transformer, bgLayer;
 var currentUnit = 'inches';
 var selectedDesignId = null;
 let sheetWidthInches = 22;
-let sheetHeightCm = 100;
+let sheetHeightInches = 22;
 let qty = 1;
-let filmType = 'standard';
-let cuttingType = 'none';
 
 function inchesToCm(v) { return Math.round(v * 2.54 * 10) / 10; }
 function cmToInches(v) { return Math.round(v / 2.54 * 10) / 10; }
@@ -345,7 +341,115 @@ function getSheetWidthDisplay() {
 }
 
 function updateSizeDisplay() {
-  document.getElementById('os-size').textContent = getSheetWidthDisplay() + ' × ' + sheetHeightCm + ' cm';
+  var osSize = document.getElementById('os-size');
+  var sideLabel = document.getElementById('sidebar-height-label');
+  if (osSize) osSize.textContent = '22" × ' + sheetHeightInches.toFixed(1) + '"';
+  if (sideLabel) sideLabel.textContent = sheetHeightInches.toFixed(1) + '"';
+  var midLabel = document.getElementById('mid-height-label');
+  var maxLabel = document.getElementById('max-height-label');
+  if (midLabel) midLabel.textContent = (sheetHeightInches / 2).toFixed(0) + '"';
+  if (maxLabel) maxLabel.textContent = sheetHeightInches.toFixed(0) + '"';
+}
+
+function findFreePosition(newWInches, newHInches) {
+  var padding = 0.25;
+  var occupied = designs
+    .filter(function(d) { return d.node; })
+    .map(function(d) {
+      return {
+        x1: d.node.x() / INCH_TO_PX,
+        y1: d.node.y() / INCH_TO_PX,
+        x2: d.node.x() / INCH_TO_PX + d.wInches,
+        y2: d.node.y() / INCH_TO_PX + d.hInches
+      };
+    });
+
+  var yPositions = [0];
+  occupied.forEach(function(r) { yPositions.push(r.y2 + padding); });
+  yPositions.sort(function(a, b) { return a - b; });
+
+  for (var yi = 0; yi < yPositions.length; yi++) {
+    var startY = yPositions[yi];
+    var xPositions = [0];
+    occupied.forEach(function(r) {
+      if (r.y1 < startY + newHInches && r.y2 > startY) {
+        xPositions.push(r.x2 + padding);
+      }
+    });
+    xPositions.sort(function(a, b) { return a - b; });
+
+    for (var xi = 0; xi < xPositions.length; xi++) {
+      var startX = xPositions[xi];
+      if (startX + newWInches > MAX_WIDTH_INCHES) continue;
+
+      var hasOverlap = occupied.some(function(r) {
+        return startX < r.x2 + padding &&
+          startX + newWInches > r.x1 - padding &&
+          startY < r.y2 + padding &&
+          startY + newHInches > r.y1 - padding;
+      });
+
+      if (!hasOverlap) {
+        return { x: startX * INCH_TO_PX, y: startY * INCH_TO_PX };
+      }
+    }
+  }
+
+  var maxBottom = 0;
+  occupied.forEach(function(r) { maxBottom = Math.max(maxBottom, r.y2); });
+  return { x: 0, y: (maxBottom + padding) * INCH_TO_PX };
+}
+
+function recalcSheetHeight() {
+  if (designs.length === 0) {
+    sheetHeightInches = MIN_HEIGHT_INCHES;
+    resizeCanvas();
+    return;
+  }
+  var maxBottomInches = MIN_HEIGHT_INCHES;
+  designs.forEach(function(d) {
+    if (!d.node) return;
+    var bottom = (d.node.y() + d.node.height()) / INCH_TO_PX;
+    maxBottomInches = Math.max(maxBottomInches, bottom + 1);
+  });
+  sheetHeightInches = Math.min(Math.max(maxBottomInches, MIN_HEIGHT_INCHES), MAX_HEIGHT_INCHES);
+
+  var newH = Math.round(sheetHeightInches * INCH_TO_PX);
+  if (stage) stage.height(newH);
+  var container = document.getElementById('konva-container');
+  if (container) container.style.height = newH + 'px';
+  var wrapper = document.querySelector('.canvas-wrapper');
+  if (wrapper) wrapper.style.height = (newH + 22) + 'px';
+  var hr = document.getElementById('height-ruler');
+  if (hr) hr.style.height = newH + 'px';
+
+  redrawGrid();
+  if (stage) stage.batchDraw();
+  updateSizeDisplay();
+  updatePricing();
+
+  if (sheetHeightInches >= MAX_HEIGHT_INCHES - 2 && !recalcSheetHeight._warned) {
+    recalcSheetHeight._warned = true;
+    showToast('Almost at max height 44"', 'error');
+  }
+  if (sheetHeightInches < MAX_HEIGHT_INCHES - 2) recalcSheetHeight._warned = false;
+}
+
+function resizeCanvas() {
+  var cont = document.getElementById('konva-container');
+  var W = cont ? cont.clientWidth : 700;
+  var H = Math.round(sheetHeightInches * INCH_TO_PX);
+  if (!stage) return;
+  stage.width(W);
+  stage.height(H);
+  if (cont) cont.style.height = H + 'px';
+  var wrapper = document.querySelector('.canvas-wrapper');
+  if (wrapper) wrapper.style.height = (H + 22) + 'px';
+  var hr = document.getElementById('height-ruler');
+  if (hr) hr.style.height = H + 'px';
+  redrawGrid();
+  stage.batchDraw();
+  updateSizeDisplay();
 }
 
 function redrawGrid() {
@@ -353,33 +457,50 @@ function redrawGrid() {
   bgLayer.destroyChildren();
   var W = stage.width();
   var H = stage.height();
-  bgLayer.add(new Konva.Rect({ x: 0, y: 0, width: W, height: H, fill: '#ffffff', stroke: '#93c5fd', strokeWidth: 1 }));
-  for (var x = 0; x <= W; x += INCH_TO_PX) {
+  var sheetPx = MAX_WIDTH_INCHES * INCH_TO_PX;
+  bgLayer.add(new Konva.Rect({ x: 0, y: 0, width: sheetPx, height: H, fill: '#ffffff', stroke: '#93c5fd', strokeWidth: 1.5 }));
+  for (var x = 0; x <= sheetPx; x += INCH_TO_PX) {
     bgLayer.add(new Konva.Line({ points: [x, 0, x, H], stroke: '#e8f4fd', strokeWidth: (x % (INCH_TO_PX * 2) === 0 ? 1 : 0.5) }));
   }
   for (var y = 0; y <= H; y += INCH_TO_PX) {
-    bgLayer.add(new Konva.Line({ points: [0, y, W, y], stroke: '#e8f4fd', strokeWidth: 0.5 }));
+    bgLayer.add(new Konva.Line({ points: [0, y, sheetPx, y], stroke: '#e8f4fd', strokeWidth: (y % (INCH_TO_PX * 2) === 0 ? 1 : 0.5) }));
   }
-  bgLayer.draw();
+  var maxH = MAX_HEIGHT_INCHES * INCH_TO_PX;
+  if (maxH <= H + 10) {
+    bgLayer.add(new Konva.Line({ points: [0, maxH, sheetPx, maxH], stroke: '#fbbf24', strokeWidth: 1.5, dash: [8, 4] }));
+    bgLayer.add(new Konva.Text({ x: 4, y: maxH - 16, text: '44" max', fontSize: 11, fill: '#f59e0b', fontStyle: 'bold' }));
+  }
+  bgLayer.batchDraw();
 }
 
-function positionDesignToolbar(node) {
+function showToolbar(node) {
   var toolbar = document.getElementById('design-toolbar');
-  var wrap = document.getElementById('canvas-container-wrap');
-  if (!toolbar || !wrap || !stage) return;
-  var stageRect = stage.container().getBoundingClientRect();
-  var wrapRect = wrap.getBoundingClientRect();
-  var nodeRect = node.getClientRect();
-  toolbar.style.display = 'flex';
-  toolbar.style.left = (stageRect.left - wrapRect.left + nodeRect.x + nodeRect.width / 2 - toolbar.offsetWidth / 2) + 'px';
-  toolbar.style.top = (stageRect.top - wrapRect.top + nodeRect.y - 44) + 'px';
+  if (!toolbar) return;
+  toolbar.classList.remove('hidden');
+  if (node && node.getClientRect) {
+    var box = node.getClientRect();
+    var wrap = document.getElementById('canvas-container-wrap');
+    var wrapRect = wrap ? wrap.getBoundingClientRect() : { left: 0, top: 0 };
+    toolbar.style.left = (box.x - wrapRect.left + (box.width / 2) - (toolbar.offsetWidth / 2)) + 'px';
+    toolbar.style.top = (box.y - wrapRect.top - 48) + 'px';
+  }
+}
+
+function hideToolbar() {
+  var toolbar = document.getElementById('design-toolbar');
+  if (toolbar) toolbar.classList.add('hidden');
 }
 
 window.addEventListener('DOMContentLoaded', function() {
   var container = document.getElementById('konva-container');
   var W = container ? container.clientWidth : 700;
-  var H = 420;
   INCH_TO_PX = W / MAX_WIDTH_INCHES;
+  var H = Math.round(sheetHeightInches * INCH_TO_PX);
+  if (container) container.style.height = H + 'px';
+  var wrapper = document.querySelector('.canvas-wrapper');
+  if (wrapper) wrapper.style.height = (H + 22) + 'px';
+  var hr = document.getElementById('height-ruler');
+  if (hr) hr.style.height = H + 'px';
 
   stage = new Konva.Stage({ container: 'konva-container', width: W, height: H });
 
@@ -397,17 +518,33 @@ window.addEventListener('DOMContentLoaded', function() {
   });
   trLayer.add(transformer);
 
+  transformer.on('transformstart', function() {
+    var nodes = transformer.nodes();
+    if (nodes.length) showToolbar(nodes[0]);
+  });
+
+  layer.on('mousedown touchstart', function(e) {
+    var target = e.target;
+    if (target && target.hasName && target.hasName('design')) {
+      showToolbar(target);
+    } else {
+      hideToolbar();
+    }
+  });
+
   stage.on('click tap', function(e) {
     if (e.target === stage) {
+      hideToolbar();
       transformer.nodes([]);
       trLayer.draw();
-      document.getElementById('design-toolbar').style.display = 'none';
       selectedDesignId = null;
     } else if (e.target.name() === 'design') {
       selectedDesignId = e.target.id();
-      positionDesignToolbar(e.target);
+      showToolbar(e.target);
     }
   });
+
+  hideToolbar();
 
   window.addEventListener('resize', function() {
     var cont = document.getElementById('konva-container');
@@ -424,11 +561,10 @@ window.addEventListener('DOMContentLoaded', function() {
       d.node.height(d.hInches * newIPX);
     });
     INCH_TO_PX = newIPX;
-    redrawGrid();
-    stage.batchDraw();
+    recalcSheetHeight();
     if (selectedDesignId) {
       var d = designs.find(function(x) { return x.id === selectedDesignId; });
-      if (d && d.node) positionDesignToolbar(d.node);
+      if (d && d.node) showToolbar(d.node);
     }
   });
 
@@ -483,16 +619,9 @@ function handleFiles(files) {
 function addDesignToCanvas(design) {
   var img = new Image();
   img.onload = function() {
-    var x = 8;
-    var sheetW = stage ? stage.width() : 700;
-    designs.forEach(function(d) {
-      if (d.node) x = Math.max(x, d.node.x() + d.wInches * INCH_TO_PX + 4);
-    });
-    var maxX = sheetW - design.wInches * INCH_TO_PX;
-    x = Math.min(x, Math.max(0, maxX));
-
+    var pos = findFreePosition(design.wInches, design.hInches);
     var node = new Konva.Image({
-      x: x, y: 8,
+      x: pos.x, y: pos.y,
       image: img,
       width: design.wInches * INCH_TO_PX,
       height: design.hInches * INCH_TO_PX,
@@ -506,15 +635,15 @@ function addDesignToCanvas(design) {
       if (this.x() > maxDragX) this.x(maxDragX);
       if (this.x() < 0) this.x(0);
       if (this.y() < 0) this.y(0);
-      if (selectedDesignId === design.id) positionDesignToolbar(node);
+      if (selectedDesignId === design.id) showToolbar(node);
     });
-    node.on('dragend', function() { updateSummaryPreview(); });
+    node.on('dragend', function() { recalcSheetHeight(); updateSummaryPreview(); });
     node.on('click tap', function(e) {
       e.cancelBubble = true;
       selectedDesignId = design.id;
       transformer.nodes([node]);
       stage.getLayers()[2].batchDraw();
-      positionDesignToolbar(node);
+      showToolbar(node);
     });
     node.on('transformend', function() {
       var sx = node.scaleX(), sy = node.scaleY();
@@ -524,14 +653,15 @@ function addDesignToCanvas(design) {
       node.width(design.wInches * INCH_TO_PX);
       node.height(design.hInches * INCH_TO_PX);
       renderTable();
-      updatePricing();
+      recalcSheetHeight();
       updateSummaryPreview();
-      if (selectedDesignId === design.id) positionDesignToolbar(node);
+      if (selectedDesignId === design.id) showToolbar(node);
     });
 
     design.node = node;
     layer.add(node);
     layer.draw();
+    recalcSheetHeight();
     updateSummaryPreview();
   };
   img.src = design.dataUrl;
@@ -551,7 +681,9 @@ function renderTable() {
     var wVal = currentUnit === 'inches' ? d.wInches : inchesToCm(d.wInches);
     var hVal = currentUnit === 'inches' ? d.hInches : inchesToCm(d.hInches);
     var maxW = currentUnit === 'inches' ? MAX_WIDTH_INCHES : MAX_WIDTH_CM;
-    var badgeNum = Math.max(1, Math.ceil((MAX_WIDTH_INCHES * sheetHeightCm * 0.1) / (d.wInches * 2.54 * d.hInches * 2.54)));
+    var sheetSqIn = MAX_WIDTH_INCHES * sheetHeightInches;
+    var designSqIn = d.wInches * d.hInches;
+    var badgeNum = Math.max(1, Math.ceil((sheetSqIn / designSqIn) * 0.4));
     var tr = document.createElement('tr');
     tr.innerHTML = '<td><img src="' + d.dataUrl + '" alt="" class="design-thumb"/></td><td><span class="design-name">' + (d.name || '') + '</span></td><td><span class="design-badge">' + badgeNum + '</span></td><td><button type="button" class="btn-icon" onclick="selectDesign(\'' + d.id + '\')">↖</button></td><td><button type="button" class="btn-icon">🔗</button></td><td><input type="number" class="dim-input" value="' + wVal + '" min="0.5" max="' + maxW + '" step="0.1" onchange="updateDim(\'' + d.id + '\',\'w\',this.value)"/></td><td><span style="font-size:12px;color:#6b7280">' + (currentUnit === 'inches' ? 'in' : 'cm') + '</span></td><td><input type="number" class="dim-input" value="' + hVal + '" min="0.5" max="500" step="0.1" onchange="updateDim(\'' + d.id + '\',\'h\',this.value)"/></td><td><span style="font-size:12px;color:#6b7280">' + (currentUnit === 'inches' ? 'in' : 'cm') + '</span></td><td><button type="button" class="btn-add-copy" onclick="duplicateDesign(\'' + d.id + '\')">+</button></td><td><button type="button" class="btn-delete-row" onclick="removeDesignById(\'' + d.id + '\')">🗑</button></td>';
     tbody.appendChild(tr);
@@ -576,16 +708,18 @@ function updateDim(id, axis, val, unit) {
     d.node.height(d.hInches * INCH_TO_PX);
     layer.draw();
   }
+  recalcSheetHeight();
   renderTable();
-  updatePricing();
   updateSummaryPreview();
 }
 
 function selectDesign(id) {
   var d = designs.find(function(x) { return x.id === id; });
   if (!d || !d.node) return;
+  selectedDesignId = id;
   transformer.nodes([d.node]);
   stage.getLayers()[2].batchDraw();
+  showToolbar(d.node);
 }
 
 function duplicateDesign(id) {
@@ -609,16 +743,16 @@ function scaleSelected(delta) {
   d.node.width(d.wInches * INCH_TO_PX);
   d.node.height(d.hInches * INCH_TO_PX);
   layer.batchDraw();
+  recalcSheetHeight();
   renderTable();
-  updatePricing();
   updateSummaryPreview();
-  positionDesignToolbar(d.node);
+  showToolbar(d.node);
 }
 
 function deleteSelected() {
   if (!selectedDesignId) return;
   removeDesignById(selectedDesignId);
-  document.getElementById('design-toolbar').style.display = 'none';
+  hideToolbar();
   selectedDesignId = null;
 }
 
@@ -679,12 +813,12 @@ function removeDesignById(id) {
   var d = designs.find(function(x) { return x.id === id; });
   if (d && d.node) { d.node.destroy(); transformer.nodes([]); layer.draw(); }
   if (selectedDesignId === id) {
-    document.getElementById('design-toolbar').style.display = 'none';
+    hideToolbar();
     selectedDesignId = null;
   }
   designs = designs.filter(function(x) { return x.id !== id; });
+  recalcSheetHeight();
   renderTable();
-  updatePricing();
   updateSummaryPreview();
 }
 
@@ -695,57 +829,81 @@ function changeQty(delta) {
   updatePricing();
 }
 
-function updateCutting(val) {
-  cuttingType = val;
-  var row = document.getElementById('os-cut-row');
-  var label = document.getElementById('os-cut');
-  if (row && label) {
-    if (val !== 'none') { row.style.display = 'flex'; label.textContent = val === 'precut' ? 'Pre-Cut Sheets' : 'Individual Cut'; }
-    else row.style.display = 'none';
+function getUsedBoundingBox() {
+  var placed = designs.filter(function(d) { return d.node; });
+  if (placed.length === 0) {
+    return { widthIn: 0, heightIn: 0, sqIn: 0 };
   }
-  updatePricing();
+  var minX = Infinity;
+  var minY = Infinity;
+  var maxX = -Infinity;
+  var maxY = -Infinity;
+  placed.forEach(function(d) {
+    var x = d.node.x() / INCH_TO_PX;
+    var y = d.node.y() / INCH_TO_PX;
+    var w = (d.node.width() * (d.node.scaleX ? d.node.scaleX() : 1)) / INCH_TO_PX;
+    var h = (d.node.height() * (d.node.scaleY ? d.node.scaleY() : 1)) / INCH_TO_PX;
+    minX = Math.min(minX, x);
+    minY = Math.min(minY, y);
+    maxX = Math.max(maxX, x + w);
+    maxY = Math.max(maxY, y + h);
+  });
+  var widthIn = maxX - minX;
+  var heightIn = maxY - minY;
+  var sqIn = widthIn * heightIn;
+  return { widthIn: widthIn, heightIn: heightIn, sqIn: sqIn };
+}
+
+function calculateDTFPrice() {
+  var saved = getDtfPricing();
+  var PRICE_PER_SQFT = saved && saved.pricePerSqFt ? saved.pricePerSqFt : 4.50;
+  var MIN_SQFT = 0.25;
+  var box = getUsedBoundingBox();
+  var sqFt = box.sqIn / 144;
+  var billableSqFt = Math.max(sqFt, MIN_SQFT);
+  var isRushOrder = document.getElementById('rush-toggle') && document.getElementById('rush-toggle').checked;
+  var pricePerSheet = billableSqFt * PRICE_PER_SQFT;
+  var rushFee = isRushOrder ? pricePerSheet * 0.5 : 0;
+  pricePerSheet += rushFee;
+  var total = pricePerSheet * qty;
+  var gst = total * 0.05;
+
+  return {
+    sqFt: billableSqFt,
+    pricePerSheet: pricePerSheet,
+    total: total,
+    gst: gst,
+    rushFee: rushFee,
+    isRush: isRushOrder,
+    pricePerSqFt: PRICE_PER_SQFT,
+    box: box
+  };
 }
 
 function updatePricing() {
-  var PRICING = getDtfPricing();
-  filmType = (document.querySelector('input[name="film"]:checked') && document.querySelector('input[name="film"]:checked').value) || 'standard';
-  var rush = document.getElementById('rush-toggle') && document.getElementById('rush-toggle').checked;
+  var result = calculateDTFPrice();
+  function fmt(n) { return '$' + parseFloat(n).toFixed(2); }
 
-  var usedArea = designs.reduce(function(sum, d) {
-    var wCm = d.wInches * 2.54;
-    var hCm = d.hInches * 2.54;
-    return sum + (wCm * hCm);
-  }, 0);
+  var placed = designs.filter(function(d) { return d.node; });
+  var boundingEl = document.getElementById('dtf-bounding-size');
+  if (boundingEl) boundingEl.textContent = placed.length === 0 ? '-- × --' : result.box.widthIn.toFixed(1) + '" × ' + result.box.heightIn.toFixed(1) + '"';
 
-  var base = Math.max((usedArea / 100) * PRICING.basePer100cm2, PRICING.minimum) * qty;
-  var rushFee = rush ? base * PRICING.rush : 0;
-  var filmFee = filmType === 'premium' ? base * PRICING.premium : (filmType === 'glow' ? base * PRICING.glow : 0);
-  var cutFee = cuttingType !== 'none' ? base * PRICING.preCut : 0;
-  var subtotal = base + rushFee + filmFee + cutFee;
-  var gst = subtotal * PRICING.gst;
-  var total = subtotal + gst;
+  document.getElementById('dtf-sqft-display').textContent = result.sqFt.toFixed(2) + ' sq ft';
+  document.getElementById('dtf-price-per-sqft').textContent = '$' + result.pricePerSqFt.toFixed(2);
+  document.getElementById('dtf-per-sheet').textContent = fmt(result.pricePerSheet) + ' / sheet';
+  document.getElementById('p-subtotal').textContent = fmt(result.total);
+  document.getElementById('p-gst').textContent = fmt(result.gst);
+  document.getElementById('p-total').textContent = fmt(result.total + result.gst) + ' CAD';
 
-  function fmt(n) { return '$' + n.toFixed(2); }
-
-  document.getElementById('p-subtotal').textContent = fmt(base);
-  document.getElementById('p-gst').textContent = fmt(gst);
-  document.getElementById('p-total').textContent = fmt(total) + ' CAD';
-
-  var prRow = document.getElementById('p-rush-row');
-  var osRush = document.getElementById('os-rush-row');
-  if (rush) { prRow.style.display = 'flex'; osRush.style.display = 'flex'; document.getElementById('p-rush').textContent = fmt(rushFee); }
-  else { prRow.style.display = 'none'; osRush.style.display = 'none'; }
-
-  var pfRow = document.getElementById('p-film-row');
-  if (filmType !== 'standard') {
-    pfRow.style.display = 'flex';
-    document.getElementById('p-film-label').textContent = filmType === 'premium' ? 'Premium Stretch (+' + Math.round(PRICING.premium * 100) + '%)' : 'Glow Effect (+' + Math.round(PRICING.glow * 100) + '%)';
-    document.getElementById('p-film').textContent = fmt(filmFee);
-  } else pfRow.style.display = 'none';
-
-  var pcRow = document.getElementById('p-cut-row');
-  if (cuttingType !== 'none') { pcRow.style.display = 'flex'; document.getElementById('p-cut').textContent = fmt(cutFee); }
-  else pcRow.style.display = 'none';
+  var rushLine = document.getElementById('dtf-rush-line');
+  if (rushLine) {
+    if (result.isRush) {
+      rushLine.classList.remove('hidden');
+      document.getElementById('dtf-rush-amount').textContent = '+' + fmt(result.rushFee);
+    } else {
+      rushLine.classList.add('hidden');
+    }
+  }
 
   updateSizeDisplay();
 }
@@ -802,10 +960,8 @@ function proceedToCheckout() {
     body: JSON.stringify({
       designs: designs.map(function(d) { return { name: d.name, wCm: d.wInches * 2.54, hCm: d.hInches * 2.54, qty: 1 }; }),
       sheetW: sheetWidthInches * 2.54,
-      sheetH: sheetHeightCm,
+      sheetH: sheetHeightInches * 2.54,
       qty: qty,
-      filmType: filmType,
-      cuttingType: cuttingType,
       rushOrder: document.getElementById('rush-toggle') && document.getElementById('rush-toggle').checked,
       customerEmail: '',
       customerName: ''
