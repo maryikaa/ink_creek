@@ -763,8 +763,8 @@ function updateDim(id, axis, val, unit) {
   if (d.node && fabricCanvas) {
     var baseW = d.node.getScaledWidth() || 1;
     var baseH = d.node.getScaledHeight() || 1;
-    d.node.setScaleX((d.wInches * INCH_TO_PX) / baseW);
-    d.node.setScaleY((d.hInches * INCH_TO_PX) / baseH);
+    d.node.scaleX = (d.wInches * INCH_TO_PX) / baseW;
+    d.node.scaleY = (d.hInches * INCH_TO_PX) / baseH;
     fabricCanvas.requestRenderAll();
   }
   recalcSheetHeight();
@@ -801,8 +801,8 @@ function scaleSelected(delta) {
   d.hInches = Math.round(newH * 10) / 10;
   var baseW = d.node.getScaledWidth() || 1;
   var baseH = d.node.getScaledHeight() || 1;
-  d.node.setScaleX((d.wInches * INCH_TO_PX) / baseW);
-  d.node.setScaleY((d.hInches * INCH_TO_PX) / baseH);
+  d.node.scaleX = (d.wInches * INCH_TO_PX) / baseW;
+  d.node.scaleY = (d.hInches * INCH_TO_PX) / baseH;
   fabricCanvas.requestRenderAll();
   recalcSheetHeight();
   renderTable();
