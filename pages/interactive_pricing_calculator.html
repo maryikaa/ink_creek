@@ -955,7 +955,7 @@
                 var sizes = p.sizes || [];
                 var sizeRange = sizes.length > 1 ? sizes[0] + ' - ' + sizes[sizes.length - 1] : (sizes[0] || '');
                 var imgUrl = (p.image || '').replace(/"/g, '&quot;');
-                var title = (p.title || 'Product').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+                var title = (p.styleName ? p.brandName + ' ' + p.styleName : p.title || 'Product')
                 var brand = (p.brandName || '').replace(/</g, '&lt;').replace(/"/g, '&quot;');
                 var sid = p.styleID != null ? p.styleID : p.id || '';
                 var swatchesHtml = visibleColors.map(function(c) {
