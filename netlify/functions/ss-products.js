@@ -1,7 +1,8 @@
 exports.handler = async function (event) {
   const accountNumber = process.env.SS_ACCOUNT_NUMBER;
   const apiKey = process.env.SS_API_KEY;
-  const baseUrl = 'https://api.ssactivewear.com/v2';
+  const baseUrl = 'https://api-ca.ssactivewear.com/V2'
+
 
   const auth =
     'Basic ' +
