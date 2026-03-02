@@ -870,7 +870,7 @@ function removeBgSelected() {
     });
 }
 
-function removeDesignById(function removeDesignById(id) {
+function removeDesignById(id) {
   var d = designs.find(function(x) { return x.id === id; });
   if (d && d.node && fabricCanvas) {
     fabricCanvas.remove(d.node);
