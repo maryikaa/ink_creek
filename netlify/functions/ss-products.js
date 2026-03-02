@@ -60,13 +60,29 @@ exports.handler = async function (event) {
           brandName: sku.brandName || '',
           styleName: sku.styleName || '',
           title: sku.title || sku.styleName || '',
-          baseCategory:
-            sku.baseCategory ||
-            sku.baseCategoryName ||
-            sku.categoryName ||
-            sku.garmentType ||
-            sku.type ||
-            '',
+          baseCategory: (function () {
+            var brand = (sku.brandName || '').toLowerCase();
+            var name = (sku.styleName || '').toLowerCase();
+            if (brand.indexOf('gildan') !== -1) return 'T-Shirts';
+            if (brand.indexOf('bella') !== -1) return 'T-Shirts';
+            if (brand.indexOf('next level') !== -1) return 'T-Shirts';
+            if (brand.indexOf('independent') !== -1) return 'T-Shirts';
+            if (brand.indexOf('hanes') !== -1) return 'T-Shirts';
+            if (brand.indexOf('port') !== -1) return 'T-Shirts';
+            if (brand.indexOf('sport') !== -1) return 'Activewear';
+            if (brand.indexOf('champion') !== -1) return 'Activewear';
+            if (brand.indexOf('rabbit') !== -1) return 'Youth';
+            if (brand.indexOf('yp') !== -1) return 'Headwear';
+            if (brand.indexOf('otto') !== -1) return 'Headwear';
+            if (brand.indexOf('richardson') !== -1) return 'Headwear';
+            if (name.indexOf('hoodie') !== -1 || name.indexOf('hood') !== -1) return 'Hoodies';
+            if (name.indexOf('fleece') !== -1 || name.indexOf('crewneck') !== -1) return 'Sweatshirts';
+            if (name.indexOf('cap') !== -1 || name.indexOf('hat') !== -1) return 'Headwear';
+            if (name.indexOf('bag') !== -1 || name.indexOf('tote') !== -1) return 'Bags';
+            if (name.indexOf('tank') !== -1) return 'Tank Tops';
+            if (name.indexOf('long') !== -1) return 'Long Sleeve';
+            return 'T-Shirts';
+          })(),
           image: sku.colorFrontImage
             ? 'https://cdn.ssactivewear.com/' + sku.colorFrontImage
             : sku.styleImage
