@@ -6,6 +6,14 @@
     <title>Interactive Pricing Calculator - Ink Creek Studio</title>
     <meta name="description" content="Get instant pricing for your custom screen printing project. Transparent pricing calculator with real-time quotes for t-shirts, hoodies, and more." />
     <link rel="stylesheet" href="../css/main.css" />
+    <style>
+        .cat-tab { padding: 10px 20px; border-radius: 50px; border: 2px solid #e5e7eb; background: #fff; font-size: 14px; font-weight: 600; color: #6b7280; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+        .cat-tab:hover { border-color: #1e40af; color: #1e40af; }
+        .cat-tab.active { background: #1e40af; border-color: #1e40af; color: #fff; }
+        .category-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9; }
+        .product-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .product-card:hover { border-color: #1e40af; box-shadow: 0 4px 20px rgba(30,64,175,0.15); transform: translateY(-2px); }
+    </style>
 <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Finkcreek7691back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
 </head>
 <body class="bg-background text-text-primary">
@@ -59,6 +67,14 @@
             </div>
         </nav>
     </header>
+
+    <!-- Cart widget -->
+    <div id="cart-widget" style="position:fixed;top:80px;right:20px;z-index:50;display:none;">
+        <button type="button" onclick="toggleCart()" style="background:#1e40af;color:#fff;border:none;border-radius:50px;padding:12px 18px;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(30,64,175,0.3);display:flex;align-items:center;gap:8px;">
+            🛒 Cart
+            <span id="cart-badge" style="background:#ef4444;color:#fff;border-radius:50%;width:22px;height:22px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;">0</span>
+        </button>
+    </div>
 
     <!-- Hero Section -->
     <section class="bg-surface py-12">
@@ -114,133 +130,34 @@
                         </div>
                     </div>
 
-                    <!-- Step 1: Choose Your Product (S&S Catalog) -->
+                    <!-- Step 1: Choose Your Product (Catalog) -->
                     <div id="step-1" class="calculator-step">
                         <div class="card">
                             <h2 class="text-2xl font-montserrat font-bold mb-6">Choose Your Product</h2>
-                            <p class="text-text-secondary mb-4">Browse the S&S Activewear Canada catalog and select a product to get started.</p>
-                            <!-- Search & Filters -->
-                            <div class="mb-6 space-y-4">
-                                <input type="text" id="product-search" class="input-field" placeholder="Search by name or style number..." />
-                                <div class="flex overflow-x-auto gap-3 mb-6 pb-2 scrollbar-hide -mx-2 px-2">
-                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-secondary bg-blue-50 transition-colors text-center" data-category="all">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-                                        <span class="text-xs font-semibold mt-1">All</span>
-                                    </button>
-                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="tshirts">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 3l-4 5h4v13h8V8h4L14 3H6z"/></svg>
-                                        <span class="text-xs font-semibold mt-1">T-Shirts</span>
-                                    </button>
-                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="hoodies">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3C9 3 6 5 5 7L2 10l3 2 1-1v10h12V11l1 1 3-2-3-3c-1-2-4-4-7-4z"/></svg>
-                                        <span class="text-xs font-semibold mt-1">Hoodies</span>
-                                    </button>
-                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="hats">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3C7 3 3 7 3 11h18c0-4-4-8-9-8z M3 11v2h18v-2"/></svg>
-                                        <span class="text-xs font-semibold mt-1">Hats</span>
-                                    </button>
-                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="polos">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3l2 4h-4l2-4z M8 7L5 8v14h14V8l-3-1"/></svg>
-                                        <span class="text-xs font-semibold mt-1">Polos</span>
-                                    </button>
-                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="jackets">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3l3 4H9l3-4z M6 7L2 9v13h8V12h4v10h8V9l-4-2"/></svg>
-                                        <span class="text-xs font-semibold mt-1">Jackets</span>
-                                    </button>
-                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="bags">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 2h12l2 6H4L6 2z M4 8v13a1 1 0 001 1h14a1 1 0 001-1V8"/></svg>
-                                        <span class="text-xs font-semibold mt-1">Bags</span>
-                                    </button>
-                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="tanktops">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 3l-4 5h4v13h8V8h4L14 3H6z"/></svg>
-                                        <span class="text-xs font-semibold mt-1">Tank Tops</span>
-                                    </button>
-                                    <button type="button" class="product-category-btn flex-shrink-0 flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 hover:border-secondary transition-colors text-center" data-category="sweatshirts">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3C9 3 6 5 5 7L2 10l3 2 1-1v10h12V11l1 1 3-2-3-3c-1-2-4-4-7-4z"/></svg>
-                                        <span class="text-xs font-semibold mt-1">Sweatshirts</span>
-                                    </button>
-                                </div>
+                            <p class="text-text-secondary mb-4">Browse the catalog and add items to your cart with your chosen color and size.</p>
+                            <div style="position:relative;margin-bottom:20px;">
+                                <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#9ca3af;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                <input type="text" id="catalog-search" placeholder="Search products..." style="width:100%;padding:12px 16px 12px 44px;border:1px solid #d1d5db;border-radius:10px;font-size:14px;color:#374151;box-sizing:border-box;" oninput="handleSearch(this.value)" />
+                                <button type="button" id="search-clear" onclick="clearSearch()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#9ca3af;font-size:18px;cursor:pointer;display:none;">×</button>
                             </div>
-                            <!-- Loading / Error / Grid -->
+                            <div class="category-tabs" id="category-tabs">
+                                <button type="button" class="cat-tab active" data-category="all" onclick="filterCategory('all')">All Products</button>
+                            </div>
+                            <p id="product-count" style="font-size:13px;color:#9ca3af;margin-bottom:16px;"></p>
                             <div id="product-catalog-loading" class="flex flex-col items-center justify-center py-12">
-                                <svg class="animate-spin h-10 w-10 text-secondary mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                <svg class="animate-spin h-10 w-10 text-secondary mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
                                 <p class="text-text-secondary font-montserrat font-semibold">Loading products...</p>
                             </div>
                             <div id="product-catalog-error" class="hidden py-8 px-4 bg-red-50 border border-red-200 rounded-lg text-center">
                                 <p class="font-montserrat font-semibold text-red-800 mb-2">Unable to load products</p>
                                 <p class="text-sm text-red-700">Please check your connection and try again later.</p>
                             </div>
-                            <div id="product-catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 hidden"></div>
+                            <div id="products-grid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:20px;"></div>
                         </div>
                     </div>
 
-                    <!-- Step 2: Choose Color & Size -->
+                    <!-- Step 2: Print Options -->
                     <div id="step-2" class="calculator-step hidden">
-                        <div class="card">
-                            <div id="selected-product-banner" class="mb-4 hidden p-4 bg-blue-50 border border-secondary rounded-lg flex items-center gap-4">
-                                <img id="selected-product-image" src="" alt="" class="w-16 h-16 object-cover rounded-md" />
-                                <div class="flex-1">
-                                    <p class="text-sm text-text-secondary">Selected product</p>
-                                    <p id="selected-product-name" class="font-montserrat font-semibold text-text-primary"></p>
-                                    <p id="selected-product-style" class="text-sm text-text-secondary"></p>
-                                </div>
-                            </div>
-                            <h2 class="text-2xl font-montserrat font-bold mb-6">Choose Color & Size</h2>
-                            <div id="step2-loading" class="flex flex-col items-center justify-center py-12 hidden">
-                                <svg class="animate-spin h-10 w-10 text-secondary mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                                <p class="text-text-secondary font-montserrat font-semibold">Loading options...</p>
-                            </div>
-                            <div id="step2-error" class="hidden py-4 px-4 bg-red-50 border border-red-200 rounded-lg text-center mb-4">
-                                <p class="font-montserrat font-semibold text-red-800">Unable to load colors and sizes. Please try again.</p>
-                            </div>
-                            <div id="step2-content" class="hidden">
-                                <div class="mb-6">
-                                    <h3 class="font-montserrat font-semibold mb-3">Color</h3>
-                                    <div id="color-grid" class="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3"></div>
-                                </div>
-                                <div>
-                                    <h3 class="font-montserrat font-semibold mb-3">Size</h3>
-                                    <div id="size-buttons" class="flex flex-wrap gap-2"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 3: Quantity -->
-                    <div id="step-3" class="calculator-step hidden">
-                        <div class="card">
-                            <h2 class="text-2xl font-montserrat font-bold mb-6">Quantity</h2>
-                            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
-                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" data-qty="12">
-                                    <div class="text-xl font-montserrat font-bold text-primary">12</div>
-                                    <div class="text-xs text-text-secondary">Minimum</div>
-                                </div>
-                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" data-qty="25">
-                                    <div class="text-xl font-montserrat font-bold text-primary">25</div>
-                                    <div class="text-xs text-success font-semibold">10% off</div>
-                                </div>
-                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" data-qty="50">
-                                    <div class="text-xl font-montserrat font-bold text-primary">50</div>
-                                    <div class="text-xs text-success font-semibold">15% off</div>
-                                </div>
-                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" data-qty="100">
-                                    <div class="text-xl font-montserrat font-bold text-primary">100</div>
-                                    <div class="text-xs text-success font-semibold">20% off</div>
-                                </div>
-                                <div class="quantity-option border-2 border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-secondary transition-colors" data-qty="250">
-                                    <div class="text-xl font-montserrat font-bold text-primary">250</div>
-                                    <div class="text-xs text-success font-semibold">20% off</div>
-                                </div>
-                            </div>
-                            <div class="mb-4">
-                                <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Custom Quantity (min 12)</label>
-                                <input type="number" id="custom-quantity" class="input-field" placeholder="Enter quantity" min="12" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 4: Print Options -->
-                    <div id="step-4" class="calculator-step hidden">
                         <div class="card">
                             <h2 class="text-2xl font-montserrat font-bold mb-6">Print Options</h2>
                             <div class="mb-6">
@@ -259,8 +176,30 @@
                         </div>
                     </div>
 
-                    <!-- Step 5: Turnaround & Extras -->
-                    <div id="step-5" class="calculator-step hidden">
+                    <!-- Step 3: Upload Artwork -->
+                    <div id="step-3" class="calculator-step hidden">
+                        <div class="card">
+                            <h2 class="text-2xl font-montserrat font-bold mb-6">Upload Artwork / Design</h2>
+                            <p class="text-text-secondary mb-4">Upload your design file for printing.</p>
+                            <div id="design-upload-dropzone" class="mt-1 flex flex-col items-center justify-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg bg-white text-center cursor-pointer hover:border-secondary transition-colors">
+                                <svg class="w-8 h-8 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M12 12v9m0-9l-3 3m3-3l3 3"/>
+                                </svg>
+                                <p class="mt-2 text-sm font-montserrat font-semibold text-text-primary">Click to upload or drag and drop</p>
+                                <p class="mt-1 text-xs text-text-secondary">Accepted formats: JPG, PNG, SVG, PDF, AI, EPS. Max size: 10MB</p>
+                                <input id="design-upload-input" name="designFile" type="file" class="hidden" accept=".jpg,.jpeg,.png,.svg,.pdf,.ai,.eps" />
+                            </div>
+                            <p id="design-error" class="mt-2 text-sm text-red-600 hidden"></p>
+                            <div id="design-preview-wrapper" class="mt-4 hidden">
+                                <img id="design-preview" alt="Design preview" class="mx-auto rounded-md border border-gray-200" style="max-height: 200px;" />
+                                <p id="design-file-info" class="mt-2 text-sm text-text-secondary text-center"></p>
+                                <button type="button" id="design-remove-btn" class="mt-3 text-xs font-semibold text-secondary hover:text-blue-700 underline">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Turnaround & Extras -->
+                    <div id="step-4" class="calculator-step hidden">
                         <div class="card">
                             <h2 class="text-2xl font-montserrat font-bold mb-6">Turnaround & Extras</h2>
                             <div class="mb-6">
@@ -274,74 +213,54 @@
                         </div>
                     </div>
 
-                    <!-- Step 6: Contact & Submit -->
+                    <!-- Step 5: Quote Summary -->
+                    <div id="step-5" class="calculator-step hidden">
+                        <div class="card quote-summary-card">
+                            <h3 class="text-xl font-montserrat font-bold mb-4">Your Quote Summary</h3>
+                            <div id="summary-items" class="space-y-2 text-sm mb-4"></div>
+                            <div id="summary-print" class="text-sm text-text-secondary mb-4"></div>
+                            <div class="price-breakdown border-t border-gray-200 pt-4 space-y-2 text-sm">
+                                <div class="price-row flex justify-between"><span>Items subtotal</span><span id="s-items">$0.00</span></div>
+                                <div class="price-row flex justify-between"><span>Print cost</span><span id="s-print">$0.00</span></div>
+                                <div class="price-row flex justify-between"><span>Setup fee</span><span id="s-setup">$0.00</span></div>
+                                <div class="price-row flex justify-between"><span>GST (5%)</span><span id="s-gst">$0.00</span></div>
+                                <div class="price-row total flex justify-between font-bold text-base mt-2 pt-2 border-t border-gray-200"><span>Total</span><span id="s-total">$0.00 CAD</span></div>
+                            </div>
+                            <button type="button" onclick="goToStep(6)" class="btn-accent w-full mt-4 py-3 text-base font-semibold">Continue to Submit Order →</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 6: Customer Information (Last) -->
                     <div id="step-6" class="calculator-step hidden">
                         <div class="card">
-                            <h2 class="text-2xl font-montserrat font-bold mb-6">Get Your Detailed Quote</h2>
-                            <p class="text-text-secondary mb-6">We'll send you a comprehensive quote within 2 hours, including design mockups and timeline.</p>
+                            <h2 class="text-2xl font-montserrat font-bold mb-6">Customer Information</h2>
+                            <p class="text-text-secondary mb-6">Complete your details to submit your order request.</p>
                             <form id="quote-form" class="space-y-4">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">First Name *</label>
-                                        <input type="text" name="firstName" class="input-field" required />
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Last Name *</label>
-                                        <input type="text" name="lastName" class="input-field" required />
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Email *</label>
-                                        <input type="email" name="email" class="input-field" required />
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Phone *</label>
-                                        <input type="tel" name="phone" class="input-field" required />
-                                    </div>
+                                <div>
+                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Full Name *</label>
+                                    <input type="text" name="fullName" class="input-field" placeholder="First and Last" required />
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Company/Organization</label>
-                                    <input type="text" name="company" class="input-field" />
+                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Company Name</label>
+                                    <input type="text" name="company" class="input-field" placeholder="Optional" />
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Project Details</label>
-                                    <textarea name="details" rows="4" class="input-field" placeholder="Tell us about your project, design ideas, or any special requirements..."></textarea>
+                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Phone</label>
+                                    <input type="tel" name="phone" class="input-field" placeholder="(604) 555-0123" />
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Preferred Contact Method</label>
-                                    <select name="contactMethod" class="input-field">
-                                        <option value="email">Email</option>
-                                        <option value="phone">Phone Call</option>
-                                        <option value="text">Text Message</option>
-                                    </select>
+                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Email *</label>
+                                    <input type="email" name="email" class="input-field" required />
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">When do you need this completed?</label>
-                                    <select name="timeline" class="input-field">
-                                        <option value="asap">ASAP (Rush Order)</option>
-                                        <option value="1week">Within 1 week</option>
-                                        <option value="2weeks">Within 2 weeks</option>
-                                        <option value="1month">Within 1 month</option>
-                                        <option value="flexible">I'm flexible</option>
-                                    </select>
+                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Notes / Special Instructions</label>
+                                    <textarea name="details" rows="4" class="input-field" placeholder="Tell us about your project or any special requirements..."></textarea>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-montserrat font-semibold text-text-primary mb-2">Upload your design</label>
-                                    <div id="design-upload-dropzone" class="mt-1 flex flex-col items-center justify-center px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg bg-white text-center cursor-pointer hover:border-secondary transition-colors">
-                                        <svg class="w-8 h-8 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M12 12v9m0-9l-3 3m3-3l3 3"/>
-                                        </svg>
-                                        <p class="mt-2 text-sm font-montserrat font-semibold text-text-primary">Click to upload or drag and drop</p>
-                                        <p class="mt-1 text-xs text-text-secondary">Accepted formats: JPG, PNG, SVG, PDF, AI, EPS. Max size: 10MB</p>
-                                        <input id="design-upload-input" name="designFile" type="file" class="hidden" accept=".jpg,.jpeg,.png,.svg,.pdf,.ai,.eps" />
-                                    </div>
-                                    <p id="design-error" class="mt-2 text-sm text-red-600 hidden"></p>
-                                    <div id="design-preview-wrapper" class="mt-4 hidden">
-                                        <img id="design-preview" alt="Design preview" class="mx-auto rounded-md border border-gray-200" style="max-height: 200px;" />
-                                        <p id="design-file-info" class="mt-2 text-sm text-text-secondary text-center"></p>
-                                        <button type="button" id="design-remove-btn" class="mt-3 text-xs font-semibold text-secondary hover:text-blue-700 underline">Remove</button>
-                                    </div>
+                                    <label class="flex items-start gap-2 cursor-pointer">
+                                        <input type="checkbox" name="agreeTerms" class="mt-1" required />
+                                        <span class="text-sm text-text-primary">I agree to the terms and conditions</span>
+                                    </label>
                                 </div>
                             </form>
                         </div>
@@ -590,11 +509,9 @@
         function applyAppearance(cfg) {
             if (!cfg || !cfg.appearance) return;
             var app = cfg.appearance;
-            var gridEl = document.getElementById('product-catalog-grid');
+            var gridEl = document.getElementById('products-grid') || document.getElementById('product-catalog-grid');
             if (gridEl) {
-                var cols = app.catalogColumns != null ? app.catalogColumns : 4;
-                var hidden = gridEl.classList.contains('hidden') ? ' hidden' : '';
-                gridEl.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-' + cols + ' gap-4' + hidden;
+                gridEl.style.display = gridEl.style.display || 'grid';
             }
             document.documentElement.style.setProperty('--catalog-img-height', (app.cardImageHeight != null ? app.cardImageHeight : 128) + 'px');
             var fonts = app.fonts || {};
@@ -709,10 +626,7 @@
                 document.getElementById('step-' + currentStep).classList.remove('hidden');
                 updateProgressBar();
                 updateNavigationButtons();
-                if (currentStep === 2 && quoteData.product) {
-                    updateSelectedProductBanner();
-                    loadStyleDetail();
-                }
+                if (currentStep === 5) updateQuoteSummaryStep();
             }
         }
 
@@ -756,267 +670,395 @@
         }
 
         function isStepValid(step) {
-            if (step === 1) return quoteData.product !== null;
-            if (step === 2) return quoteData.color !== null && quoteData.size !== null;
-            if (step === 3) return quoteData.quantity >= getMinQuantity();
-            if (step === 4) return quoteData.printLocations.length > 0 && quoteData.inkColors >= 1;
+            if (step === 1) return true;
+            if (step === 2) return cart.length > 0 && quoteData.printLocations.length > 0 && quoteData.inkColors >= 1;
+            if (step === 3) return true;
+            if (step === 4) return true;
             if (step === 5) return true;
             return true;
         }
 
-        function updateSelectedProductBanner() {
-            var banner = document.getElementById('selected-product-banner');
-            if (!quoteData.product) { banner.classList.add('hidden'); return; }
-            banner.classList.remove('hidden');
-            document.getElementById('selected-product-image').src = quoteData.product.image || '';
-            document.getElementById('selected-product-name').textContent = quoteData.product.name || '';
-            document.getElementById('selected-product-style').textContent = quoteData.product.style ? 'Style #' + quoteData.product.style : '';
+        function updateSelectedProductBanner() {}
+
+        function goToStep(stepNum) {
+            document.querySelectorAll('.calculator-step').forEach(function(el) { el.classList.add('hidden'); });
+            var stepEl = document.getElementById('step-' + stepNum);
+            if (stepEl) stepEl.classList.remove('hidden');
+            currentStep = stepNum;
+            updateProgressBar();
+            updateNavigationButtons();
+            if (stepNum === 5) updateQuoteSummaryStep();
         }
 
-        // S&S Activewear API (via Netlify proxy to avoid CORS)
-        let allProducts = [];
-        let filteredProducts = [];
-
-        function matchCategory(catKey, product) {
-            if (catKey === 'all') return true;
-            var cat = product.category || '';
-            var name = (product.name || '').toLowerCase();
-            var style = (product.style || '').toLowerCase();
-            var brand = (product.brand || '').toLowerCase();
-            var combined = cat + ' ' + name + ' ' + style + ' ' + brand;
-            if (catKey === 'tshirts') return /t-?shirt|tee|tshirt/.test(combined);
-            if (catKey === 'hoodies') return /hoodie|hood/.test(combined);
-            if (catKey === 'hats') return /hat|cap|visor/.test(combined);
-            if (catKey === 'polos') return /polo/.test(combined);
-            if (catKey === 'jackets') return /jacket|coat|vest/.test(combined);
-            if (catKey === 'bags') return /bag|tote|backpack|duffel/.test(combined);
-            if (catKey === 'tanktops') return /tank|sleeveless/.test(combined);
-            if (catKey === 'sweatshirts') return /sweatshirt|crew/.test(combined);
-            return false;
-        }
-
-        function filterAndRender() {
-            if (!allProducts || !allProducts.length) return;
-            var raw = (document.getElementById('product-search') && document.getElementById('product-search').value) || '';
-            var q = raw.trim().toLowerCase();
-            var activeCat = document.querySelector('.product-category-btn.border-secondary');
-            var catKey = activeCat ? activeCat.getAttribute('data-category') : 'all';
-            filteredProducts = allProducts.filter(function(p) {
-                var searchMatch = !q ||
-                    (p.name || '').toLowerCase().includes(q) ||
-                    String(p.style || '').toLowerCase().includes(q) ||
-                    (p.brand || '').toLowerCase().includes(q) ||
-                    (p.category || '').toLowerCase().includes(q);
-                var catMatch = catKey === 'all' || matchCategory(catKey, p);
-                return searchMatch && catMatch;
-            });
-            var grid = document.getElementById('product-catalog-grid');
-            if (grid) {
-                grid.classList.remove('hidden');
-                renderProductGrid(grid);
+        function getMarkupPercent() {
+            var saved = localStorage.getItem('calculatorConfig');
+            if (saved) {
+                try {
+                    var s = JSON.parse(saved);
+                    var m = s.markup || {};
+                    if (m.value != null) return parseFloat(m.value) || 30;
+                } catch (e) {}
             }
+            saved = localStorage.getItem('calculatorSettings');
+            if (saved) {
+                try {
+                    var s = JSON.parse(saved);
+                    return parseFloat(s.markup || s.markupPercent || 30) || 30;
+                } catch (e) {}
+            }
+            return 30;
         }
+
+        var allProducts = [];
+        var activeCategory = 'all';
+        var searchQuery = '';
 
         function normalizeProduct(p) {
             var name = p.title || p.styleName || p.productName || p.name || '';
-            var style = p.styleID || p.partNumber || p.style || '';
+            var style = (p.styleID != null ? p.styleID : p.partNumber || p.style || '').toString();
             var brand = p.brandName || p.brand || '';
             var rawImg = p.styleImage || p.brandImage || p.colorFrontImage || '';
             var image = rawImg ? (rawImg.indexOf('http') === 0 ? rawImg : 'https://cdn.ssactivewear.com/' + rawImg) : '';
-            var cat = (p.baseCategory || p.categoryName || p.category || '').toLowerCase();
+            var cat = (p.baseCategory || p.categoryName || p.category || '').toLowerCase().replace(/\s+/g, '');
             var price = parseFloat(p.gatePrice || p.ourPrice || p.salePrice || p.basePrice || 0) || 0;
             return { name: name, style: style, brand: brand, image: image, colors: [], category: cat, price: price, raw: p };
         }
 
-        function renderProductGrid(container) {
-            if (!container) return;
-            container.innerHTML = '';
-            filteredProducts.forEach(function(p, index) {
-                var card = document.createElement('div');
-                card.className = 'product-card border-2 border-gray-200 rounded-lg p-4 flex flex-col hover:border-secondary transition-colors';
-                card.setAttribute('data-product-index', index);
-                card.style.cursor = 'pointer';
-                var priceHtml = (p.price > 0)
-                    ? '<p class="text-sm font-bold text-accent mb-3">From $' + applyMarkupSimple(p.price).toFixed(2) + '</p>'
-                    : '<p class="text-xs text-text-secondary mb-3">Price on selection</p>';
-                card.innerHTML =
-                    '<div class="relative">' +
-                    '<img src="' + (p.image || '') + '" alt="' + (p.name || '') + '" class="w-full object-cover rounded-lg mb-3 bg-gray-100" style="height: var(--catalog-img-height, 128px)" onerror="this.style.visibility=\'hidden\'"/>' +
-                    '</div>' +
-                    '<p class="text-xs text-text-secondary mb-1">' + (p.brand || '') + '</p>' +
-                    '<h3 class="font-montserrat font-semibold mb-1 text-sm leading-tight line-clamp-2">' + (p.name || '') + '</h3>' +
-                    '<p class="text-xs text-text-secondary mb-2">Style #' + (p.style || '') + '</p>' +
-                    priceHtml +
-                    '<button type="button" class="select-product-btn btn-accent mt-auto w-full text-sm">Select →</button>';
-                card.addEventListener('click', function(e) {
-                    if (e.target.closest('.select-product-btn')) return;
-                    openProductModal(filteredProducts[index]);
-                });
-                container.appendChild(card);
-            });
-            container.querySelectorAll('.select-product-btn').forEach(function(btn) {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    var card = btn.closest('.product-card');
-                    var idx = parseInt(card.getAttribute('data-product-index'), 10);
-                    selectProduct(filteredProducts[idx], card);
-                });
-            });
-        }
-
-        function bindCatalogListeners() {
-            var searchEl = document.getElementById('product-search');
-            if (searchEl) {
-                searchEl.addEventListener('input', filterAndRender);
-                searchEl.addEventListener('keyup', filterAndRender);
-            }
-            document.querySelectorAll('.product-category-btn').forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.product-category-btn').forEach(function(b) {
-                        b.classList.remove('border-secondary', 'bg-blue-50');
-                        b.classList.add('border-gray-200');
-                    });
-                    this.classList.remove('border-gray-200');
-                    this.classList.add('border-secondary', 'bg-blue-50');
-                    filterAndRender();
-                });
-            });
-        }
-
-        function initProductCatalog() {
+        function showLoadingState() {
             var loadingEl = document.getElementById('product-catalog-loading');
             var errorEl = document.getElementById('product-catalog-error');
-            var gridEl = document.getElementById('product-catalog-grid');
+            var gridEl = document.getElementById('products-grid');
+            if (loadingEl) loadingEl.classList.remove('hidden');
+            if (errorEl) errorEl.classList.add('hidden');
+            if (gridEl) gridEl.style.display = 'none';
+        }
+
+        function showErrorState() {
+            var loadingEl = document.getElementById('product-catalog-loading');
+            var errorEl = document.getElementById('product-catalog-error');
+            if (loadingEl) loadingEl.classList.add('hidden');
+            if (errorEl) errorEl.classList.remove('hidden');
+        }
+
+        function getMockProducts() {
+            return [];
+        }
+
+        function loadProducts() {
+            showLoadingState();
             fetch('/api/ss-products')
-                .then(function(res) {
-                    if (!res.ok) throw new Error('Network response was not ok');
-                    return res.json();
-                })
+                .then(function(res) { return res.json(); })
                 .then(function(data) {
+                    var loadingEl = document.getElementById('product-catalog-loading');
+                    var gridEl = document.getElementById('products-grid');
                     if (loadingEl) loadingEl.classList.add('hidden');
-                    var list = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.Items) ? data.Items : (data && data.data) ? data.data : [];
+                    var list = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.data) ? data.data : [];
                     allProducts = list.map(normalizeProduct);
-                    filterAndRender();
-                    if (gridEl) gridEl.classList.remove('hidden');
+                    buildCategoryTabs(allProducts);
+                    renderFilteredProducts();
+                    if (gridEl) gridEl.style.display = 'grid';
                 })
-                .catch(function() {
-                    if (loadingEl) loadingEl.classList.add('hidden');
-                    if (errorEl) errorEl.classList.remove('hidden');
+                .catch(function(err) {
+                    console.error('Failed to load products:', err);
+                    showErrorState();
+                    allProducts = getMockProducts();
+                    buildCategoryTabs(allProducts);
+                    renderFilteredProducts();
+                    var gridEl = document.getElementById('products-grid');
+                    if (gridEl) gridEl.style.display = 'grid';
                 });
         }
 
-        function selectProduct(product, cardEl) {
-            quoteData.product = { name: product.name, style: product.style, image: product.image };
-            quoteData.color = null;
-            quoteData.size = null;
-            quoteData.unitPrice = 0;
-            quoteData.styleDetail = null;
-            document.querySelectorAll('.product-card').forEach(function(el) {
-                el.classList.remove('border-secondary', 'bg-blue-50');
-                el.classList.add('border-gray-200');
+        function buildCategoryTabs(products) {
+            var cats = { all: true };
+            products.forEach(function(p) {
+                var cat = (p.category || '').toLowerCase().replace(/\s+/g, '') || (p.raw && (p.raw.baseCategory || p.raw.categoryName || '').toLowerCase().replace(/\s+/g, ''));
+                if (cat) cats[cat] = true;
             });
-            if (cardEl) {
-                cardEl.classList.remove('border-gray-200');
-                cardEl.classList.add('border-secondary', 'bg-blue-50');
+            var labels = { all: 'All Products', 't-shirt': 'T-Shirts', tshirts: 'T-Shirts', hoodie: 'Hoodies', hoodies: 'Hoodies', sweatshirt: 'Crewnecks', crewneck: 'Crewnecks', tote: 'Tote Bags', hat: 'Hats & Caps', hats: 'Hats & Caps', jacket: 'Jackets', jackets: 'Jackets', polos: 'Polos', bags: 'Bags', tanktops: 'Tank Tops', sweatshirts: 'Sweatshirts' };
+            var container = document.getElementById('category-tabs');
+            if (!container) return;
+            container.innerHTML = '';
+            Object.keys(cats).forEach(function(cat) {
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'cat-tab' + (cat === 'all' ? ' active' : '');
+                btn.setAttribute('data-category', cat);
+                btn.textContent = labels[cat] || (cat.charAt(0).toUpperCase() + cat.slice(1));
+                btn.onclick = function() { filterCategory(cat); };
+                container.appendChild(btn);
+            });
+        }
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            document.querySelectorAll('.cat-tab').forEach(function(btn) {
+                btn.classList.toggle('active', btn.getAttribute('data-category') === cat);
+            });
+            renderFilteredProducts();
+        }
+
+        function renderFilteredProducts() {
+            var filtered = allProducts.slice();
+            if (activeCategory !== 'all') {
+                var ac = activeCategory.toLowerCase();
+                filtered = filtered.filter(function(p) {
+                    var title = (p.name || '').toLowerCase();
+                    var cat = (p.category || '').toLowerCase();
+                    return cat.indexOf(ac) !== -1 || title.indexOf(ac) !== -1;
+                });
             }
-            updateNavigationButtons();
-            document.getElementById('step-1').classList.add('hidden');
-            currentStep = 2;
-            document.getElementById('step-2').classList.remove('hidden');
-            updateProgressBar();
-            updateNavigationButtons();
-            updateSelectedProductBanner();
-            loadStyleDetail();
+            if (searchQuery.trim()) {
+                var q = searchQuery.toLowerCase();
+                filtered = filtered.filter(function(p) {
+                    var title = (p.name || '').toLowerCase();
+                    var desc = ((p.raw && p.raw.description) || '').toLowerCase();
+                    return title.indexOf(q) !== -1 || desc.indexOf(q) !== -1;
+                });
+            }
+            renderProducts(filtered);
+            var countEl = document.getElementById('product-count');
+            if (countEl) countEl.textContent = filtered.length + ' product' + (filtered.length !== 1 ? 's' : '');
+        }
+
+        function handleSearch(val) {
+            searchQuery = val;
+            var clearBtn = document.getElementById('search-clear');
+            if (clearBtn) clearBtn.style.display = val ? 'block' : 'none';
+            renderFilteredProducts();
+        }
+
+        function clearSearch() {
+            searchQuery = '';
+            var searchEl = document.getElementById('catalog-search');
+            if (searchEl) searchEl.value = '';
+            var clearBtn = document.getElementById('search-clear');
+            if (clearBtn) clearBtn.style.display = 'none';
+            renderFilteredProducts();
+        }
+
+        function renderProducts(products) {
+            var grid = document.getElementById('products-grid');
+            if (!grid) return;
+            var markup = getMarkupPercent();
+            if (!products || products.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#9ca3af;"><svg style="width:48px;height:48px;margin:0 auto 16px;display:block;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><p style="font-size:16px;font-weight:600;color:#374151;margin-bottom:4px;">No products found</p><p>Try a different search or category</p></div>';
+                return;
+            }
+            var html = products.map(function(p) {
+                var basePrice = p.price || 0;
+                var markedUpPrice = basePrice * (1 + markup / 100);
+                var title = (p.name || 'Product').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+                var imgUrl = (p.image || '').replace(/"/g, '&quot;');
+                var pid = (p.raw && p.raw.styleID != null ? p.raw.styleID : p.style || '').toString().replace(/"/g, '&quot;');
+                return '<div class="product-card" onclick="selectProduct(\'' + pid + '\')"><div style="background:#f8fafc;border-radius:8px 8px 0 0;height:200px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;padding:20px;">' + (imgUrl ? '<img src="' + imgUrl + '" alt="' + title + '" style="max-height:180px;max-width:90%;object-fit:contain;" onerror="this.style.display=\'none\'"/>' : '<div style="color:#d1d5db;font-size:48px;">👕</div>') + '</div><div style="padding:16px;"><h3 style="font-size:18px;font-weight:700;color:#1e293b;text-align:center;margin-bottom:4px;line-height:1.3;">' + title + '</h3><p style="font-size:14px;color:#6b7280;text-align:center;margin-bottom:2px;">Base price: $' + basePrice.toFixed(2) + '</p><p style="font-size:15px;font-weight:700;color:#1e40af;text-align:center;margin-bottom:14px;">Your price: $' + markedUpPrice.toFixed(2) + '</p><button type="button" onclick="event.stopPropagation();selectProduct(\'' + pid + '\')" style="width:100%;padding:12px;background:#1e40af;color:#fff;border:none;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background=\'#1e3a5f\'" onmouseout="this.style.background=\'#1e40af\'">Select</button></div></div>';
+            }).join('');
+            grid.innerHTML = html;
+        }
+
+        var cart = [];
+        var modalProduct = null;
+        var selectedColor = null;
+        var sizeQtys = {};
+
+        function addToCart(item) {
+            var existing = cart.filter(function(c) { return String(c.productId) === String(item.productId) && c.color === item.color && c.size === item.size; })[0];
+            if (existing) {
+                existing.qty += item.qty;
+            } else {
+                cart.push({ id: (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'id-' + Date.now(), productId: item.productId, productName: item.productName, image: item.image, color: item.color, colorHex: item.colorHex, size: item.size, qty: item.qty, unitPrice: item.unitPrice, basePrice: item.basePrice });
+            }
+            updateCartBadge();
+            saveCart();
+            if (typeof updateSummary === 'function') updateSummary();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(function(c) { return c.id !== id; });
+            updateCartBadge();
+            saveCart();
+            if (typeof updateSummary === 'function') updateSummary();
+        }
+
+        function updateCartBadge() {
+            var total = cart.reduce(function(s, c) { return s + (c.qty || 0); }, 0);
+            var badge = document.getElementById('cart-badge');
+            var widget = document.getElementById('cart-widget');
+            if (badge) badge.textContent = total;
+            if (widget) widget.style.display = total > 0 ? 'block' : 'none';
+        }
+
+        function saveCart() {
+            try { localStorage.setItem('inkCreekCart', JSON.stringify(cart)); } catch (e) {}
+        }
+
+        function loadCart() {
+            try {
+                var saved = localStorage.getItem('inkCreekCart');
+                if (saved) { cart = JSON.parse(saved); updateCartBadge(); }
+            } catch (e) {}
+        }
+
+        function toggleCart() {
+            var summary = document.querySelector('.sticky.top-24');
+            if (summary) summary.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectProduct(productId) {
+            var product = allProducts.filter(function(p) { return String((p.raw && p.raw.styleID) || p.style) === String(productId); })[0];
+            if (!product) return;
+            modalProduct = product;
+            selectedColor = null;
+            sizeQtys = {};
+            var markup = getMarkupPercent();
+            var basePrice = product.price || 0;
+            var yourPrice = basePrice * (1 + markup / 100);
+            document.getElementById('modal-product-title').textContent = product.name || 'Select Options';
+            document.getElementById('modal-product-name').textContent = product.name || '';
+            document.getElementById('modal-base-price').textContent = 'Base: $' + basePrice.toFixed(2);
+            document.getElementById('modal-your-price').textContent = 'Your price: $' + yourPrice.toFixed(2);
+            var img = document.getElementById('modal-product-img');
+            img.src = product.image || '';
+            img.style.display = product.image ? 'block' : 'none';
+            document.getElementById('selected-color-name').textContent = '— select below';
+            var styleID = (product.raw && product.raw.styleID != null) ? product.raw.styleID : product.style;
+            fetch('/api/ss-style-detail?styleID=' + encodeURIComponent(styleID))
+                .then(function(res) { return res.json(); })
+                .then(function(skus) {
+                    var list = Array.isArray(skus) ? skus : (skus && skus.products) ? skus.products : [];
+                    var colorMap = {};
+                    list.forEach(function(sku) {
+                        var cname = sku.colorName || sku.ColorName || '';
+                        if (cname && !colorMap[cname]) {
+                            var swatch = (sku.colorSwatchImage || sku.ColorSwatchImage) ? 'https://cdn.ssactivewear.com/' + (sku.colorSwatchImage || sku.ColorSwatchImage) : null;
+                            colorMap[cname] = { name: cname, swatch: swatch, hex: '#ccc' };
+                        }
+                    });
+                    var colors = [];
+                    for (var k in colorMap) colors.push(colorMap[k]);
+                    var sizeOrder = ['OSFA','XS','S','M','L','XL','2XL','3XL','4XL','5XL'];
+                    var sizeSet = {};
+                    list.forEach(function(s) { if (s.sizeName || s.SizeName) sizeSet[s.sizeName || s.SizeName] = true; });
+                    var sizes = sizeOrder.filter(function(s) { return sizeSet[s]; });
+                    if (sizes.length === 0) sizes = Object.keys(sizeSet);
+                    buildColorSwatches(colors);
+                    buildSizeGrid(sizes);
+                })
+                .catch(function() {
+                    buildColorSwatches([]);
+                    buildSizeGrid(['S','M','L','XL']);
+                });
+            var modal = document.getElementById('product-modal');
+            if (modal) { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         }
 
         function closeProductModal() {
             var modal = document.getElementById('product-modal');
-            if (modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
+            if (modal) { modal.style.display = 'none'; document.body.style.overflow = ''; }
+        }
+
+        function selectColorFromEl(el) {
+            var name = el.getAttribute('data-color') || '';
+            var hex = el.getAttribute('data-hex') || '#ccc';
+            selectColor(name, hex);
+        }
+
+        function buildColorSwatches(colors) {
+            var container = document.getElementById('color-swatches');
+            if (!container) return;
+            if (!colors || colors.length === 0) {
+                container.innerHTML = '<p style="color:#9ca3af;font-size:13px;">One color available</p>';
+                return;
             }
+            container.innerHTML = colors.map(function(c) {
+                var name = (c.name || '').replace(/"/g, '&quot;');
+                var hex = (c.hex || '#ccc').replace(/"/g, '');
+                return '<div class="color-swatch" data-color="' + name + '" data-hex="' + hex + '" onclick="selectColorFromEl(this)" title="' + name + '" style="width:36px;height:36px;border-radius:50%;cursor:pointer;border:2px solid #e5e7eb;background:' + hex + ';transition:all 0.15s;"></div>';
+            }).join('');
         }
 
-        function switchModalImage(src) {
-            var img = document.getElementById('modal-main-img');
-            if (img) img.src = src;
+        function buildSizeGrid(sizes) {
+            var container = document.getElementById('size-qty-grid');
+            if (!container) return;
+            sizeQtys = {};
+            container.innerHTML = (sizes || ['XS','S','M','L','XL','2XL','3XL']).map(function(s) {
+                var sizeName = (typeof s === 'object' ? (s.size || s.name) : s) || '';
+                return '<div style="text-align:center;"><div style="font-size:12px;font-weight:600;color:#6b7280;margin-bottom:4px;">' + sizeName + '</div><div style="display:flex;align-items:center;border:1px solid #d1d5db;border-radius:8px;overflow:hidden;"><button type="button" onclick="changeSizeQty(\'' + sizeName + '\', -1)" style="width:28px;height:32px;border:none;background:#f9fafb;color:#374151;font-size:16px;cursor:pointer;flex-shrink:0;">−</button><span id="qty-' + sizeName + '" style="flex:1;text-align:center;font-size:14px;font-weight:600;color:#111827;min-width:24px;">0</span><button type="button" onclick="changeSizeQty(\'' + sizeName + '\', 1)" style="width:28px;height:32px;border:none;background:#f9fafb;color:#374151;font-size:16px;cursor:pointer;flex-shrink:0;">+</button></div></div>';
+            }).join('');
         }
 
-        async function openProductModal(product) {
-            var modal = document.getElementById('product-modal');
-            var content = document.getElementById('product-modal-content');
-            if (!modal || !content) return;
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            content.innerHTML = '<div class="flex justify-center py-12"><svg class="animate-spin h-10 w-10 text-secondary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg></div>';
-
-            var skus = [];
-            var styleID = product.raw && (product.raw.styleID != null) ? product.raw.styleID : product.style;
-            try {
-                var res = await fetch('/api/ss-style-detail?styleID=' + encodeURIComponent(styleID));
-                var data = await res.json();
-                skus = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.Items) ? data.Items : [];
-            } catch (e) { skus = []; }
-
-            var colorMap = {};
-            skus.forEach(function(sku) {
-                var cname = sku.colorName || sku.ColorName || '';
-                if (cname && !colorMap[cname]) {
-                    var swatch = (sku.colorSwatchImage || sku.ColorSwatchImage) ? 'https://cdn.ssactivewear.com/' + (sku.colorSwatchImage || sku.ColorSwatchImage) : null;
-                    var front = (sku.colorFrontImage || sku.ColorFrontImage) ? 'https://cdn.ssactivewear.com/' + (sku.colorFrontImage || sku.ColorFrontImage) : (product.image || '');
-                    colorMap[cname] = { name: cname, swatch: swatch, front: front, price: parseFloat(sku.ourPrice || sku.gatePrice || 0) || 0 };
-                }
+        function selectColor(name, hex) {
+            selectedColor = { name: name, hex: hex || '#ccc' };
+            document.getElementById('selected-color-name').textContent = name;
+            document.querySelectorAll('.color-swatch').forEach(function(s) {
+                var isSelected = s.getAttribute('data-color') === name;
+                s.style.border = isSelected ? '3px solid #1e40af' : '2px solid #e5e7eb';
+                s.style.transform = isSelected ? 'scale(1.15)' : 'scale(1)';
+                s.style.boxShadow = isSelected ? '0 0 0 2px #fff, 0 0 0 4px #1e40af' : 'none';
             });
-            var colors = [];
-            for (var k in colorMap) colors.push(colorMap[k]);
+            updateModalCartSummary();
+        }
 
-            var sizeOrder = ['OSFA','XS','S','M','L','XL','2XL','3XL','4XL','5XL'];
-            var sizeSet = {};
-            skus.forEach(function(s) { if (s.sizeName || s.SizeName) sizeSet[s.sizeName || s.SizeName] = true; });
-            var sizes = sizeOrder.filter(function(s) { return sizeSet[s]; });
-            if (sizes.length === 0) sizes = Object.keys(sizeSet);
+        function changeSizeQty(size, delta) {
+            sizeQtys[size] = Math.max(0, (sizeQtys[size] || 0) + delta);
+            var el = document.getElementById('qty-' + size);
+            if (el) el.textContent = sizeQtys[size];
+            updateModalCartSummary();
+        }
 
-            var desc = (product.raw && product.raw.description) ? product.raw.description : '';
-            var retailPrice = product.price > 0 ? 'From $' + applyMarkupSimple(product.price).toFixed(2) : 'Price on selection';
+        function updateModalCartSummary() {
+            var totalQty = Object.keys(sizeQtys).reduce(function(a, k) { return a + (sizeQtys[k] || 0); }, 0);
+            var summary = document.getElementById('modal-cart-summary');
+            if (!summary) return;
+            if (totalQty === 0 || !selectedColor) { summary.style.display = 'none'; return; }
+            var basePrice = parseFloat(modalProduct && (modalProduct.price != null ? modalProduct.price : 0)) || 0;
+            var markup = getMarkupPercent();
+            var unitPrice = basePrice * (1 + markup / 100);
+            var subtotal = unitPrice * totalQty;
+            summary.style.display = 'block';
+            summary.innerHTML = totalQty + ' item' + (totalQty > 1 ? 's' : '') + ' · ' + (selectedColor.name || '') + ' · Subtotal: <strong>$' + subtotal.toFixed(2) + ' CAD</strong>';
+        }
 
-            var colorSwitcherHtml = colors.slice(0, 12).map(function(c, i) {
-                var swatchHtml = c.swatch ? '<img src="' + c.swatch + '" class="w-full h-full object-cover"/>' : '<div class="w-full h-full bg-gray-300"></div>';
-                return '<button type="button" class="modal-color-swatch w-8 h-8 rounded-lg border-2 border-gray-200 overflow-hidden hover:border-secondary transition-all" data-src="' + (c.front || '').replace(/"/g, '&quot;') + '" title="' + (c.name || '').replace(/"/g, '&quot;') + '">' + swatchHtml + '</button>';
-            }).join('');
-            if (colors.length > 12) colorSwitcherHtml += '<span class="text-xs text-text-secondary self-center">+' + (colors.length - 12) + ' more</span>';
-
-            var mainImg = (product.image || (colors[0] && colors[0].front) || '').replace(/"/g, '&quot;');
-            var allColorsGrid = colors.map(function(c) {
-                var cell = c.swatch ? '<img src="' + c.swatch + '" class="w-full h-full object-cover"/>' : '<div class="w-full h-full bg-gray-300 rounded-lg"></div>';
-                return '<div class="flex flex-col items-center text-center"><div class="w-10 h-10 rounded-lg border border-gray-200 overflow-hidden mb-1">' + cell + '</div><span class="text-xs text-text-secondary leading-tight line-clamp-2">' + (c.name || '').replace(/</g, '&lt;') + '</span></div>';
-            }).join('');
-
-            var sizesHtml = sizes.map(function(s) { return '<span class="px-3 py-1 bg-gray-100 rounded-lg text-xs font-semibold">' + s + '</span>'; }).join('');
-
-            content.innerHTML =
-                '<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">' +
-                '<div><img id="modal-main-img" src="' + mainImg + '" alt="' + (product.name || '').replace(/"/g, '&quot;') + '" class="w-full rounded-xl object-cover" style="height:280px"/>' +
-                '<div class="flex flex-wrap gap-2 mt-3">' + colorSwitcherHtml + '</div></div>' +
-                '<div><p class="text-xs text-text-secondary mb-1">' + (product.brand || '').replace(/</g, '&lt;') + '</p>' +
-                '<h2 class="text-xl font-montserrat font-bold mb-1">' + (product.name || '').replace(/</g, '&lt;') + '</h2>' +
-                '<p class="text-sm text-text-secondary mb-3">Style #' + (product.style || '') + '</p>' +
-                '<p class="text-2xl font-bold text-accent mb-4">' + retailPrice + '</p>' +
-                '<p class="text-sm font-semibold mb-2">' + colors.length + ' Colors Available</p>' +
-                '<p class="text-sm font-semibold mb-2">Available Sizes:</p><div class="flex flex-wrap gap-2 mb-4">' + sizesHtml + '</div>' +
-                '<div class="text-sm text-text-secondary leading-relaxed max-h-32 overflow-y-auto">' + (desc || '').replace(/</g, '&lt;') + '</div></div></div>' +
-                '<div class="border-t pt-4"><h3 class="font-semibold mb-3">All Available Colors (' + colors.length + ')</h3>' +
-                '<div class="grid grid-cols-5 sm:grid-cols-8 gap-2">' + allColorsGrid + '</div></div>';
-
-            document.getElementById('modal-select-btn').onclick = function() {
-                closeProductModal();
-                selectProduct(product, null);
-            };
-            content.querySelectorAll('.modal-color-swatch').forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    var src = this.getAttribute('data-src');
-                    if (src) switchModalImage(src);
-                });
+        function addToCartFromModal() {
+            var totalQty = Object.keys(sizeQtys).reduce(function(a, k) { return a + (sizeQtys[k] || 0); }, 0);
+            if (!selectedColor) { if (typeof showToast === 'function') showToast('Please select a color', 'error'); return; }
+            if (totalQty === 0) { if (typeof showToast === 'function') showToast('Please add at least 1 item', 'error'); return; }
+            var basePrice = parseFloat(modalProduct && (modalProduct.price != null ? modalProduct.price : 0)) || 0;
+            var markup = getMarkupPercent();
+            var unitPrice = basePrice * (1 + markup / 100);
+            var pid = (modalProduct.raw && modalProduct.raw.styleID != null) ? modalProduct.raw.styleID : modalProduct.style;
+            Object.keys(sizeQtys).forEach(function(size) {
+                var qty = sizeQtys[size] || 0;
+                if (qty === 0) return;
+                addToCart({ productId: pid, productName: modalProduct.name || '', image: modalProduct.image || '', color: selectedColor.name, colorHex: selectedColor.hex || '#ccc', size: size, qty: qty, unitPrice: unitPrice, basePrice: basePrice });
             });
+            closeProductModal();
+            if (typeof showToast === 'function') showToast('✓ Added ' + totalQty + ' item' + (totalQty > 1 ? 's' : '') + ' to cart', 'success');
+            updateCartBadge();
+        }
+
+        function updateQuoteSummaryStep() {
+            var itemsEl = document.getElementById('summary-items');
+            var printEl = document.getElementById('summary-print');
+            if (itemsEl) {
+                itemsEl.innerHTML = cart.length ? cart.map(function(c) { return '<div class="flex justify-between text-sm"><span>' + (c.productName || '') + ' · ' + (c.color || '') + ' · ' + (c.size || '') + ' × ' + (c.qty || 0) + '</span><span>$' + ((c.unitPrice || 0) * (c.qty || 0)).toFixed(2) + '</span></div>'; }).join('') : '<p class="text-text-secondary text-sm">No items in cart</p>';
+            }
+            if (printEl) printEl.textContent = 'Print: ' + (quoteData.printLocations && quoteData.printLocations.length ? quoteData.printLocations.join(', ') : '—');
+            var itemsTotal = cart.reduce(function(s, c) { return s + (c.unitPrice || 0) * (c.qty || 0); }, 0);
+            var printCost = quoteData.printSetup || 0;
+            var setupFee = 0;
+            var gst = (itemsTotal + printCost + setupFee) * 0.05;
+            var total = itemsTotal + printCost + setupFee + gst;
+            var sItems = document.getElementById('s-items');
+            var sPrint = document.getElementById('s-print');
+            var sSetup = document.getElementById('s-setup');
+            var sGst = document.getElementById('s-gst');
+            var sTotal = document.getElementById('s-total');
+            if (sItems) sItems.textContent = '$' + itemsTotal.toFixed(2);
+            if (sPrint) sPrint.textContent = '$' + printCost.toFixed(2);
+            if (sSetup) sSetup.textContent = '$' + setupFee.toFixed(2);
+            if (sGst) sGst.textContent = '$' + gst.toFixed(2);
+            if (sTotal) sTotal.textContent = '$' + total.toFixed(2) + ' CAD';
         }
 
         var styleDetailColors = [];
@@ -1146,26 +1188,44 @@
         }
 
         function updateSummary() {
-            document.getElementById('summary-product-name').textContent = quoteData.product ? quoteData.product.name : '-';
-            document.getElementById('summary-style').textContent = quoteData.product && quoteData.product.style ? quoteData.product.style : '-';
-            document.getElementById('summary-color').textContent = quoteData.color ? quoteData.color.name : '-';
-            document.getElementById('summary-size').textContent = quoteData.size || '-';
-            document.getElementById('summary-quantity').textContent = quoteData.quantity >= 12 ? quoteData.quantity : '-';
+            var totalQty = cart.reduce(function(s, c) { return s + (c.qty || 0); }, 0);
+            var summaryName = document.getElementById('summary-product-name');
+            var summaryStyle = document.getElementById('summary-style');
+            var summaryColor = document.getElementById('summary-color');
+            var summarySize = document.getElementById('summary-size');
+            var summaryQty = document.getElementById('summary-quantity');
+            if (cart.length > 0) {
+                if (summaryName) summaryName.textContent = cart.length === 1 ? (cart[0].productName || '-') : cart.length + ' items';
+                if (summaryStyle) summaryStyle.textContent = cart.length === 1 && cart[0].productId ? cart[0].productId : '-';
+                if (summaryColor) summaryColor.textContent = cart.length === 1 ? (cart[0].color || '-') : '-';
+                if (summarySize) summarySize.textContent = cart.length === 1 ? (cart[0].size || '-') : '-';
+                if (summaryQty) summaryQty.textContent = totalQty;
+            } else {
+                if (summaryName) summaryName.textContent = quoteData.product ? quoteData.product.name : '-';
+                if (summaryStyle) summaryStyle.textContent = quoteData.product && quoteData.product.style ? quoteData.product.style : '-';
+                if (summaryColor) summaryColor.textContent = quoteData.color ? (quoteData.color.name || quoteData.color) : '-';
+                if (summarySize) summarySize.textContent = quoteData.size || '-';
+                if (summaryQty) summaryQty.textContent = quoteData.quantity >= 12 ? quoteData.quantity : '-';
+            }
             calculatePricing();
         }
 
         function calculatePricing() {
             var garmentCost = 0, printSetup = 0, inkCost = 0, effectsCost = 0, rushFee = 0, extrasCost = 0, bulkDiscount = 0;
-            var qty = quoteData.quantity >= 12 ? quoteData.quantity : 0;
-            if (qty > 0 && quoteData.unitPrice > 0) {
+            var qty = cart.length > 0 ? cart.reduce(function(s, c) { return s + (c.qty || 0); }, 0) : (quoteData.quantity >= 12 ? quoteData.quantity : 0);
+            if (cart.length > 0) {
+                cart.forEach(function(c) { garmentCost += (c.unitPrice || 0) * (c.qty || 0); });
+            } else if (qty > 0 && quoteData.unitPrice > 0) {
                 garmentCost = quoteData.unitPrice * qty;
+            }
+            if (qty > 0) {
                 var locationCost = 0;
-                quoteData.printLocations.forEach(function(loc) { locationCost += (loc.cost || 0) * qty; });
+                (quoteData.printLocations || []).forEach(function(loc) { locationCost += (loc.cost || 0) * qty; });
                 printSetup = locationCost;
                 inkCost = (quoteData.inkColorCost || 0) * qty;
-                quoteData.effects.forEach(function(e) { effectsCost += (e.cost || 0) * qty; });
+                (quoteData.effects || []).forEach(function(e) { effectsCost += (e.cost || 0) * qty; });
                 rushFee = quoteData.rushFee || 0;
-                quoteData.extras.forEach(function(e) {
+                (quoteData.extras || []).forEach(function(e) {
                     if (e.type === 'onetime') extrasCost += e.cost || 0;
                     else extrasCost += (e.cost || 0) * qty;
                 });
@@ -1429,30 +1489,30 @@
 
         // Submit Quote
         function submitQuote() {
-            const form = document.getElementById('quote-form');
-            const formData = new FormData(form);
-            
+            var form = document.getElementById('quote-form');
+            var formData = new FormData(form);
+
             if (form.checkValidity()) {
-                // Combine form data with quote data
-                const submissionData = {
-                    ...quoteData,
+                var submissionData = {
+                    cart: cart,
+                    quoteData: quoteData,
                     contact: {
-                        firstName: formData.get('firstName'),
-                        lastName: formData.get('lastName'),
-                        email: formData.get('email'),
-                        phone: formData.get('phone'),
+                        fullName: formData.get('fullName'),
                         company: formData.get('company'),
+                        phone: formData.get('phone'),
+                        email: formData.get('email'),
                         details: formData.get('details'),
-                        contactMethod: formData.get('contactMethod'),
-                        timeline: formData.get('timeline')
+                        agreeTerms: formData.get('agreeTerms')
                     },
                     timestamp: new Date().toISOString()
                 };
 
-                // Store submission
                 localStorage.setItem('latestQuote', JSON.stringify(submissionData));
-                
-                // Redirect to results page
+
+                cart = [];
+                saveCart();
+                updateCartBadge();
+
                 window.location.href = 'quote_results_lead_capture.html';
             } else {
                 form.reportValidity();
@@ -1460,7 +1520,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            bindCatalogListeners();
+            loadCart();
             var productModalEl = document.getElementById('product-modal');
             if (productModalEl) productModalEl.addEventListener('click', function(e) {
                 if (e.target === this) closeProductModal();
@@ -1480,7 +1540,7 @@
                         else customQtyLabel.textContent = 'Custom Quantity (min ' + getMinQuantity() + ')';
                     }
                     updateNavigationButtons();
-                    initProductCatalog();
+                    loadProducts();
                     initDesignUpload();
                     bindSteps3to5();
                     var urlParams = new URLSearchParams(window.location.search);
@@ -1533,7 +1593,7 @@
                     renderStep5FromConfig(calculatorConfig);
                     applyAppearance(calculatorConfig);
                     updateNavigationButtons();
-                    initProductCatalog();
+                    loadProducts();
                     initDesignUpload();
                     bindSteps3to5();
                 });
@@ -1541,12 +1601,33 @@
 
         function restoreUIState() {}
     </script>
-    <!-- Product detail modal -->
-    <div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50 p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-screen overflow-y-auto p-6 relative">
-            <button type="button" onclick="closeProductModal()" class="absolute top-4 right-4 text-gray-400 hover:text-black text-2xl font-bold">×</button>
-            <div id="product-modal-content"></div>
-            <button type="button" id="modal-select-btn" class="btn-accent w-full mt-6 text-lg">Select This Product →</button>
+    <!-- Product detail modal (color + size + add to cart) -->
+    <div id="product-modal" style="display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;padding:16px;" class="flex">
+        <div style="background:#fff;border-radius:16px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+            <div style="padding:20px 24px;border-bottom:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center;">
+                <h3 id="modal-product-title" style="font-size:18px;font-weight:700;color:#1e293b;">Select Options</h3>
+                <button type="button" onclick="closeProductModal()" style="background:none;border:none;font-size:24px;color:#9ca3af;cursor:pointer;">×</button>
+            </div>
+            <div style="padding:20px 24px;display:flex;gap:16px;align-items:flex-start;border-bottom:1px solid #f1f5f9;">
+                <img id="modal-product-img" src="" alt="" style="width:100px;height:100px;object-fit:contain;border-radius:8px;border:1px solid #e5e7eb;background:#f8fafc;flex-shrink:0;" />
+                <div>
+                    <p id="modal-product-name" style="font-size:16px;font-weight:600;color:#1e293b;margin-bottom:4px;"></p>
+                    <p id="modal-base-price" style="font-size:13px;color:#9ca3af;margin-bottom:2px;"></p>
+                    <p id="modal-your-price" style="font-size:18px;font-weight:700;color:#1e40af;"></p>
+                </div>
+            </div>
+            <div style="padding:20px 24px;">
+                <div style="margin-bottom:20px;">
+                    <p style="font-size:14px;font-weight:600;color:#374151;margin-bottom:10px;">Color: <span id="selected-color-name" style="font-weight:400;color:#6b7280;">— select below</span></p>
+                    <div id="color-swatches" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+                </div>
+                <div style="margin-bottom:20px;">
+                    <p style="font-size:14px;font-weight:600;color:#374151;margin-bottom:10px;">Sizes &amp; Quantities</p>
+                    <div id="size-qty-grid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(80px, 1fr));gap:8px;"></div>
+                </div>
+                <div id="modal-cart-summary" style="display:none;background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#1e40af;font-weight:500;"></div>
+                <button type="button" id="modal-add-btn" onclick="addToCartFromModal()" style="width:100%;padding:14px;background:#1e40af;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='#1e3a5f'" onmouseout="this.style.background='#1e40af'">Add to Cart</button>
+            </div>
         </div>
     </div>
 
