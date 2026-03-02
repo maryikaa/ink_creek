@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DTF Print Order — Ink Creek Studio</title>
   <link rel="stylesheet" href="../css/main.css"/>
-  <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
   <style>
     .dtf-page { max-width: 1300px; margin: 0 auto; padding: 32px 20px; }
     .dtf-header { text-align: center; margin-bottom: 32px; }
@@ -144,7 +144,7 @@
             <span id="ruler-left">0"</span>
             <span id="ruler-right">22"</span>
           </div>
-          <div id="konva-container"></div>
+          <div id="konva-container"><canvas id="dtf-canvas"></canvas></div>
           <div id="design-toolbar" class="hidden" style="position:absolute;z-index:20;background:#1e293b;border-radius:10px;padding:6px 8px;gap:6px;align-items:center;box-shadow:0 4px 16px rgba(0,0,0,0.2);display:flex;">
             <button type="button" onclick="scaleSelected(-0.1)" style="width:30px;height:30px;border-radius:6px;border:none;background:#334155;color:#fff;font-size:16px;cursor:pointer;" title="Shrink">−</button>
             <button type="button" onclick="scaleSelected(0.1)" style="width:30px;height:30px;border-radius:6px;border:none;background:#334155;color:#fff;font-size:16px;cursor:pointer;" title="Grow">+</button>
@@ -314,7 +314,8 @@ function getDtfPricing() {
 }
 
 var designs = [];
-var stage, layer, transformer, bgLayer;
+var fabricCanvas = null;
+var GRID_MARKER = '_isGrid';
 var currentUnit = 'inches';
 var selectedDesignId = null;
 let sheetWidthInches = 22;
@@ -351,18 +352,30 @@ function updateSizeDisplay() {
   if (maxLabel) maxLabel.textContent = sheetHeightInches.toFixed(0) + '"';
 }
 
+function getDesignBoundsInches(obj) {
+  if (!obj || obj[GRID_MARKER]) return null;
+  var left = obj.get('left') || 0;
+  var top = obj.get('top') || 0;
+  var w = (obj.getWidth() || 0) * (obj.getScaleX() || 1);
+  var h = (obj.getHeight() || 0) * (obj.getScaleY() || 1);
+  return {
+    x1: left / INCH_TO_PX,
+    y1: top / INCH_TO_PX,
+    x2: (left + w) / INCH_TO_PX,
+    y2: (top + h) / INCH_TO_PX
+  };
+}
+
 function findFreePosition(newWInches, newHInches) {
   var padding = 0.25;
-  var occupied = designs
-    .filter(function(d) { return d.node; })
-    .map(function(d) {
-      return {
-        x1: d.node.x() / INCH_TO_PX,
-        y1: d.node.y() / INCH_TO_PX,
-        x2: d.node.x() / INCH_TO_PX + d.wInches,
-        y2: d.node.y() / INCH_TO_PX + d.hInches
-      };
+  var occupied = [];
+  if (fabricCanvas) {
+    fabricCanvas.getObjects().forEach(function(obj) {
+      if (obj[GRID_MARKER]) return;
+      var b = getDesignBoundsInches(obj);
+      if (b) occupied.push(b);
     });
+  }
 
   var yPositions = [0];
   occupied.forEach(function(r) { yPositions.push(r.y2 + padding); });
@@ -407,15 +420,19 @@ function recalcSheetHeight() {
     return;
   }
   var maxBottomInches = MIN_HEIGHT_INCHES;
-  designs.forEach(function(d) {
-    if (!d.node) return;
-    var bottom = (d.node.y() + d.node.height()) / INCH_TO_PX;
-    maxBottomInches = Math.max(maxBottomInches, bottom + 1);
-  });
+  if (fabricCanvas) {
+    fabricCanvas.getObjects().forEach(function(obj) {
+      if (obj[GRID_MARKER]) return;
+      var top = obj.get('top') || 0;
+      var h = (obj.getHeight() || 0) * (obj.getScaleY() || 1);
+      var bottom = (top + h) / INCH_TO_PX;
+      maxBottomInches = Math.max(maxBottomInches, bottom + 1);
+    });
+  }
   sheetHeightInches = Math.min(Math.max(maxBottomInches, MIN_HEIGHT_INCHES), MAX_HEIGHT_INCHES);
 
   var newH = Math.round(sheetHeightInches * INCH_TO_PX);
-  if (stage) stage.height(newH);
+  if (fabricCanvas) fabricCanvas.setHeight(newH);
   var container = document.getElementById('konva-container');
   if (container) container.style.height = newH + 'px';
   var wrapper = document.querySelector('.canvas-wrapper');
@@ -424,7 +441,7 @@ function recalcSheetHeight() {
   if (hr) hr.style.height = newH + 'px';
 
   redrawGrid();
-  if (stage) stage.batchDraw();
+  if (fabricCanvas) fabricCanvas.requestRenderAll();
   updateSizeDisplay();
   updatePricing();
 
@@ -439,50 +456,83 @@ function resizeCanvas() {
   var cont = document.getElementById('konva-container');
   var W = cont ? cont.clientWidth : 700;
   var H = Math.round(sheetHeightInches * INCH_TO_PX);
-  if (!stage) return;
-  stage.width(W);
-  stage.height(H);
+  if (!fabricCanvas) return;
+  var oldW = fabricCanvas.getWidth();
+  fabricCanvas.setDimensions({ width: W, height: H });
   if (cont) cont.style.height = H + 'px';
   var wrapper = document.querySelector('.canvas-wrapper');
   if (wrapper) wrapper.style.height = (H + 22) + 'px';
   var hr = document.getElementById('height-ruler');
   if (hr) hr.style.height = H + 'px';
+  if (oldW && oldW !== W) {
+    var ratio = W / oldW;
+    INCH_TO_PX = W / MAX_WIDTH_INCHES;
+    fabricCanvas.getObjects().forEach(function(obj) {
+      if (obj[GRID_MARKER]) return;
+      obj.set('left', (obj.get('left') || 0) * ratio);
+      obj.set('top', (obj.get('top') || 0) * ratio);
+      obj.set('scaleX', (obj.getScaleX() || 1) * ratio);
+      obj.set('scaleY', (obj.getScaleY() || 1) * ratio);
+    });
+  }
   redrawGrid();
-  stage.batchDraw();
+  fabricCanvas.requestRenderAll();
   updateSizeDisplay();
 }
 
 function redrawGrid() {
-  if (!bgLayer || !stage) return;
-  bgLayer.destroyChildren();
-  var W = stage.width();
-  var H = stage.height();
+  if (!fabricCanvas) return;
+  var objs = fabricCanvas.getObjects().slice();
+  objs.forEach(function(o) {
+    if (o[GRID_MARKER]) fabricCanvas.remove(o);
+  });
+  var W = fabricCanvas.getWidth();
+  var H = fabricCanvas.getHeight();
   var sheetPx = MAX_WIDTH_INCHES * INCH_TO_PX;
-  bgLayer.add(new Konva.Rect({ x: 0, y: 0, width: sheetPx, height: H, fill: '#ffffff', stroke: '#93c5fd', strokeWidth: 1.5 }));
+  var rect = new fabric.Rect({ left: 0, top: 0, width: sheetPx, height: H, fill: '#ffffff', stroke: '#93c5fd', strokeWidth: 1.5, selectable: false, evented: false });
+  rect[GRID_MARKER] = true;
+  fabricCanvas.add(rect);
   for (var x = 0; x <= sheetPx; x += INCH_TO_PX) {
-    bgLayer.add(new Konva.Line({ points: [x, 0, x, H], stroke: '#e8f4fd', strokeWidth: (x % (INCH_TO_PX * 2) === 0 ? 1 : 0.5) }));
+    var line = new fabric.Line([x, 0, x, H], { stroke: '#e8f4fd', strokeWidth: (x % (INCH_TO_PX * 2) === 0 ? 1 : 0.5), selectable: false, evented: false });
+    line[GRID_MARKER] = true;
+    fabricCanvas.add(line);
   }
   for (var y = 0; y <= H; y += INCH_TO_PX) {
-    bgLayer.add(new Konva.Line({ points: [0, y, sheetPx, y], stroke: '#e8f4fd', strokeWidth: (y % (INCH_TO_PX * 2) === 0 ? 1 : 0.5) }));
+    var lineY = new fabric.Line([0, y, sheetPx, y], { stroke: '#e8f4fd', strokeWidth: (y % (INCH_TO_PX * 2) === 0 ? 1 : 0.5), selectable: false, evented: false });
+    lineY[GRID_MARKER] = true;
+    fabricCanvas.add(lineY);
   }
   var maxH = MAX_HEIGHT_INCHES * INCH_TO_PX;
   if (maxH <= H + 10) {
-    bgLayer.add(new Konva.Line({ points: [0, maxH, sheetPx, maxH], stroke: '#fbbf24', strokeWidth: 1.5, dash: [8, 4] }));
-    bgLayer.add(new Konva.Text({ x: 4, y: maxH - 16, text: '44" max', fontSize: 11, fill: '#f59e0b', fontStyle: 'bold' }));
+    var dashLine = new fabric.Line([0, maxH, sheetPx, maxH], { stroke: '#fbbf24', strokeWidth: 1.5, strokeDashArray: [8, 4], selectable: false, evented: false });
+    dashLine[GRID_MARKER] = true;
+    fabricCanvas.add(dashLine);
+    var text = new fabric.Text('44" max', { left: 4, top: maxH - 16, fontSize: 11, fill: '#f59e0b', fontStyle: 'bold', selectable: false, evented: false });
+    text[GRID_MARKER] = true;
+    fabricCanvas.add(text);
   }
-  bgLayer.batchDraw();
+  fabricCanvas.getObjects().forEach(function(o) {
+    if (o[GRID_MARKER]) fabricCanvas.sendObjectToBack(o);
+  });
+  fabricCanvas.requestRenderAll();
 }
 
 function showToolbar(node) {
   var toolbar = document.getElementById('design-toolbar');
   if (!toolbar) return;
   toolbar.classList.remove('hidden');
-  if (node && node.getClientRect) {
-    var box = node.getClientRect();
+  if (node && fabricCanvas) {
     var wrap = document.getElementById('canvas-container-wrap');
     var wrapRect = wrap ? wrap.getBoundingClientRect() : { left: 0, top: 0 };
-    toolbar.style.left = (box.x - wrapRect.left + (box.width / 2) - (toolbar.offsetWidth / 2)) + 'px';
-    toolbar.style.top = (box.y - wrapRect.top - 48) + 'px';
+    var cont = document.getElementById('konva-container');
+    var contRect = cont ? cont.getBoundingClientRect() : wrapRect;
+    var left = node.get('left') || 0;
+    var top = node.get('top') || 0;
+    var w = (node.getWidth() || 0) * (node.getScaleX() || 1);
+    var scaleX = contRect.width / fabricCanvas.getWidth();
+    var scaleY = contRect.height / fabricCanvas.getHeight();
+    toolbar.style.left = (contRect.left + (left + w / 2) * scaleX - toolbar.offsetWidth / 2) + 'px';
+    toolbar.style.top = (contRect.top + top * scaleY - 48) + 'px';
   }
 }
 
@@ -502,45 +552,52 @@ window.addEventListener('DOMContentLoaded', function() {
   var hr = document.getElementById('height-ruler');
   if (hr) hr.style.height = H + 'px';
 
-  stage = new Konva.Stage({ container: 'konva-container', width: W, height: H });
+  var canvasEl = document.getElementById('dtf-canvas');
+  if (canvasEl) {
+    fabricCanvas = new fabric.Canvas('dtf-canvas', { width: W, height: H, selection: true, preserveObjectStacking: true });
+    redrawGrid();
+  }
 
-  bgLayer = new Konva.Layer({ listening: false });
-  stage.add(bgLayer);
-  redrawGrid();
-
-  layer = new Konva.Layer();
-  stage.add(layer);
-  var trLayer = new Konva.Layer();
-  stage.add(trLayer);
-  transformer = new Konva.Transformer({
-    rotationSnaps: [0,45,90,135,180,225,270,315],
-    boundBoxFunc: function(_, nb) { return { x: nb.x, y: nb.y, width: Math.max(10, nb.width), height: Math.max(10, nb.height) }; }
-  });
-  trLayer.add(transformer);
-
-  transformer.on('transformstart', function() {
-    var nodes = transformer.nodes();
-    if (nodes.length) showToolbar(nodes[0]);
-  });
-
-  layer.on('mousedown touchstart', function(e) {
-    var target = e.target;
-    if (target && target.hasName && target.hasName('design')) {
-      showToolbar(target);
-    } else {
-      hideToolbar();
+  fabricCanvas.on('selection:created', function(e) {
+    var obj = e.selected && e.selected[0];
+    if (obj && obj.get('data') && obj.get('data').designId) {
+      selectedDesignId = obj.get('data').designId;
+      showToolbar(obj);
     }
   });
 
-  stage.on('click tap', function(e) {
-    if (e.target === stage) {
-      hideToolbar();
-      transformer.nodes([]);
-      trLayer.draw();
-      selectedDesignId = null;
-    } else if (e.target.name() === 'design') {
-      selectedDesignId = e.target.id();
+  fabricCanvas.on('selection:updated', function(e) {
+    var obj = e.selected && e.selected[0];
+    if (obj && obj.get('data') && obj.get('data').designId) {
+      selectedDesignId = obj.get('data').designId;
+      showToolbar(obj);
+    }
+  });
+
+  fabricCanvas.on('selection:cleared', function() {
+    selectedDesignId = null;
+    hideToolbar();
+  });
+
+  fabricCanvas.on('object:modified', function() {
+    recalcSheetHeight();
+    updateSummaryPreview();
+    updatePricing();
+  });
+
+  fabricCanvas.on('object:added', function() {
+    updatePricing();
+  });
+
+  fabricCanvas.on('object:removed', function() {
+    updatePricing();
+  });
+
+  fabricCanvas.on('mouse:down', function(e) {
+    if (e.target && e.target.get('data') && e.target.get('data').designId) {
       showToolbar(e.target);
+    } else if (!e.target) {
+      hideToolbar();
     }
   });
 
@@ -548,19 +605,21 @@ window.addEventListener('DOMContentLoaded', function() {
 
   window.addEventListener('resize', function() {
     var cont = document.getElementById('konva-container');
-    if (!cont || !stage) return;
+    if (!cont || !fabricCanvas) return;
     var W = cont.clientWidth;
-    stage.width(W);
     var newIPX = W / MAX_WIDTH_INCHES;
     var ratio = newIPX / INCH_TO_PX;
-    designs.forEach(function(d) {
-      if (!d.node) return;
-      d.node.x(d.node.x() * ratio);
-      d.node.y(d.node.y() * ratio);
-      d.node.width(d.wInches * newIPX);
-      d.node.height(d.hInches * newIPX);
-    });
+    var curW = fabricCanvas.getWidth();
+    fabricCanvas.setDimensions({ width: W, height: fabricCanvas.getHeight() });
     INCH_TO_PX = newIPX;
+    fabricCanvas.getObjects().forEach(function(obj) {
+      if (obj[GRID_MARKER]) return;
+      obj.set('left', (obj.get('left') || 0) * ratio);
+      obj.set('top', (obj.get('top') || 0) * ratio);
+      obj.set('scaleX', (obj.getScaleX() || 1) * ratio);
+      obj.set('scaleY', (obj.getScaleY() || 1) * ratio);
+    });
+    redrawGrid();
     recalcSheetHeight();
     if (selectedDesignId) {
       var d = designs.find(function(x) { return x.id === selectedDesignId; });
@@ -570,8 +629,10 @@ window.addEventListener('DOMContentLoaded', function() {
 
   window.addEventListener('keydown', function(e) {
     if ((e.key === 'Delete' || e.key === 'Backspace') && e.target.tagName !== 'INPUT') {
-      var nodes = transformer.nodes();
-      if (nodes.length) removeDesignById(nodes[0].id());
+      var active = fabricCanvas.getActiveObject();
+      if (active && active.get('data') && active.get('data').designId) {
+        removeDesignById(active.get('data').designId);
+      }
     }
   });
 
@@ -617,54 +678,50 @@ function handleFiles(files) {
 }
 
 function addDesignToCanvas(design) {
-  var img = new Image();
-  img.onload = function() {
+  fabric.Image.fromURL(design.dataUrl, function(fabricImg) {
+    if (!fabricCanvas) return;
     var pos = findFreePosition(design.wInches, design.hInches);
-    var node = new Konva.Image({
-      x: pos.x, y: pos.y,
-      image: img,
-      width: design.wInches * INCH_TO_PX,
-      height: design.hInches * INCH_TO_PX,
-      draggable: true,
-      name: 'design'
+    var wPx = design.wInches * INCH_TO_PX;
+    var hPx = design.hInches * INCH_TO_PX;
+    var imgW = fabricImg.getWidth() || 1;
+    var imgH = fabricImg.getHeight() || 1;
+    fabricImg.set({
+      left: pos.x,
+      top: pos.y,
+      scaleX: wPx / imgW,
+      scaleY: hPx / imgH,
+      selectable: true,
+      evented: true,
+      hasControls: true,
+      hasBorders: true,
+      lockRotation: false
     });
-    node.id(design.id);
+    fabricImg.set('data', { designId: design.id });
+    fabricCanvas.add(fabricImg);
+    design.node = fabricImg;
 
-    node.on('dragmove', function() {
-      var maxDragX = (stage ? stage.width() : 700) - design.wInches * INCH_TO_PX;
-      if (this.x() > maxDragX) this.x(maxDragX);
-      if (this.x() < 0) this.x(0);
-      if (this.y() < 0) this.y(0);
-      if (selectedDesignId === design.id) showToolbar(node);
+    fabricImg.on('moving', function() {
+      var sheetW = MAX_WIDTH_INCHES * INCH_TO_PX;
+      var w = (fabricImg.getWidth() || 0) * (fabricImg.getScaleX() || 1);
+      var left = fabricImg.get('left') || 0;
+      if (left < 0) fabricImg.set('left', 0);
+      if (left + w > sheetW) fabricImg.set('left', sheetW - w);
+      if ((fabricImg.get('top') || 0) < 0) fabricImg.set('top', 0);
+      if (selectedDesignId === design.id) showToolbar(fabricImg);
     });
-    node.on('dragend', function() { recalcSheetHeight(); updateSummaryPreview(); });
-    node.on('click tap', function(e) {
-      e.cancelBubble = true;
-      selectedDesignId = design.id;
-      transformer.nodes([node]);
-      stage.getLayers()[2].batchDraw();
-      showToolbar(node);
-    });
-    node.on('transformend', function() {
-      var sx = node.scaleX(), sy = node.scaleY();
-      node.scaleX(1); node.scaleY(1);
-      design.wInches = Math.min(Math.round(node.width() * sx / INCH_TO_PX * 10) / 10, MAX_WIDTH_INCHES);
-      design.hInches = Math.round(node.height() * sy / INCH_TO_PX * 10) / 10;
-      node.width(design.wInches * INCH_TO_PX);
-      node.height(design.hInches * INCH_TO_PX);
+
+    fabricImg.on('modified', function() {
+      var w = (fabricImg.getWidth() || 0) * (fabricImg.getScaleX() || 1);
+      var h = (fabricImg.getHeight() || 0) * (fabricImg.getScaleY() || 1);
+      design.wInches = Math.min(Math.round((w / INCH_TO_PX) * 10) / 10, MAX_WIDTH_INCHES);
+      design.hInches = Math.round((h / INCH_TO_PX) * 10) / 10;
       renderTable();
-      recalcSheetHeight();
-      updateSummaryPreview();
-      if (selectedDesignId === design.id) showToolbar(node);
     });
 
-    design.node = node;
-    layer.add(node);
-    layer.draw();
+    fabricCanvas.requestRenderAll();
     recalcSheetHeight();
     updateSummaryPreview();
-  };
-  img.src = design.dataUrl;
+  }, { crossOrigin: 'anonymous' });
 }
 
 function renderTable() {
@@ -703,10 +760,12 @@ function updateDim(id, axis, val, unit) {
   } else {
     d.hInches = Math.max(0.5, Math.round(inches * 10) / 10);
   }
-  if (d.node) {
-    d.node.width(d.wInches * INCH_TO_PX);
-    d.node.height(d.hInches * INCH_TO_PX);
-    layer.draw();
+  if (d.node && fabricCanvas) {
+    var baseW = d.node.getWidth() || 1;
+    var baseH = d.node.getHeight() || 1;
+    d.node.setScaleX((d.wInches * INCH_TO_PX) / baseW);
+    d.node.setScaleY((d.hInches * INCH_TO_PX) / baseH);
+    fabricCanvas.requestRenderAll();
   }
   recalcSheetHeight();
   renderTable();
@@ -715,10 +774,10 @@ function updateDim(id, axis, val, unit) {
 
 function selectDesign(id) {
   var d = designs.find(function(x) { return x.id === id; });
-  if (!d || !d.node) return;
+  if (!d || !d.node || !fabricCanvas) return;
   selectedDesignId = id;
-  transformer.nodes([d.node]);
-  stage.getLayers()[2].batchDraw();
+  fabricCanvas.setActiveObject(d.node);
+  fabricCanvas.requestRenderAll();
   showToolbar(d.node);
 }
 
@@ -734,15 +793,17 @@ function duplicateDesign(id) {
 
 function scaleSelected(delta) {
   var d = designs.find(function(x) { return x.id === selectedDesignId; });
-  if (!d || !d.node) return;
+  if (!d || !d.node || !fabricCanvas) return;
   var factor = 1 + delta;
   var newW = Math.min(d.wInches * factor, MAX_WIDTH_INCHES);
   var newH = d.hInches * factor;
   d.wInches = Math.round(newW * 10) / 10;
   d.hInches = Math.round(newH * 10) / 10;
-  d.node.width(d.wInches * INCH_TO_PX);
-  d.node.height(d.hInches * INCH_TO_PX);
-  layer.batchDraw();
+  var baseW = d.node.getWidth() || 1;
+  var baseH = d.node.getHeight() || 1;
+  d.node.setScaleX((d.wInches * INCH_TO_PX) / baseW);
+  d.node.setScaleY((d.hInches * INCH_TO_PX) / baseH);
+  fabricCanvas.requestRenderAll();
   recalcSheetHeight();
   renderTable();
   updateSummaryPreview();
@@ -790,10 +851,23 @@ function removeBgSelected() {
     ctx.putImageData(imageData, 0, 0);
     var newDataUrl = offCanvas.toDataURL('image/png');
     d.dataUrl = newDataUrl;
-    var newImg = new Image();
-    newImg.onload = function() {
-      d.node.image(newImg);
-      layer.batchDraw();
+    fabric.Image.fromURL(newDataUrl, function(newFabricImg) {
+      if (!d.node || !fabricCanvas) return;
+      newFabricImg.set({
+        left: d.node.get('left'),
+        top: d.node.get('top'),
+        scaleX: d.node.getScaleX(),
+        scaleY: d.node.getScaleY(),
+        data: d.node.get('data'),
+        selectable: true,
+        evented: true,
+        hasControls: true,
+        hasBorders: true
+      });
+      fabricCanvas.remove(d.node);
+      fabricCanvas.add(newFabricImg);
+      d.node = newFabricImg;
+      fabricCanvas.requestRenderAll();
       renderTable();
       btn.textContent = '✅ BG Removed';
       btn.style.background = '#16a34a';
@@ -802,8 +876,7 @@ function removeBgSelected() {
         btn.style.background = '#3b82f6';
         btn.disabled = false;
       }, 2000);
-    };
-    newImg.src = newDataUrl;
+    }, { crossOrigin: 'anonymous' });
   };
   img.onerror = function() { btn.textContent = '✨ Remove BG'; btn.disabled = false; };
   img.src = d.dataUrl;
@@ -811,7 +884,11 @@ function removeBgSelected() {
 
 function removeDesignById(id) {
   var d = designs.find(function(x) { return x.id === id; });
-  if (d && d.node) { d.node.destroy(); transformer.nodes([]); layer.draw(); }
+  if (d && d.node && fabricCanvas) {
+    fabricCanvas.remove(d.node);
+    fabricCanvas.discardActiveObject();
+    fabricCanvas.requestRenderAll();
+  }
   if (selectedDesignId === id) {
     hideToolbar();
     selectedDesignId = null;
@@ -839,10 +916,11 @@ function getUsedBoundingBox() {
   var maxX = -Infinity;
   var maxY = -Infinity;
   placed.forEach(function(d) {
-    var x = d.node.x() / INCH_TO_PX;
-    var y = d.node.y() / INCH_TO_PX;
-    var w = (d.node.width() * (d.node.scaleX ? d.node.scaleX() : 1)) / INCH_TO_PX;
-    var h = (d.node.height() * (d.node.scaleY ? d.node.scaleY() : 1)) / INCH_TO_PX;
+    var obj = d.node;
+    var x = (obj.get('left') || 0) / INCH_TO_PX;
+    var y = (obj.get('top') || 0) / INCH_TO_PX;
+    var w = ((obj.getWidth() || 0) * (obj.getScaleX() || 1)) / INCH_TO_PX;
+    var h = ((obj.getHeight() || 0) * (obj.getScaleY() || 1)) / INCH_TO_PX;
     minX = Math.min(minX, x);
     minY = Math.min(minY, y);
     maxX = Math.max(maxX, x + w);
@@ -933,9 +1011,13 @@ function updateSummaryPreview() {
   var total = designs.filter(function(d) { return d.node; }).length;
   designs.forEach(function(d) {
     if (!d.node) return;
+    var left = (d.node.get('left') || 0) * scale;
+    var top = (d.node.get('top') || 0) * scale;
+    var wPx = (d.node.getWidth() || 0) * (d.node.getScaleX() || 1) * scale;
+    var hPx = (d.node.getHeight() || 0) * (d.node.getScaleY() || 1) * scale;
     var img = new Image();
     img.onload = function() {
-      ctx.drawImage(img, d.node.x() * scale, d.node.y() * scale, d.wInches * INCH_TO_PX * scale, d.hInches * INCH_TO_PX * scale);
+      ctx.drawImage(img, left, top, wPx, hPx);
       drawn++;
       if (drawn >= total) {
         ctx.strokeStyle = '#93c5fd';
