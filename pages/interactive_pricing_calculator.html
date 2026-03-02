@@ -14,6 +14,26 @@
         .product-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
         .product-card:hover { border-color: #1e40af; box-shadow: 0 4px 20px rgba(30,64,175,0.15); transform: translateY(-2px); }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .catalog-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; background: #fff; }
+        @media (max-width: 1024px) { .catalog-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 600px) { .catalog-grid { grid-template-columns: repeat(2, 1fr); } }
+        .catalog-card { background: #fff; border: 1px solid #f0f0f0; padding: 0; cursor: pointer; transition: box-shadow 0.2s; position: relative; }
+        .catalog-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.12); z-index: 2; }
+        .card-style-num { position: absolute; top: 8px; left: 10px; font-size: 13px; font-weight: 600; color: #333; z-index: 3; background: rgba(255,255,255,0.85); padding: 1px 4px; border-radius: 3px; }
+        .card-sale-ribbon { position: absolute; top: 0; left: 0; width: 72px; height: 72px; overflow: hidden; z-index: 3; }
+        .card-sale-ribbon span { position: absolute; top: 16px; left: -18px; width: 80px; background: #e85d04; color: #fff; font-size: 11px; font-weight: 700; text-align: center; padding: 3px 0; transform: rotate(-45deg); letter-spacing: 0.02em; }
+        .card-img-wrap { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #f5f5f5; }
+        .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 0.3s; }
+        .catalog-card:hover .card-img-wrap img { transform: scale(1.04); }
+        .card-info { padding: 10px 12px 12px; }
+        .card-price { font-size: 14px; font-weight: 700; color: #c05e00; margin-bottom: 2px; }
+        .card-brand { font-size: 12px; color: #888; margin-bottom: 2px; font-weight: 500; }
+        .card-title { font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 8px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-swatches { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; margin-bottom: 6px; }
+        .card-swatch { width: 16px; height: 16px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.15s; }
+        .card-swatch:hover { transform: scale(1.3); }
+        .card-swatch-more { font-size: 11px; color: #888; font-weight: 600; margin-left: 2px; }
+        .card-sizes { font-size: 11px; color: #aaa; font-weight: 500; }
     </style>
 <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Finkcreek7691back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
 </head>
@@ -153,7 +173,7 @@
                                 <p class="font-montserrat font-semibold text-red-800 mb-2">Unable to load products</p>
                                 <p class="text-sm text-red-700">Please check your connection and try again later.</p>
                             </div>
-                            <div id="products-grid" style="display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:20px;"></div>
+                            <div id="products-grid" class="catalog-grid"></div>
                         </div>
                     </div>
 
@@ -839,26 +859,34 @@
             if (!grid) return;
             var markup = getMarkupPercent();
             if (!products || products.length === 0) {
-                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#9ca3af;"><svg style="width:48px;height:48px;margin:0 auto 16px;display:block;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><p style="font-size:16px;font-weight:600;color:#374151;margin-bottom:4px;">No products found</p><p>Try a different search or category</p></div>';
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:80px 20px;color:#9ca3af;"><p style="font-size:18px;font-weight:600;color:#374151;margin-bottom:8px;">No products found</p><p>Try a different search or category</p></div>';
                 return;
             }
             var html = products.map(function(p) {
                 var basePrice = parseFloat(p.price || 0);
                 var clientPrice = basePrice > 0 ? (basePrice * (1 + markup / 100)).toFixed(2) : null;
-                var colorCount = (p.colors || []).length;
+                var colors = p.colors || [];
+                var maxSwatches = 8;
+                var visibleColors = colors.slice(0, maxSwatches);
+                var extraCount = colors.length - maxSwatches;
+                var sizes = p.sizes || [];
+                var sizeRange = sizes.length > 1 ? sizes[0] + ' - ' + sizes[sizes.length - 1] : (sizes[0] || '');
+                var imgUrl = (p.image || '').replace(/"/g, '&quot;');
                 var title = (p.title || 'Product').replace(/</g, '&lt;').replace(/"/g, '&quot;');
                 var brand = (p.brandName || '').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-                var imgUrl = (p.image || '').replace(/"/g, '&quot;');
-                var sid = String(p.styleID != null ? p.styleID : p.id || '');
+                var sid = p.styleID != null ? p.styleID : p.id || '';
+                var swatchesHtml = visibleColors.map(function(c) {
+                    var hex = (c.hex || '#ccc').replace(/"/g, '');
+                    var cImg = (c.image || '').replace(/"/g, '&quot;');
+                    var cName = (c.name || '').replace(/"/g, '&quot;');
+                    var bg = c.image ? 'background-image:url(' + cImg + ');background-size:cover;background-color:#f0f0f0;' : 'background:' + hex + ';';
+                    return '<div class="card-swatch" style="' + bg + '" title="' + cName + '"></div>';
+                }).join('') + (extraCount > 0 ? '<span class="card-swatch-more">+' + extraCount + '</span>' : '');
+                var saleRibbon = (p.onSale || p.sale) ? '<div class="card-sale-ribbon"><span>On Sale</span></div>' : '';
                 var imgBlock = p.image
-                    ? '<img src="' + imgUrl + '" alt="' + title + '" style="max-height:180px;max-width:90%;object-fit:contain;" onerror="this.src=\'\';this.parentElement.innerHTML=\'<div style=color:#d1d5db;font-size:48px>👕</div>\'"/>'
-                    : '<div style="color:#d1d5db;font-size:48px">👕</div>';
-                var brandBadge = '<div style="position:absolute;top:8px;left:8px;background:rgba(255,255,255,0.92);backdrop-filter:blur(4px);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#374151;">' + brand + '</div>';
-                var colorBadge = colorCount > 1 ? '<div style="position:absolute;bottom:8px;right:8px;background:rgba(255,255,255,0.92);border-radius:20px;padding:3px 8px;font-size:11px;color:#6b7280;font-weight:600;">' + colorCount + ' colors</div>' : '';
-                var priceBlock = clientPrice
-                    ? '<p style="font-size:18px;font-weight:800;color:#1e40af;text-align:center;margin-bottom:12px;">from $' + clientPrice + '</p>'
-                    : '<p style="font-size:13px;color:#9ca3af;text-align:center;margin-bottom:12px;">Request quote</p>';
-                return '<div class="product-card" onclick="selectProduct(' + sid + ')"><div style="background:#f8fafc;height:200px;display:flex;align-items:center;justify-content:center;border-radius:10px 10px 0 0;overflow:hidden;position:relative;">' + imgBlock + brandBadge + colorBadge + '</div><div style="padding:14px 16px;"><p style="font-size:11px;font-weight:700;color:#1e40af;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px;">' + brand + '</p><h3 style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:10px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">' + title + '</h3>' + priceBlock + '<button type="button" onclick="event.stopPropagation();selectProduct(' + sid + ')" style="width:100%;padding:11px;background:#1e40af;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background=\'#1e3a5f\'" onmouseout="this.style.background=\'#1e40af\'">Select</button></div></div>';
+                    ? '<img src="' + imgUrl + '" alt="' + title + '" loading="lazy" onerror="this.parentElement.style.background=\'#f0f0f0\';this.style.display=\'none\'"/>'
+                    : '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;">👕</div>';
+                return '<div class="catalog-card" onclick="selectProduct(' + sid + ')"><div class="card-style-num">' + (p.styleName || p.styleID || '') + '</div>' + saleRibbon + '<div class="card-img-wrap">' + imgBlock + '</div><div class="card-info"><div class="card-price">' + (clientPrice ? '$' + clientPrice : 'Request quote') + '</div><div class="card-brand">' + brand + '</div><div class="card-title">' + title + '</div><div class="card-swatches">' + swatchesHtml + '</div><div class="card-sizes">' + sizeRange + '</div></div></div>';
             }).join('');
             grid.innerHTML = html;
         }
