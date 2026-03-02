@@ -356,8 +356,8 @@ function getDesignBoundsInches(obj) {
   if (!obj || obj[GRID_MARKER]) return null;
   var left = obj.get('left') || 0;
   var top = obj.get('top') || 0;
-  var w = (obj.getWidth() || 0) * (obj.getScaleX() || 1);
-  var h = (obj.getHeight() || 0) * (obj.getScaleY() || 1);
+  var w = (obj.width * (obj.scaleX || 1) || 0) * (obj.scaleX || 1);
+  var h = (obj.height * (obj.scaleY || 1) || 0) * (obj.scaleY || 1);
   return {
     x1: left / INCH_TO_PX,
     y1: top / INCH_TO_PX,
@@ -424,7 +424,7 @@ function recalcSheetHeight() {
     fabricCanvas.getObjects().forEach(function(obj) {
       if (obj[GRID_MARKER]) return;
       var top = obj.get('top') || 0;
-      var h = (obj.getHeight() || 0) * (obj.getScaleY() || 1);
+      var h = (obj.height * (obj.scaleY || 1) || 0) * (obj.scaleY || 1);
       var bottom = (top + h) / INCH_TO_PX;
       maxBottomInches = Math.max(maxBottomInches, bottom + 1);
     });
@@ -471,8 +471,8 @@ function resizeCanvas() {
       if (obj[GRID_MARKER]) return;
       obj.set('left', (obj.get('left') || 0) * ratio);
       obj.set('top', (obj.get('top') || 0) * ratio);
-      obj.set('scaleX', (obj.getScaleX() || 1) * ratio);
-      obj.set('scaleY', (obj.getScaleY() || 1) * ratio);
+      obj.set('scaleX', (obj.scaleX || 1) * ratio);
+      obj.set('scaleY', (obj.scaleY || 1) * ratio);
     });
   }
   redrawGrid();
@@ -512,7 +512,7 @@ function redrawGrid() {
     fabricCanvas.add(text);
   }
   fabricCanvas.getObjects().forEach(function(o) {
-    if (o[GRID_MARKER]) fabricCanvas.sendObjectToBack(o);
+    if (o[GRID_MARKER]) fabricCanvas.sendToBack(o);
   });
   fabricCanvas.requestRenderAll();
 }
@@ -616,8 +616,8 @@ window.addEventListener('DOMContentLoaded', function() {
       if (obj[GRID_MARKER]) return;
       obj.set('left', (obj.get('left') || 0) * ratio);
       obj.set('top', (obj.get('top') || 0) * ratio);
-      obj.set('scaleX', (obj.getScaleX() || 1) * ratio);
-      obj.set('scaleY', (obj.getScaleY() || 1) * ratio);
+      obj.set('scaleX', (obj.scaleX || 1) * ratio);
+      obj.set('scaleY', (obj.scaleY || 1) * ratio);
     });
     redrawGrid();
     recalcSheetHeight();
@@ -683,8 +683,8 @@ function addDesignToCanvas(design) {
     var pos = findFreePosition(design.wInches, design.hInches);
     var wPx = design.wInches * INCH_TO_PX;
     var hPx = design.hInches * INCH_TO_PX;
-    var imgW = fabricImg.getWidth() || 1;
-    var imgH = fabricImg.getHeight() || 1;
+    var imgW = (fabricImg.width || 1) * (fabricImg.scaleX || 1);
+    var imgH = (fabricImg.height || 1) * (fabricImg.scaleY || 1);
     fabricImg.set({
       left: pos.x,
       top: pos.y,
@@ -702,7 +702,7 @@ function addDesignToCanvas(design) {
 
     fabricImg.on('moving', function() {
       var sheetW = MAX_WIDTH_INCHES * INCH_TO_PX;
-      var w = (fabricImg.getWidth() || 0) * (fabricImg.getScaleX() || 1);
+      var w = (fabricImg.width || 0) * (fabricImg.scaleX || 1);
       var left = fabricImg.get('left') || 0;
       if (left < 0) fabricImg.set('left', 0);
       if (left + w > sheetW) fabricImg.set('left', sheetW - w);
@@ -711,8 +711,8 @@ function addDesignToCanvas(design) {
     });
 
     fabricImg.on('modified', function() {
-      var w = (fabricImg.getWidth() || 0) * (fabricImg.getScaleX() || 1);
-      var h = (fabricImg.getHeight() || 0) * (fabricImg.getScaleY() || 1);
+      var w = (fabricImg.width || 0) * (fabricImg.scaleX || 1);
+      var h = (fabricImg.height || 0) * (fabricImg.scaleY || 1);
       design.wInches = Math.min(Math.round((w / INCH_TO_PX) * 10) / 10, MAX_WIDTH_INCHES);
       design.hInches = Math.round((h / INCH_TO_PX) * 10) / 10;
       renderTable();
@@ -919,8 +919,8 @@ function getUsedBoundingBox() {
     var obj = d.node;
     var x = (obj.get('left') || 0) / INCH_TO_PX;
     var y = (obj.get('top') || 0) / INCH_TO_PX;
-    var w = ((obj.getWidth() || 0) * (obj.getScaleX() || 1)) / INCH_TO_PX;
-    var h = ((obj.getHeight() || 0) * (obj.getScaleY() || 1)) / INCH_TO_PX;
+    var w = ((obj.width * (obj.scaleX || 1) || 0) * (obj.scaleX || 1)) / INCH_TO_PX;
+    var h = ((obj.height * (obj.scaleY || 1) || 0) * (obj.scaleY || 1)) / INCH_TO_PX;
     minX = Math.min(minX, x);
     minY = Math.min(minY, y);
     maxX = Math.max(maxX, x + w);
