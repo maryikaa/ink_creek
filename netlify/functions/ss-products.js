@@ -1,21 +1,46 @@
 exports.handler = async function (event) {
   const accountNumber = process.env.SS_ACCOUNT_NUMBER;
   const apiKey = process.env.SS_API_KEY;
-  const baseUrl = 'https://api-ca.ssactivewear.com/V2'
-
+  const baseUrl = 'https://api-ca.ssactivewear.com/V2';
 
   const auth =
     'Basic ' +
     Buffer.from(accountNumber + ':' + apiKey).toString('base64');
 
   const headers = {
-    Authorization: auth,
+    'Authorization': auth,
+    'Accept': 'application/json',        // ← ДОБАВЛЕНО
     'Content-Type': 'application/json',
   };
 
   try {
-    const stylesRes = await fetch(baseUrl + '/products/', { headers });
-    const styles = await stylesRes.json();
+    const stylesRes = await fetch(
+      baseUrl + '/products/?mediatype=json', // ← ИЗМЕНЕНО
+      { headers }
+    );
+
+    // Диагностика
+    console.log('SS status:', stylesRes.status);
+    const text = await stylesRes.text();
+    console.log('SS preview:', text.slice(0, 300));
+
+    let styles;
+    try {
+      styles = JSON.parse(text);
+    } catch (e) {
+      return {
+        statusCode: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body: JSON.stringify({
+          error: 'SS API returned non-JSON',
+          preview: text.slice(0, 300),
+          httpStatus: stylesRes.status,
+        }),
+      };
+    }
 
     if (!Array.isArray(styles)) {
       return {
@@ -37,7 +62,7 @@ exports.handler = async function (event) {
       limited.map(async (style) => {
         try {
           const varRes = await fetch(
-            baseUrl + '/products/' + style.styleID + '/',
+            baseUrl + '/products/' + style.styleID + '/?mediatype=json', // ← ИЗМЕНЕНО
             { headers }
           );
           const variants = await varRes.json();
@@ -72,20 +97,13 @@ exports.handler = async function (event) {
           }
 
           const colors = Object.values(colorMap);
-          const sizeOrder = [
-            'XS',
-            'S',
-            'M',
-            'L',
-            'XL',
-            '2XL',
-            '3XL',
-          ];
+          const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'];
           let sizes = sizeOrder.filter(
             (s) => sizeSet.has(s) || sizeSet.size === 0
           );
           if (sizes.length === 0) sizes = Array.from(sizeSet);
-          const finalSizes = sizes.length > 0 ? sizes : ['S', 'M', 'L', 'XL'];
+          const finalSizes =
+            sizes.length > 0 ? sizes : ['S', 'M', 'L', 'XL'];
 
           return {
             id: style.styleID,
