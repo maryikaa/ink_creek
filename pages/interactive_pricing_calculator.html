@@ -731,6 +731,8 @@
         }
 
         var allProducts = [];
+        var currentPage = 1;
+        var productsPerPage = 20;
         var activeCategory = 'all';
         var searchQuery = '';
 
@@ -822,20 +824,80 @@
             var filtered = allProducts.slice();
             if (activeCategory !== 'all') {
                 filtered = filtered.filter(function(p) {
-                    return (p.baseCategory || '') === activeCategory;
+                    return p.baseCategory === activeCategory;
                 });
             }
             if (searchQuery.trim()) {
                 var q = searchQuery.toLowerCase();
                 filtered = filtered.filter(function(p) {
-                    return (p.title || '').toLowerCase().indexOf(q) !== -1 ||
-                        (p.brandName || '').toLowerCase().indexOf(q) !== -1 ||
-                        (p.baseCategory || '').toLowerCase().indexOf(q) !== -1;
+                    return (p.title || '').toLowerCase().indexOf(q) !== -1
+                        || (p.brandName || '').toLowerCase().indexOf(q) !== -1
+                        || (p.baseCategory || '').toLowerCase().indexOf(q) !== -1;
                 });
             }
-            renderProducts(filtered);
+            currentPage = 1;
+            renderProductsWithPagination(filtered);
+        }
+
+        function renderProductsWithPagination(filtered) {
+            var grid = document.getElementById('products-grid');
+            if (!grid) return;
+            var total = filtered.length;
+            var totalPages = Math.ceil(total / productsPerPage);
+            var start = (currentPage - 1) * productsPerPage;
+            var pageProducts = filtered.slice(start, start + productsPerPage);
+
             var countEl = document.getElementById('product-count');
-            if (countEl) countEl.textContent = filtered.length + ' products';
+            if (countEl) countEl.textContent = total + ' products';
+
+            renderProducts(pageProducts);
+
+            var paginationEl = document.getElementById('catalog-pagination');
+            if (!paginationEl) {
+                paginationEl = document.createElement('div');
+                paginationEl.id = 'catalog-pagination';
+                paginationEl.style.cssText =
+                    'display:flex;justify-content:center;align-items:center;'
+                    + 'gap:8px;margin-top:24px;flex-wrap:wrap;';
+                grid.parentNode.insertBefore(paginationEl, grid.nextSibling);
+            }
+
+            if (totalPages <= 1) { paginationEl.innerHTML = ''; return; }
+
+            var html = '';
+            html += '<button onclick="changePage(' + (currentPage-1) + ')" '
+                + (currentPage === 1 ? 'disabled' : '')
+                + ' style="padding:8px 16px;border:1px solid #e5e7eb;border-radius:8px;'
+                + 'background:#fff;cursor:pointer;font-weight:600;color:#374151;'
+                + (currentPage === 1 ? 'opacity:0.4;cursor:not-allowed;' : '') + '">← Prev</button>';
+
+            var startPage = Math.max(1, currentPage - 2);
+            var endPage = Math.min(totalPages, startPage + 4);
+            if (endPage - startPage < 4) startPage = Math.max(1, endPage - 4);
+
+            for (var i = startPage; i <= endPage; i++) {
+                var isActive = i === currentPage;
+                html += '<button onclick="changePage(' + i + ')"'
+                    + ' style="padding:8px 14px;border:1px solid '
+                    + (isActive ? '#1e40af' : '#e5e7eb') + ';border-radius:8px;'
+                    + 'background:' + (isActive ? '#1e40af' : '#fff') + ';'
+                    + 'color:' + (isActive ? '#fff' : '#374151') + ';'
+                    + 'cursor:pointer;font-weight:600;">' + i + '</button>';
+            }
+
+            html += '<button onclick="changePage(' + (currentPage+1) + ')" '
+                + (currentPage === totalPages ? 'disabled' : '')
+                + ' style="padding:8px 16px;border:1px solid #e5e7eb;border-radius:8px;'
+                + 'background:#fff;cursor:pointer;font-weight:600;color:#374151;'
+                + (currentPage === totalPages ? 'opacity:0.4;cursor:not-allowed;' : '') + '">Next →</button>';
+
+            html += '<span style="font-size:13px;color:#9ca3af;margin-left:8px">'
+                + 'Page ' + currentPage + ' of ' + totalPages + '</span>';
+
+            paginationEl.innerHTML = html;
+
+            var step1 = document.getElementById('step-1');
+            if (step1) step1.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function handleSearch(val) {
@@ -852,6 +914,27 @@
             var clearBtn = document.getElementById('search-clear');
             if (clearBtn) clearBtn.style.display = 'none';
             renderFilteredProducts();
+        }
+
+        function changePage(page) {
+            var filtered = allProducts.slice();
+            if (activeCategory !== 'all') {
+                filtered = filtered.filter(function(p) {
+                    return p.baseCategory === activeCategory;
+                });
+            }
+            if (searchQuery.trim()) {
+                var q = searchQuery.toLowerCase();
+                filtered = filtered.filter(function(p) {
+                    return (p.title || '').toLowerCase().indexOf(q) !== -1
+                        || (p.brandName || '').toLowerCase().indexOf(q) !== -1
+                        || (p.baseCategory || '').toLowerCase().indexOf(q) !== -1;
+                });
+            }
+            var totalPages = Math.ceil(filtered.length / productsPerPage);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            renderProductsWithPagination(filtered);
         }
 
         function renderProducts(products) {
@@ -971,6 +1054,7 @@
         }
 
         function selectColorFromEl(el) {
+          if (el.tagName === 'IMG') el = el.parentElement;
           var name = el.getAttribute('data-color');
           var hex  = el.getAttribute('data-hex') || '#cccccc';
           var img  = el.getAttribute('data-img') || '';
@@ -992,8 +1076,9 @@
             var cImg = (c.image || c.swatch || '').replace(/"/g, '&quot;');
             var bgStyle = cImg ? '' : 'background:' + hex + ';';
             var inner = cImg
-              ? '<img src="' + cImg + '" style="width:100%;height:100%;object-fit:cover;pointer-events:none;"'
-
+              ? '<img src="' + cImg + '" style="width:100%;height:100%;object-fit:cover;pointer-events:none;" onerror="this.style.display=\'none\';this.parentElement.style.background=\'' + hex + '\'">'
+              : '';
+            return '<div class="color-swatch"'
               + ' data-color="' + name + '"'
               + ' data-hex="' + hex + '"'
               + ' data-img="' + cImg + '"'
