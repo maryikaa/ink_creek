@@ -151,12 +151,8 @@
             <button type="button" onclick="scaleSelected(0.1)" style="width:30px;height:30px;border-radius:6px;border:none;background:#334155;color:#fff;font-size:16px;cursor:pointer;" title="Grow">+</button>
             <div style="width:1px;height:20px;background:#475569;margin:0 2px;"></div>
             <div style="position:relative;">
-              <button type="button" onclick="removeBgSelected()" id="btn-remove-bg" onmouseenter="document.getElementById('bg-tolerance-wrap').style.display='block'" onmouseleave="document.getElementById('bg-tolerance-wrap').style.display='none'" style="padding:0 10px;height:30px;border-radius:6px;border:none;background:#3b82f6;color:#fff;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;">✨ Remove BG</button>
-              <div id="bg-tolerance-wrap" onmouseenter="this.style.display='block'" onmouseleave="this.style.display='none'" style="display:none;position:absolute;bottom:100%;left:0;margin-bottom:4px;background:#1e293b;border-radius:8px;padding:8px 12px;z-index:25;box-shadow:0 4px 12px rgba(0,0,0,0.2);">
-                <label style="font-size:11px;color:#94a3b8;display:block;margin-bottom:4px;">Tolerance: <span id="tol-val">30</span></label>
-                <input type="range" id="bg-tolerance" min="5" max="80" value="30" style="width:120px;accent-color:#3b82f6" oninput="document.getElementById('tol-val').textContent=this.value"/>
-              </div>
-            </div>
+              <button type="button" onclick="removeBgSelected()" id="btn-remove-bg" >✨ Remove BG</button>
+              
             <div style="width:1px;height:20px;background:#475569;margin:0 2px;"></div>
             <button type="button" onclick="deleteSelected()" style="width:30px;height:30px;border-radius:6px;border:none;background:#ef4444;color:#fff;font-size:14px;cursor:pointer;" title="Delete">🗑</button>
           </div>
