@@ -73,7 +73,6 @@
     #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 1000; display: flex; flex-direction: column; gap: 8px; }
     #design-toolbar.hidden { display: none !important; }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/background-removal.js"></script>
 </head>
 <body class="bg-background text-text-primary">
 
@@ -1059,6 +1058,10 @@ function toggleMobileMenu() {
   var menu = document.getElementById('mobile-menu');
   if (menu) menu.classList.toggle('hidden');
 }
+</script>
+<script type="module">
+  import { removeBackground } from 'https://esm.sh/@imgly/background-removal@1.5.5';
+  window.imglyRemoveBackground = removeBackground;
 </script>
 </body>
 </html>
