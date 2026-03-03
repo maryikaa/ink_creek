@@ -692,7 +692,7 @@
 
         function isStepValid(step) {
             if (step === 1) return true;
-            if (step === 2) return cart.length > 0 && quoteData.printLocations.length > 0 && quoteData.inkColors >= 1;
+            if (step === 2) return cart.length > 0;
             if (step === 3) return true;
             if (step === 4) return true;
             if (step === 5) return true;
@@ -1028,6 +1028,8 @@
             modalProduct = product;
             selectedColor = null;
             sizeQtys = {};
+            var styleID = String(product.styleID != null ? product.styleID : product.id || '');
+            quoteData.product = { name: product.title || '', style: styleID };
             var markup = getMarkupPercent();
             var basePrice = parseFloat(product.price || 0);
             var baseEl = document.getElementById('modal-base-price');
@@ -1040,12 +1042,12 @@
             img.src = product.image || '';
             img.style.display = product.image ? 'block' : 'none';
             document.getElementById('selected-color-name').textContent = '— select below';
-            buildColorSwatches(product);
-            buildSizeGrid(product.sizes && product.sizes.length 
-              ? product.sizes 
-              : ['S','M','L','XL']);
+            var colorContainer = document.getElementById('color-swatches');
+            if (colorContainer) colorContainer.innerHTML = '<p style="color:#9ca3af;font-size:13px">Loading options…</p>';
+            buildSizeGrid(['S','M','L','XL']);
             var modal = document.getElementById('product-modal');
             if (modal) { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+            loadStyleDetail();
         }
 
         function closeProductModal() {
@@ -1202,14 +1204,15 @@ function buildSizeGrid(sizes) {
             var loadingEl = document.getElementById('step2-loading');
             var errorEl = document.getElementById('step2-error');
             var contentEl = document.getElementById('step2-content');
-            loadingEl.classList.remove('hidden');
-            errorEl.classList.add('hidden');
-            contentEl.classList.add('hidden');
+            if (loadingEl) loadingEl.classList.remove('hidden');
+            if (errorEl) errorEl.classList.add('hidden');
+            if (contentEl) contentEl.classList.add('hidden');
             fetch('/api/ss-style-detail?styleID=' + encodeURIComponent(styleID))
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
-                    loadingEl.classList.add('hidden');
-                    var list = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.Items) ? data.Items : (data && data.data) ? data.data : [];
+                    if (loadingEl) loadingEl.classList.add('hidden');
+                    var list = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.Items) ? data.Items : (data && data.data && Array.isArray(data.data)) ? data.data : [];
+                    if (list.length === 0) console.log('ss-style-detail: no SKUs in response', typeof data === 'object' && data !== null ? Object.keys(data) : 'non-object');
                     var colorMap = {};
                     list.forEach(function(sku) {
                         var key = (sku.colorName || sku.ColorName || sku.color || '').trim() || 'Default';
@@ -1237,11 +1240,16 @@ function buildSizeGrid(sizes) {
                     if (styleDetailSizes.length === 0) styleDetailSizes = Object.keys(sizeSet);
                     quoteData.styleDetail = { colors: styleDetailColors, sizes: styleDetailSizes };
                     renderStep2Content();
-                    contentEl.classList.remove('hidden');
+                    if (contentEl) contentEl.classList.remove('hidden');
+                    var modal = document.getElementById('product-modal');
+                    if (modal && modal.style.display === 'flex') {
+                        buildColorSwatches({ colors: styleDetailColors.map(function(c) { return { name: c.name, image: c.swatch || c.image, swatch: c.swatch, hex: '#cccccc' }; }) });
+                        buildSizeGrid(styleDetailSizes);
+                    }
                 })
                 .catch(function() {
-                    loadingEl.classList.add('hidden');
-                    errorEl.classList.remove('hidden');
+                    if (loadingEl) loadingEl.classList.add('hidden');
+                    if (errorEl) errorEl.classList.remove('hidden');
                 });
         }
 
