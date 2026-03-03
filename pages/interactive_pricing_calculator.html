@@ -1198,6 +1198,7 @@ function buildSizeGrid(sizes) {
         var styleDetailSizes = [];
 
         function loadStyleDetail() {
+            console.log('loadStyleDetail called with styleID:', quoteData.product?.style);
             var styleID = quoteData.product && quoteData.product.style;
             if (!styleID) return;
             var loadingEl = document.getElementById('step2-loading');
@@ -1208,10 +1209,18 @@ function buildSizeGrid(sizes) {
             if (contentEl) contentEl.classList.add('hidden');
             fetch('/api/ss-style-detail?styleID=' + encodeURIComponent(styleID))
                 .then(function(res) { return res.json(); })
-                .then(function(data) {
+                .then(function(rawData) {
+                    console.log('Raw API response:', rawData);
+                    console.log('Array.isArray(rawData):', Array.isArray(rawData));
+                    var list = Array.isArray(rawData) ? rawData :
+                                (rawData && rawData.products) ? rawData.products :
+                                (rawData && rawData.Items) ? rawData.Items :
+                                (rawData && rawData.data) ? rawData.data :
+                                (rawData && Array.isArray(rawData.data)) ? rawData.data :
+                                [];
+                    console.log('Parsed list length:', list.length);
                     if (loadingEl) loadingEl.classList.add('hidden');
-                    var list = Array.isArray(data) ? data : (data && data.products) ? data.products : (data && data.Items) ? data.Items : (data && data.data && Array.isArray(data.data)) ? data.data : [];
-                    if (list.length === 0) console.log('ss-style-detail: no SKUs in response', typeof data === 'object' && data !== null ? Object.keys(data) : 'non-object');
+                    if (list.length === 0) console.log('ss-style-detail: no SKUs in response', typeof rawData === 'object' && rawData !== null ? Object.keys(rawData) : 'non-object');
                     var colorMap = {};
                     list.forEach(function(sku) {
                         var key = (sku.colorName || sku.ColorName || sku.color || '').trim() || 'Default';

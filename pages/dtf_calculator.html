@@ -554,7 +554,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
   var canvasEl = document.getElementById('dtf-canvas');
   if (canvasEl) {
-    fabricCanvas = new fabric.Canvas('dtf-canvas', { width: W, height: H, selection: true, preserveObjectStacking: true });
+    fabricCanvas = new fabric.Canvas('dtf-canvas', { width: W, height: H, backgroundColor: '#cccccc', selection: true, preserveObjectStacking: true });
     redrawGrid();
   }
 
